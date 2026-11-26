@@ -32,7 +32,12 @@
 \begin{Referee}{1}
 On p.~4, please clarify the statement that DFE is ``information-theoretically optimal.'' Its $O(\epsilon^{-2})$ dependence is optimal, but the dependence on the Hilbert-space dimension or the number of qubits is not universally optimal and depends on the allowed measurement model and the target state.
 \end{Referee}
-\status{Open.}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}). Reply: suggested text below, to be rewritten.}
+
+\begin{Response}
+(Suggested text, to be rewritten.)
+We thank the referee for this remark, which is correct. We rewrote this statement in Section~2.1. The dependence of DFE in $\epsilon^{-2}$ is optimal as far as fidelity estimation is concerned: a dependence in $\epsilon^{-1}$ can be obtained, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal: it is $O(d)=O(2^n)$ in the worst case, but it can be significantly reduced for specific classes of states, for instance to $O(1)$ for stabilizer states. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states, which is exactly the context in which we use it in this work.
+\end{Response}
 
 \begin{Referee}{2}
 The sample-complexity analysis seems somewhat pessimistic for resource states relevant to Pauli-MBQC, where many of the product inputs may be stabilizer states such as $\ket0$, while only a subset are magic states. It would be useful to express the complexity in terms of the numbers $n_0$ and $n_H$ of stabilizer and magic inputs. Then, the sample complexity can be improved since $\ket0$ inputs can be verified more efficiently than generic single-qubit states, i.e., $O((n_0/\epsilon)\log(1/\delta))$ samples, rather than the $O(n_0^2/\epsilon^2)$ scaling resulting from additive fidelity estimation. It would be helpful for readers to write this refined sample complexity.
@@ -73,7 +78,12 @@ We thank the referee for this suggestion, which we followed: the sample complexi
 \begin{Referee}{3}
 The fidelity witness in Eq.~(9) appears closely related to a straightforward local-certification argument: if each single-qubit reduced state has infidelity at most $\epsilon_i$, then the global infidelity is bounded by $\sum_i\epsilon_i$. It would be helpful if the authors clarified more explicitly what is gained by introducing the fidelity-witness formalism rather than certifying the single-qubit states separately and applying a union-bound-type argument. My understanding is that the main advantage is statistical: the proposed protocol directly estimates a weighted sum of local fidelities through importance sampling (based on Eq.~(14)), thereby avoiding separate estimation and confidence bounds for all $n$ qubits and improving the overall sample complexity.
 \end{Referee}
-\status{Open.}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}). Reply: suggested text below, to be rewritten.}
+
+\begin{Response}
+(Suggested text, to be rewritten.)
+We thank the referee for this question; their understanding is correct, and we added a paragraph after the proof of Theorem~1 (``Joint estimation of the witness'', Section~3.2) to make it explicit. A naive approach would estimate the fidelity of each block separately with DFE and combine the estimates with a union-bound type of argument. Each estimate would then need precision $\epsilon/(3(1+t))$, so that each of the $t$ estimations on non-stabilizer qubits would cost $O((1+t)^2\epsilon^{-2}\log((1+t)/\delta))$ copies, hence a scaling in $t^3$ in total. Our protocol instead estimates the witness jointly with a single estimator, built by importance sampling over the blocks: intuitively, the statistical fluctuations of the different blocks compensate each other, and $O((1+t)^2\epsilon^{-2}\log(1/\delta))$ copies are sufficient.
+\end{Response}
 
 %-----------------------------------------------------------------------
 \section{Reply to Reviewer 2}
@@ -81,16 +91,33 @@ The fidelity witness in Eq.~(9) appears closely related to a straightforward loc
 \begin{Referee}{1}
 The adversarial complexity may be large. Moreover, a sampled Pauli string can involve $O(n)$ elementary measurements, so copy complexity understates the total experimental cost.
 \end{Referee}
-\status{Open. Note: the adversarial scaling is now $\tilde O(n(1+t)^4/(\delta^2\epsilon^6))$ (see Reviewer~1, comment~2).}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}) for the first part. Reply: suggested text below, to be rewritten. The second part ($O(n)$ elementary measurements per copy) is not addressed in the paper yet: TODO.}
+
+\begin{Response}
+(Suggested text, to be rewritten.)
+We agree with the referee. The adversarial sample complexity is large because we took a generic approach: the result of [FKMO24learning] that we use (Lemma~2) applies to any protocol with non-adaptive and incoherent measurements, so that the bound is not tight and can be subject to optimization. We leave this optimization to further work, as it is not the main focus of this paper; note that it has already been done for stabilizer states, in particular graph states [ZH19efficient, LZH23robust]. We added this discussion after Theorem~2 (Section~3.3). Note also that, following the comment of Referee~1, this scaling is now $\tilde O\big(n(1+t)^4/(\delta^2\epsilon^6)\big)$ instead of $\tilde O(n^5/(\delta^2\epsilon^6))$.
+\end{Response}
+
+\todo{Reply to the second part of the comment (a sampled Pauli string can involve $O(n)$ elementary measurements). Not addressed in the paper.}
 
 \begin{Referee}{2}
 The guaranteed acceptance requires $F(\rho,\Psi)\ge1-\frac{\epsilon}{3n}$. The paper should discuss whether this tolerance margin is realistic.
 \end{Referee}
-\status{Open. Note: the margin is now $1-\frac{\epsilon}{3(1+t)}$ (see Reviewer~1, comment~2).}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}). Reply: suggested text below, to be rewritten.}
+
+\begin{Response}
+(Suggested text, to be rewritten.)
+We thank the referee for raising this point, which we now discuss in a paragraph after the proof of Theorem~1 (``Robustness loss'', Section~3.2). First, following the comment of Referee~1, the margin is now $1-\frac{\epsilon}{3(1+t)}$, where $t$ is the number of non-stabilizer inputs, instead of $1-\frac{\epsilon}{3n}$. Second, some loss in robustness cannot be avoided in our approach: no loss at all would mean estimating the fidelity itself, as DFE does, which cannot be done efficiently with DFE for \textsf{CPS}, since its sample complexity grows exponentially with the number of magic inputs. The present loss, linear in the number of blocks, is not a lower bound, and how far it can be reduced is left for future work. Finally, this margin is not necessarily unrealistic: our protocol certifies states produced in the context of fault-tolerant quantum computation (Clifford circuits, magic-state injection and Pauli measurements), that is, in a regime where high fidelities are expected, so that the protocol remains meaningful and does not abort all the time.
+\end{Response}
 
 \begin{Referee}{3}
 The novelty lies in a combination of known techniques for CPS states. This is useful, but the manuscript should position the contribution accordingly.
 \end{Referee}
-\status{Open.}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}). Reply: suggested text below, to be rewritten.}
+
+\begin{Response}
+(Suggested text, to be rewritten.)
+We agree with the referee, and we now state explicitly in the introduction that our protocol combines existing techniques, namely Direct Fidelity Estimation, robust fidelity witnesses and Pauli measurement back-propagation. Our contribution is to show that this combination yields the first oracle-free, efficient Pauli-only certification protocol for \textsf{CPS}.
+\end{Response}
 
 \end{document}
