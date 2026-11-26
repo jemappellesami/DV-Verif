@@ -439,10 +439,10 @@ In this section, we propose a protocol to check whether an i.i.d.\ prover correc
             \label{protocol:certification}
             Let $\ket\Psi = C\left(\bigotimes_{\qubit=1}^n\ket{\psi_\qubit}\right)$ be the target state to certify and let $\epsilon>0$ be a threshold of acceptance. With the notations above, the protocol goes as follows:
             \begin{enumerate}
-                \item For each copy $\copyindex\leq N$, sample classically $(\qubit_j, P_j)\sim \pdist$, then measure $C P_j^{(i_j)} C^\dagger$ on $\rho$ (where $P^{(i)}$ denotes the $n$-qubit Pauli operator acting as $P$ on the $i-$th qubit and as identity on all the other qubits), obtaining the outcome $x_j\in\{-1, 1\}$.
-                \item Compute $\bar X \coloneqq \frac{1}{N}\sum_{\copyindex=1}^N \mathrm{sgn}(\chi_{\psi_{\qubit_j}}(P_j)) \,x_j
+                \item For each copy $\copyindex\leq N$, sample classically $(b_j, P_j)\sim \pdist$, then measure $C P_j^{(b_j)} C^\dagger$ on $\rho$ (where $P^{(b)}$ denotes the $n$-qubit Pauli operator acting as $P$ on block $b$ and as identity on all the other qubits), obtaining the outcome $x_j\in\{-1, 1\}$.
+                \item Compute $\bar X \coloneqq \frac{1}{N}\sum_{\copyindex=1}^N \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j
                 $.
-                \item Output $\bar W\coloneqq 1-n+\np\times \bar X$. Accept if $\bar W\ge1-\frac23\epsilon$, reject otherwise.
+                \item Output $\bar W\coloneqq 1-(1+t)+\np\times \bar X$. Accept if $\bar W\ge1-\frac23\epsilon$, reject otherwise.
             \end{enumerate}
         \end{protocol}
 
