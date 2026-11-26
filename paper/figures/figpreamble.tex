@@ -1,0 +1,34 @@
+% Shared preamble for the standalone TikZ figures of the paper.
+% Structure taken from the QSL slides (tizes/slides/2026-10-30-QSL/figures):
+% each figure is its own document,
+%   \documentclass[tikz,border=0pt]{standalone}
+%   \input{figpreamble}
+% then the tikzpicture. Compile it from paper/figures/ (pdflatex <name>.tex);
+% the PDF lands next to it and main.tex includes it as before.
+%
+% Only what the figures share lives here: fonts, packages, notation.
+% Each figure keeps the colours of its submitted (Inkscape) version and
+% defines them itself.
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usetikzlibrary{arrows.meta, calc, fit, backgrounds}
+
+% Fonts of the submitted figures: sans text, sans Latin letters and digits
+% in math (as beamer does, in the scalable Latin Modern Sans), Greek left
+% in cmmi.
+\renewcommand{\familydefault}{\sfdefault}
+\DeclareSymbolFont{sfletters}{OT1}{lmss}{m}{sl}
+\SetSymbolFont{operators}{normal}{OT1}{lmss}{m}{n}
+\def\sfletter#1{\ifx#1\relax\else
+  \DeclareMathSymbol{#1}{\mathalpha}{sfletters}{`#1}\expandafter\sfletter\fi}
+\sfletter abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\relax
+
+% Notation of main.tex.
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\Pauli}{\mathcal P}
+\newcommand{\Clifford}{\mathcal C}
+
+% A font size in pt, for text matched to the submitted figures.
+\newcommand{\figsize}[1]{\fontsize{#1}{1.2\dimexpr#1pt\relax}\selectfont}

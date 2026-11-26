@@ -1,0 +1,80 @@
+% ======================================================================
+% FIGURE 2 (fig:MSI): the Magic-State Injection model. Preliminaries,
+% "Physical setting of the work".
+% Standalone: compile from this folder (pdflatex MSI.tex).
+% Included in main.tex at \linewidth.
+% ----------------------------------------------------------------------
+% Original request (author): redraw the submitted figure in TikZ, keeping
+% its content and colours (the submitted one was exported from Inkscape).
+% ----------------------------------------------------------------------
+% What is drawn, as in the submitted figure (150 x 99 bp page):
+%   - inputs |0>, |0> and the magic state T|+> (light blue tag) entering
+%     a Clifford circuit C in C_n;
+%   - the dashed blue box "Magic-State Injection": the state before the
+%     measurements, a CPS;
+%   - the green panel: a layer of single-qubit Pauli measurements
+%     P in P_n driving the computation.
+% Coordinates are in bp, origin at the top-left corner, y pointing down,
+% read from the submitted PDF, so the figure keeps its size and layout.
+%
+% Knobs: \msiwire{y} positions of the three wires.
+% ======================================================================
+\documentclass[tikz,border=0pt]{standalone}
+\input{figpreamble}
+
+% Colours of the submitted figure.
+\definecolor{msiblue}{RGB}{100,128,255}     % dashed box
+\definecolor{msibluetext}{RGB}{67,91,236}   % "Magic-State Injection"
+\definecolor{msibluefill}{RGB}{155,187,255} % tag of the magic state
+\definecolor{msigreenfill}{RGB}{154,255,180}% measurement panel
+
+\tikzset{
+  msi wire/.style={line width=0.53bp},
+  % A measurement: box 18 x 14 bp, top-left corner at the origin.
+  pics/msimeter/.style={code={
+    \draw[line width=0.97bp, line cap=round, line join=round]
+      (0,0) rectangle (18,14)
+      (1.22,10.22) .. controls (5.48,5.96) and (12.37,5.92) .. (16.67,10.12)
+      (9.0,11.0) -- (14.0,2.0);
+  }},
+}
+
+\begin{document}
+\begin{tikzpicture}[x=1bp, y=-1bp, every node/.style={inner sep=0pt}]
+  \useasboundingbox (0,0) rectangle (150,99);
+
+  % ---------------- Pauli measurements panel (green) ----------------
+  \fill[msigreenfill, opacity=0.384] (124.32,7.17) rectangle (150,89.6);
+
+  % ---------------- circuit ----------------
+  % The strokes of the submitted PDF carry a y-scale of 0.998235.
+  \begin{scope}[yscale=0.998235]
+    \foreach \y in {25.2, 45.8, 66.55}
+      \draw[msi wire] (52.48,\y) -- (75.07,\y);
+    \foreach \y in {24.94, 45.74, 66.55}
+      \draw[msi wire] (105.18,\y) -- (127.76,\y);
+    \draw[line width=0.41bp] (75.04,15.92) rectangle (105.21,77.87);
+    \foreach \y in {17.67, 38.47, 59.82}
+      \pic at (128.0,\y) {msimeter};
+  \end{scope}
+
+  % ---------------- magic-state tag (blue, over its wire) ----------------
+  \fill[msibluefill, opacity=0.378, rounded corners=2.4bp]
+    (15.72,57.02) rectangle (72.17,75.8);
+
+  % ---------------- labels ----------------
+  \node[anchor=east, font=\figsize{14.4}] at (49.9,24.75) {$\ket{0}$};
+  \node[anchor=east, font=\figsize{14.4}] at (49.9,45.45) {$\ket{0}$};
+  \node[anchor=east, font=\figsize{14.4}] at (49.9,66.7) {$T\ket{+}$};
+  \node[font=\figsize{14.4}] at (89.45,37.0) {$C$};
+  \node[anchor=south east, font=\figsize{7.7}] at (103.1,74.2)
+    {$\in\Clifford_n$};
+  \node[font=\figsize{9.12}\bfseries, text=msibluetext] at (61.45,86.8)
+    {Magic-State Injection};
+  \node[font=\figsize{6.4}] at (136.95,85.2) {$P\in\Pauli_n$};
+
+  % ---------------- the CPS box ----------------
+  \draw[yscale=0.998235, msiblue, line width=1.3bp,
+    dash pattern=on 7.78bp off 7.78bp] (0.65,0.65) rectangle (116.97,98.5);
+\end{tikzpicture}
+\end{document}
