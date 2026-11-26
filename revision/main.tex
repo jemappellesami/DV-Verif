@@ -204,9 +204,10 @@ Define
 so that $F(\rho, \ket{\psi}) = \mathbb{E}_{P \sim \mathcal{D}_\psi}[g(P)]$.
 
 By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and averaging the outcomes, one obtains an unbiased estimator of the fidelity. To achieve additive precision $\epsilon$ and failure probability $\delta$, $N> N' \in O(d\, \epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, following Hoeffding's inequality (Lemma \ref{lemma:prelim:hoeffding}). 
+For a stabilizer state, $\norm{\chi_\psi}_1=d$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$ \cite{DHZ20Optimal}.
 
 
-Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the sample cost grows exponentially with the system size $n$, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
+Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the sample cost grows exponentially with the system size $n$ for general target states, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
 
 \subsection{Fidelity witnesses}
 \label{subsection:prelims:witness}
