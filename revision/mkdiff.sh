@@ -43,8 +43,10 @@ if [ $# -eq 2 ]; then
   # The revision folder as it was at version TO (figures, bibliography...).
   git -C "$ROOT" archive "$TO" revision | tar -x -C "$TMP"
   cd "$TMP/revision"
-  source_of "$FROM" > old.tex
-  source_of "$TO" > main.tex
+  # Highlighting of the changes (red text and tags) is switched off, as
+  # latexdiff marks the changes itself.
+  source_of "$FROM" | sed 's/\\highlightchangestrue/\\highlightchangesfalse/' > old.tex
+  source_of "$TO" | sed 's/\\highlightchangestrue/\\highlightchangesfalse/' > main.tex
   latexdiff --type=CFONT --math-markup=whole old.tex main.tex > diff.tex
   latexmk -pdf -interaction=nonstopmode -halt-on-error diff.tex
   mkdir -p "$ROOT/diffs/tex"
@@ -71,6 +73,10 @@ else
   OUT=diff.pdf
 fi
 cd "$TMP"
+# Highlighting of the changes switched off, as latexdiff marks them itself.
+for f in old.tex main.tex; do
+  sed 's/\\highlightchangestrue/\\highlightchangesfalse/' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+done
 latexdiff --type=CFONT --math-markup=whole old.tex main.tex > diff.tex
 latexmk -pdf -interaction=nonstopmode -halt-on-error diff.tex
 cp diff.pdf "$HERE/$OUT"

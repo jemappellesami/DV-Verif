@@ -96,9 +96,7 @@ Commits of this step (each one can be opened and commented on GitHub):
 [`v3.2_highlighted.pdf`](v3.2_highlighted.pdf) · source
 [`../revision/main.tex`](../revision/main.tex) · git tags `v3.1` → `v3.2`
 
-The PDF is the current revision (v3.2, plus two later edits of the author:
-the reference DHZ20 for the `eps^-1` dependence in Sec. 2.1 and the end of
-the "Robustness loss" paragraph), with the v3.2 changes in red.
+The PDF is v3.2 itself (git tag `v3.2`), with the v3.2 changes in red.
 
 | Where | What changed | Referee comment | Page |
 |-------|--------------|-----------------|------|
@@ -123,7 +121,8 @@ Commits of this step:
 - [`cbbeaf9`](https://github.com/jemappellesami/DV-Verif/commit/cbbeaf9) R2 C2: robustness loss
 - [`f722202`](https://github.com/jemappellesami/DV-Verif/commit/f722202) R2 C1: adversarial sample complexity
 - [`cb2bb2b`](https://github.com/jemappellesami/DV-Verif/commit/cb2bb2b) Response letter: suggested replies
-- [`682ee7d`](https://github.com/jemappellesami/DV-Verif/commit/682ee7d) Author edits: reference for eps^-1, wording of "Robustness loss" (after the tag v3.2)
+- [`682ee7d`](https://github.com/jemappellesami/DV-Verif/commit/682ee7d) Author edits: reference for eps^-1, wording of "Robustness loss"
+- [`e45ec26`](https://github.com/jemappellesami/DV-Verif/commit/e45ec26), [`4d418a6`](https://github.com/jemappellesami/DV-Verif/commit/4d418a6), [`92c2473`](https://github.com/jemappellesami/DV-Verif/commit/92c2473) v3.2 changes highlighted in red in the paper, tagged with the comment they answer
 
 ---
 
