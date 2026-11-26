@@ -91,7 +91,7 @@ We thank the referee for this question; their understanding is correct, and we a
 \begin{Referee}{1}
 The adversarial complexity may be large. Moreover, a sampled Pauli string can involve $O(n)$ elementary measurements, so copy complexity understates the total experimental cost.
 \end{Referee}
-\status{DONE in the paper: first part in v3.2 (git tag \texttt{v3.2}), second part after v3.2 (next version). Reply: suggested text below, to be rewritten.}
+\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}). Reply: suggested text below, to be rewritten.}
 
 \begin{Response}
 (Suggested text, to be rewritten.)
@@ -100,7 +100,7 @@ We agree with the referee. The adversarial sample complexity is large because we
 
 \begin{Response}
 (Suggested text for the second part, to be rewritten.)
-The referee is right that a back-propagated Pauli observable $CP^{(b)}C^\dagger$ may act non-trivially on up to $n$ qubits. It is measured by measuring each of these qubits in the corresponding single-qubit Pauli basis, all in parallel, and by taking the product of the outcomes. Each copy thus requires at most $n$ single-qubit measurements, performed in a single round, so that the total number of single-qubit measurements is at most $n$ times the number of copies, which remains polynomial. We added this remark after Protocol~1 (Section~3.2).
+The referee is right that a back-propagated Pauli observable $CP^{(b)}C^\dagger$ may act non-trivially on up to $n$ qubits. It is measured by measuring each of these qubits in the corresponding single-qubit Pauli basis, all in parallel, and by taking the product of the outcomes. Each copy thus requires at most $n$ single-qubit measurements, performed in a single round, so that the total number of single-qubit measurements is at most $n$ times the number of copies, which remains polynomial. We added this remark in a paragraph after the proof of Theorem~1 (``Number of single-qubit measurements'', Section~3.2).
 \end{Response}
 
 \begin{Referee}{2}

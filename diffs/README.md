@@ -105,13 +105,9 @@ The PDF is v3.2 itself (git tag `v3.2`), with the v3.2 changes in red.
 | Sec. 3 (introduction) | Completeness and soundness variables renamed `eps_c` and `eps_s` (they were `c` and `s`; `s` is now the number of stabilizer inputs). | – (notation) | 6 |
 | Sec. 3.2, new paragraph "Joint estimation of the witness" | Estimating each block separately with a union bound would cost `t^3`; the joint estimator costs `t^2`. | Reviewer 1, comment 3 (witness vs union bound) | 9–10 |
 | Sec. 3.2, new paragraph "Robustness loss" | Why there is a loss in robustness, why it is linear in `1+t`, and why it is realistic for fault-tolerant resource states. | Reviewer 2, comment 2 (is the margin realistic?) | 10 |
+| Sec. 3.2, new paragraph "Number of single-qubit measurements" | Each copy needs at most `n` single-qubit measurements, in a single round, so the total number of measurements stays polynomial. | Reviewer 2, comment 1, second part (`O(n)` measurements per Pauli string) | 10 |
 | Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | 11 |
 | App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | 17 |
-
-The second half of Reviewer 2, comment 1 (a sampled Pauli string can
-involve `O(n)` elementary measurements) is answered after v3.2, by a remark
-after Protocol 1 (Sec. 3.2), also in red with the tag (R2.1); it will be part
-of the next step.
 
 Commits of this step:
 
