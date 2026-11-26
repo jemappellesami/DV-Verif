@@ -119,7 +119,7 @@ These relationships between \CEPS~and other known classes of states are summariz
 
 We therefore arrive at the central problem addressed in this paper: although \CEPS~form a natural family of resource states for Pauli-based quantum computation, no existing method efficiently certifies arbitrary \CEPS~using only Pauli measurements and the circuit description of the target state. Here we close this gap by introducing a certification protocol that is both sample-efficient and time-efficient: the number of required copies scales polynomially with the relevant parameters, and the associated classical pre- and post-processing can be performed in polynomial time.
 
-To achieve this, we combine Direct Fidelity Estimation \cite{FL11direct, FOS24optimal} with a recent framework of robust fidelity witnesses \cite{CGKM21efficient}, while exploiting the Clifford structure of \CEPS~through Pauli measurement back-propagation \cite{UC24efficient}. 
+To achieve this, we combine existing techniques, namely Direct Fidelity Estimation \cite{FL11direct, FOS24optimal} with a recent framework of robust fidelity witnesses \cite{CGKM21efficient}, while exploiting the Clifford structure of \CEPS~through Pauli measurement back-propagation \cite{UC24efficient}. 
 \begin{comment}
 A direct application of Direct Fidelity Estimation is not sufficient for arbitrary \CEPS: we show that both its sample complexity and its classical running time scale exponentially with the system size. 
 This motivates certifying the state through a different route, notably by estimating a certified lower bound on the fidelity rather than the fidelity itself.
