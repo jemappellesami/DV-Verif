@@ -91,14 +91,17 @@ We thank the referee for this question; their understanding is correct, and we a
 \begin{Referee}{1}
 The adversarial complexity may be large. Moreover, a sampled Pauli string can involve $O(n)$ elementary measurements, so copy complexity understates the total experimental cost.
 \end{Referee}
-\status{DONE in the paper, v3.2 (git tag \texttt{v3.2}) for the first part. Reply: suggested text below, to be rewritten. The second part ($O(n)$ elementary measurements per copy) is not addressed in the paper yet: TODO.}
+\status{DONE in the paper: first part in v3.2 (git tag \texttt{v3.2}), second part after v3.2 (next version). Reply: suggested text below, to be rewritten.}
 
 \begin{Response}
 (Suggested text, to be rewritten.)
 We agree with the referee. The adversarial sample complexity is large because we took a generic approach: the result of [FKMO24learning] that we use (Lemma~2) applies to any protocol with non-adaptive and incoherent measurements, so that the bound is not tight and can be subject to optimization. We leave this optimization to further work, as it is not the main focus of this paper; note that it has already been done for stabilizer states, in particular graph states [ZH19efficient, LZH23robust]. We added this discussion after Theorem~2 (Section~3.3). Note also that, following the comment of Referee~1, this scaling is now $\tilde O\big(n(1+t)^4/(\delta^2\epsilon^6)\big)$ instead of $\tilde O(n^5/(\delta^2\epsilon^6))$.
 \end{Response}
 
-\todo{Reply to the second part of the comment (a sampled Pauli string can involve $O(n)$ elementary measurements). Not addressed in the paper.}
+\begin{Response}
+(Suggested text for the second part, to be rewritten.)
+The referee is right that a back-propagated Pauli observable $CP^{(b)}C^\dagger$ may act non-trivially on up to $n$ qubits. It is measured by measuring each of these qubits in the corresponding single-qubit Pauli basis, all in parallel, and by taking the product of the outcomes. Each copy thus requires at most $n$ single-qubit measurements, performed in a single round, so that the total number of single-qubit measurements is at most $n$ times the number of copies, which remains polynomial. We added this remark after Protocol~1 (Section~3.2).
+\end{Response}
 
 \begin{Referee}{2}
 The guaranteed acceptance requires $F(\rho,\Psi)\ge1-\frac{\epsilon}{3n}$. The paper should discuss whether this tolerance margin is realistic.

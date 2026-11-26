@@ -60,12 +60,11 @@ it is superseded by v3.1 and can be ignored.
 | Reviewer 1, comment 1 | "DFE is information-theoretically optimal" | Done (v3.2), Sec. 2.1 | Suggested, to rewrite |
 | Reviewer 1, comment 2 | Complexity in terms of stabilizer and magic inputs | Done (v3.1), Sec. 2.1, 2.2, 3, 4, App. C, Fig. 4 | Suggested, to rewrite; TODO on `1/eps` vs `1/eps^2` |
 | Reviewer 1, comment 3 | Fidelity witness vs union bound | Done (v3.2), Sec. 3.2 ("Joint estimation of the witness") | Suggested, to rewrite |
-| Reviewer 2, comment 1 | Adversarial cost; `O(n)` measurements per Pauli string | First part done (v3.2), Sec. 3.3; second part TODO | Suggested for the first part; TODO for the second |
+| Reviewer 2, comment 1 | Adversarial cost; `O(n)` measurements per Pauli string | First part done (v3.2), Sec. 3.3; second part done after v3.2, Sec. 3.2 (after Protocol 1) | Suggested, to rewrite |
 | Reviewer 2, comment 2 | Is the acceptance margin realistic? | Done (v3.2), Sec. 3.2 ("Robustness loss") | Suggested, to rewrite |
 | Reviewer 2, comment 3 | Position the contribution | Done (v3.2), introduction | Suggested, to rewrite |
 
-Still to do: the second part of Reviewer 2, comment 1; the final replies;
-the letter to the editor.
+Still to do: the final replies and the letter to the editor.
 
 ## How to comment
 

@@ -108,8 +108,10 @@ The PDF is v3.2 itself (git tag `v3.2`), with the v3.2 changes in red.
 | Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | 11 |
 | App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | 17 |
 
-Not addressed yet: the second half of Reviewer 2, comment 1 (a sampled
-Pauli string can involve `O(n)` elementary measurements).
+The second half of Reviewer 2, comment 1 (a sampled Pauli string can
+involve `O(n)` elementary measurements) is answered after v3.2, by a remark
+after Protocol 1 (Sec. 3.2), also in red with the tag (R2.1); it will be part
+of the next step.
 
 Commits of this step:
 
