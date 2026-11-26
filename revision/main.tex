@@ -367,7 +367,7 @@ We use the term \emph{back-propagation} for the classical post-processing of Pau
 \Tr\left[
 (C^\dagger\rho C)P
 \right]
-= \Tr\left[\rho\,(C^\dagger P C^\dagger)\right],
+= \Tr\left[\rho\,(C P C^\dagger)\right],
 \end{equation}
 by cyclicity of the trace. Thus, measuring $P$ after applying $C$ is equivalent in expectation value to measuring the \emph{back-propagated} observable $C P C^\dagger$ on the pre-Clifford state $\rho$. Since $C$ is a Clifford operation, $C P C^\dagger\in\Pauli_n$, so the back-propagated measurement remains a Pauli measurement. In other words, “uncomputing” $C$ (i.e., applying $C^\dagger$ on $\rho$ before measuring $P$) can be replaced by measuring $C P C^\dagger$ on $\rho$ at the level of expectation values. This approach is depicted on figure \ref{fig:backprop}. Back-propagation of POVM elements was already introduced in \cite{UC24efficient} in the context of verification in continuous variables quantum information processing tasks. In discrete variables, it is also crucially used in \emph{prepare-and-send} verification protocols \cite{FK17unconditionally, KKLM22unifyinga}. Its usage here in this receive-and-measure protocol showcases again the usefulness of the efficient mapping of the Pauli group through Clifford evolutions in the context of verification tasks.
 
@@ -420,7 +420,7 @@ In this section, we propose a protocol to check whether an i.i.d.\ prover correc
             \begin{figure*}[t]
                 \centering
                 \includegraphics[width=\textwidth]{figures/sf-protocol-ceps.pdf} 
-                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sampled $b, P$, we have $g(x) = \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j$. The test $b$ is either the stabilizer block $S$, with probability $1/\np$, or a non-stabilizer qubit $i\in M$, with probability $\norm{\chi_{\psi_i}}_1/\np$; here, the first two wires form the block $S$ and the last one is a qubit $i\in M$. Also, the estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-(1+t)+\np\times \bar X$.
+                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sampled $b, P$, we have $g(x_j) = \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j$. The test $b$ is either the stabilizer block $S$, with probability $1/\np$, or a non-stabilizer qubit $i\in M$, with probability $\norm{\chi_{\psi_i}}_1/\np$; here, the first two wires form the block $S$ and the last one is a qubit $i\in M$. Also, the estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-(1+t)+\np\times \bar X$.
                 The samples in red boxes are used for certification, while
                 the blue box is a sample that is untouched, left to be used for the computation.}
                 \label{fig:protocol:certification}
@@ -663,7 +663,7 @@ size $N_{2}$ (\texttt{test}), $N_1-N_2-1$ (\texttt{discard}), and $1$ (\texttt{k
         \end{theorem}
 
 
-        As a corollary of the above, verifying a $n-$qubit state of the \CEPS~ class with precision $\delta$ and failure probability at most $\delta$ requires a total number of samples $N_1\geq N_{non-iid}$ where
+        As a corollary of the above, verifying a $n-$qubit state of the \CEPS~ class with precision $\epsilon$ and failure probability at most $\delta$ requires a total number of samples $N_1\geq N_{non-iid}$ where
         \begin{equation}
             \label{eq:verification:scaling}
         N_{non-iid} \in \tilde\O\left(\frac{n(1+t)^4}{\delta^2\epsilon^6}\right)\; .
