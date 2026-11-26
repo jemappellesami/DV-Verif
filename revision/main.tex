@@ -311,7 +311,7 @@ so that $F(\rho, \ket{\psi}) = \mathbb{E}_{P \sim \mathcal{D}_\psi}[f(P)]$.
 
 By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and averaging the outcomes, one obtains an unbiased estimator of the fidelity. To achieve additive precision $\epsilon$ and failure probability $\delta$, $N> N' \in O(d\, \epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, following Hoeffding's inequality (Lemma \ref{lemma:prelim:hoeffding}). 
 The distribution $\mathcal{D}_\psi$ can be sampled from in $O(d)$ time.
-For a stabilizer state, $\norm{\chi_\psi}_1=1$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$.
+For a stabilizer state, $\norm{\chi_\psi}_1=1$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$ \cite{DHZ20Optimal}.
 
 Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the measurement cost grows exponentially with the system size $n$ for general target states, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
 
@@ -343,6 +343,21 @@ This expression combines local fidelities into a global quantity that certifies 
     \label{eq:prelims:witness:robustness}
     1-n(1-F(\rho, \ket\psi)) \leq W(\rho, \ket\psi)\leq F(\rho, \ket\psi)\; .
 \end{equation}
+This witness extends to target states that are products of states on blocks of qubits. Indeed,
+for $\ket{\psi}=\bigotimes_{b=1}^{B}\ket{\psi_b}$, where the $B$ blocks form a partition of the $n$ qubits and each $\ket{\psi_b}$ is a pure state on block $b$, ref.~\cite{UC24efficient} defined the \emph{block fidelity witness} as
+\begin{equation}
+    \label{eq:prelims:blockwitness}
+    W(\rho, \ket{\psi})
+    \coloneqq 1 -
+    \sum_{b=1}^{B}
+    \big(1 - F(\rho_b, \ket{\psi_b})\big),
+\end{equation}
+where $\rho_b$ denotes the reduced state of $\rho$ on block $b$. The robustness property then becomes
+\begin{equation}
+    \label{eq:prelims:blockwitness:robustness}
+    1-B(1-F(\rho, \ket\psi)) \leq W(\rho, \ket\psi)\leq F(\rho, \ket\psi)\; .
+\end{equation}
+Eq.~\eqref{eq:prelims:witness} is the case where each block is a single qubit, with $B=n$.
 
 \subsubsection{Measurement back-propagation}
 \label{subsection:prelims:backprop}
