@@ -11,7 +11,7 @@
 # The build happens in a temporary folder, so it does not clash with an
 # editor compiling in revision/; only the PDF is copied back.
 set -e
-BASELINE=R1.2-done
+BASELINE=v3.1
 HERE="$(cd "$(dirname "$0")" && pwd)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
