@@ -15,15 +15,18 @@
 \usepackage{amssymb}
 \usetikzlibrary{arrows.meta, calc, fit, backgrounds}
 
-% Fonts of the submitted figures: sans text, sans Latin letters and digits
-% in math (as beamer does, in the scalable Latin Modern Sans), Greek left
-% in cmmi.
-\renewcommand{\familydefault}{\sfdefault}
-\DeclareSymbolFont{sfletters}{OT1}{lmss}{m}{sl}
-\SetSymbolFont{operators}{normal}{OT1}{lmss}{m}{n}
+% Fonts. The submitted figures use one of two looks, so each figure picks
+% its own: serif (Latin Modern, the default here) or, by calling
+% \figsansfonts in its preamble, sans text with sans Latin letters and
+% digits in math (as beamer does, in the scalable Latin Modern Sans),
+% Greek left in cmmi.
 \def\sfletter#1{\ifx#1\relax\else
   \DeclareMathSymbol{#1}{\mathalpha}{sfletters}{`#1}\expandafter\sfletter\fi}
-\sfletter abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\relax
+\newcommand{\figsansfonts}{%
+  \renewcommand{\familydefault}{\sfdefault}%
+  \DeclareSymbolFont{sfletters}{OT1}{lmss}{m}{sl}%
+  \SetSymbolFont{operators}{normal}{OT1}{lmss}{m}{n}%
+  \sfletter abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\relax}
 
 % Notation of main.tex.
 \newcommand{\ket}[1]{\left|#1\right\rangle}
