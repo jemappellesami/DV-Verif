@@ -302,26 +302,30 @@ We introduce some notations in Section\ \ref{subsection:notations}, describe the
 
 \subsection{Notations}
 \label{subsection:notations}
-Here, we introduce relevant notations for the certification protocol.
+Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\ket{\psi_i}$ by concentrating its stabilizer part in the first $s$ qubits, leaving the non-stabilizer states in the remaining $t$ qubits, with $n=s+t$ (the corresponding reordering of the qubits is a Clifford operation, which we include in $C$).
+            This allows to re-write the state as $C^\dagger\ket\Psi=\ket{\psi_S}\otimes\bigotimes_{i\in M}\ket{\psi_i}$, where $S=\{1,\dots,s\}$, $M=\{s+1,\dots,n\}$, and $\ket{\psi_S}=\bigotimes_{i\in S}\ket{\psi_i}$ is a stabilizer state on $s$ qubits\footnote{If $s=0$, we keep the block $S$, with $\ket{\psi_S}$ the trivial state and $\norm{\chi_{\psi_S}}_1=1$.}. We thus see $C^\dagger\ket\Psi$ as a product state on $1+t$ blocks, labelled by $b\in\{S\}\cup M$: the block $S$, and one block for each qubit $i\in M$. We denote by $d_b=2^{|b|}$ the dimension of block $b$, where $|b|$ is its number of qubits.
+
+            We now define some notations.
             For
             $N\in\mathbb
             N$, let $\rho^{\otimes N}$ be $N$ copies of an unknown, possibly mixed, $n$-qubit quantum state.
-            Let $\np=\sum_\qubit \norm{\chi_{\psi_\qubit}}_1\le n(1+\sqrt3)$. We define the probability distribution on qubit indices $i\in\{1,\dots,n\}$:
+            Let $\np=\sum_b 2\norm{\chi_{\psi_b}}_1/d_b=2+\sum_{i\in M}\norm{\chi_{\psi_i}}_1\le 2+t(1+\sqrt3)$. We define the probability distribution on blocks $b\in\{S\}\cup M$:
             \begin{equation}
             \label{mu_i}
-                \mu(\qubit) \coloneqq \frac{\norm{\chi_{\psi_\qubit}}_1}\np.
+                \mu(b) \coloneqq \frac{2\norm{\chi_{\psi_b}}_1}{d_b\,\np}.
             \end{equation}
-            For all $i\in\{1,\dots,n\}$, we also define the probability distributions over single-qubit Pauli operators
+            For all $b\in\{S\}\cup M$, we also define the probability distributions over Pauli operators on block $b$
             \begin{equation}
             \label{Dpsi_iP}
-                \mathcal{D}_{\psi_i}(P) \coloneqq \frac{|\chi_{\psi_i}(P)|}{\norm{\chi_{\psi_i}}_1}.
+                \mathcal{D}_{\psi_b}(P) \coloneqq \frac{|\chi_{\psi_b}(P)|}{\norm{\chi_{\psi_b}}_1}.
             \end{equation}
-             Finally, we define a joint probability distribution on qubit indices $i$ and single-qubit Pauli operators $P$ as
+            Sampling $b=S$ corresponds to a test of the stabilizer block, with probability $\mu(S)=2/\np$, that is, the weight of a single stabilizer qubit (since $\norm{\chi_{\psi_S}}_1=d_S$, see Section~\ref{subsection:prelims:DFE}), and $\mathcal{D}_{\psi_S}$ is the uniform distribution over the stabilizer group of $\ket{\psi_S}$. Sampling $b=i\in M$ corresponds to a test of the non-stabilizer qubit $i$, with a probability $\mu(i)=\norm{\chi_{\psi_i}}_1/\np$ that depends on $\ket{\psi_i}$, and $\mathcal{D}_{\psi_i}$ is a distribution over single-qubit Pauli operators.
+             Finally, we define a joint probability distribution on blocks $b$ and Pauli operators $P$ on block $b$ as
              \begin{equation}
             \label{DpsiPi}
-                \pdist(\qubit, P) \coloneqq \mu(\qubit)\pdist_{\psi_\qubit}(P)=\frac{|\chi_{\psi_i}(P)|}\np.
+                \pdist(b, P) \coloneqq \mu(b)\pdist_{\psi_b}(P)=\frac{2}{d_b}\frac{|\chi_{\psi_b}(P)|}{\np}.
             \end{equation}
-            By construction, this joint distribution can be sampled from classically by sampling the subsystem index $i$ from $\mu(i)$, and then the single-qubit Pauli operator $P$ from $\mathcal{D}_{\psi_i}(P)$.
+            By construction, this joint distribution can be sampled from classically by sampling the block $b$ from $\mu(b)$, and then the Pauli operator $P$ from $\mathcal{D}_{\psi_b}(P)$.
 
 
             %
