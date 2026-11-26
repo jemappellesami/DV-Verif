@@ -1,0 +1,433 @@
+\documentclass[11pt]{article}
+\usepackage{cite}
+
+
+\usepackage{geometry}
+\geometry{hmargin=3cm,vmargin=3cm}
+
+\usepackage{amsmath, amssymb, amsthm, mathtools, dsfont}
+\usepackage{physics}
+\usepackage[inline]{enumitem} %% customize lists
+\usepackage{setspace} %% set double space
+\usepackage{eqparbox, etoolbox} %% to customize description width
+
+
+
+%% Management of references and colors
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\hypersetup{
+  colorlinks,
+  citecolor=Violet,
+  linkcolor=Blue,
+  urlcolor=Blue
+}
+%% Specific colors and textual elements to guide note taking
+\definecolor{lightgreen}{RGB}{69, 169, 0 }
+\definecolor{importantclr}{rgb}{0.35,0.35,1}
+\definecolor{mygreen}{rgb}{0,0.55,0.22}
+\definecolor{myblue}{rgb}{0.12,0.15,0.57}
+\definecolor{myblue}{rgb}{0.17,0.22,0.87}
+\definecolor{myred}{rgb}{0.61,0,0}
+\definecolor{mypurple}{rgb}{0.31,0,0.65}
+\newcommand{\important}[1]{\textcolor{importantclr}{#1}}
+\newcommand{\concept}[1]{\textcolor{importantclr}{\textsf{\textbf{#1}}}}
+\newcommand{\todo}[1]{\textcolor{importantclr}{$\square$\; \textsf{\textbf{To do} :  #1}}}
+\newcommand{\done}[1]{\textcolor{lightgreen}{$\checkmark$\; \textsf{\textbf{Done} : } #1}}
+\newcommand{\mygreentext}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\mybluetext}[1]{\textcolor{myblue}{#1}}
+\newcommand{\myredtext}[1]{\textcolor{myred}{#1}}
+\newcommand{\mypurpletext}[1]{\textcolor{mypurple}{#1}}
+%% Title format
+\usepackage{titlesec} 
+\titleformat*{\section}{\Large\bfseries\sffamily}
+\titleformat*{\subsection}{\large\bfseries\sffamily}
+\titleformat*{\subsubsection}{\bfseries\sffamily}
+\titleformat*{\paragraph}{\bfseries\sffamily\color{importantclr}}
+
+% Environments, ...
+%% Custom enumeration for status of a reading
+\newlist{status}{description}{1}
+
+\AtBeginEnvironment{status}{%
+\renewcommand*\descriptionlabel[2][Des]{\hspace\labelsep\eqmakebox[Des][r]{\hfill\normalfont\concept{#2} \; }}\setlist[status]{leftmargin =\dimexpr\eqboxwidth{Des}+\labelsep}}%
+
+\newenvironment{parenthesis}[2][\hsize]
+{%
+     \def\FrameCommand
+     {%
+         {\color{importantclr}\vrule width 2pt}%
+         \hspace{7pt}%must no space.
+        % \fboxsep=\FrameSep\colorbox{yellow}%
+     }%
+     \MakeFramed{\hsize\linewidth\advance\hsize-\width\FrameRestore}%
+     \noindent\concept{#1} \\
+}
+{\endMakeFramed}
+
+
+\usepackage{tcolorbox}  % For the custom box
+\usepackage{xcolor}     % Extra colors
+\usepackage{lipsum}     % Sample text
+
+% Define the AI Note Box
+\newtcolorbox[auto counter, number within=section]{ainote}[1][]{%
+    colback=gray!15,    % Background color
+    colframe=gray!50,   % Border color
+    coltitle=black,     % Title color
+    fonttitle=\bfseries,% Title font
+    boxrule=0.5mm,      % Border thickness
+    arc=4mm,            % Rounded corners
+    left=5mm, right=5mm, top=3mm, bottom=3mm, % Padding
+    title={AI Note~\thetcbcounter: #1},  % Title format
+}
+
+
+
+%% Multi-column itemize (https://tex.stackexchange.com/questions/194426/split-itemize-into-multiple-columns)
+\usepackage{etoolbox,refcount}
+\usepackage{multicol}
+
+\newcounter{countitems}
+\newcounter{nextitemizecount}
+\newcommand{\setupcountitems}{%
+  \stepcounter{nextitemizecount}%
+  \setcounter{countitems}{0}%
+  \preto\item{\stepcounter{countitems}}%
+}
+\makeatletter
+\newcommand{\computecountitems}{%
+  \edef\@currentlabel{\number\c@countitems}%
+  \label{countitems@\number\numexpr\value{nextitemizecount}-1\relax}%
+}
+\newcommand{\nextitemizecount}{%
+  \getrefnumber{countitems@\number\c@nextitemizecount}%
+}
+\newcommand{\previtemizecount}{%
+  \getrefnumber{countitems@\number\numexpr\value{nextitemizecount}-1\relax}%
+}
+\makeatother    
+\newenvironment{AutoMultiColItemize}{%
+\ifnumcomp{\nextitemizecount}{>}{3}{\begin{multicols}{2}}{}%
+\setupcountitems\begin{itemize}}%
+{\end{itemize}%
+\unskip\computecountitems\ifnumcomp{\previtemizecount}{>}{3}{\end{multicols}}{}}
+
+
+%% Writing
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{result}{Result}
+\newtheorem{claim}{Claim}
+\newtheorem{game}{Game}
+\newtheorem{property}{Property}
+
+
+\title{Personal notes}
+\author{Sami AS}
+
+\newcommand{\RSP}{\mathsf{RSP}}
+\newcommand{\CZ}{\mathsf{CZ}}
+\newcommand{\BQP}{\mathsf{BQP}}
+\newcommand{\Qcirc}{\mathsf{Q-Circuit}}
+\newcommand{\Qcircyes}{\mathsf{Q-Circuit}_{\mathsf{Yes}}}
+\newcommand{\Qcircno}{\mathsf{Q-Circuit}_{\mathsf{No}}}
+\newcommand{\CNOT}{\mathsf{CNOT}}
+\renewcommand{\H}{\mathsf{H}}
+\renewcommand{\P}{\mathsf{P}}
+\newcommand{\Q}{\mathsf{Q}}
+\newcommand{\Pauli}{\mathcal{P}}
+\newcommand{\Z}{\mathsf{Z}}
+\newcommand{\C}{\mathsf{C}}
+\newcommand{\X}{\mathsf{X}}
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\id}{\mathsf{Id}}
+\newcommand{\RSPcc}{\mathsf{RSP}_{\mathsf{CC}}}
+\newcommand{\arrowalpha}{\xrightarrow{\;\alpha\;}}
+
+
+\begin{document}
+\maketitle
+\section{DV Verification}
+\subsection{Literature review}
+In this project, we do Verification of Quantum Computations with techniques inspired from State Certification, in the receive-and-measure setting and using only Pauli measurements. We can dig in state certification methods, and their usage to verify quantum computations.
+
+In state certification we are interested in the following questions: \begin{enumerate*}[label=\arabic*)]
+    \item what is the required measurement setup ?
+    \item how does the number of required samples (to build enough trust) scale in function of the state size ?
+    \item on which class of states is this protocol efficient ?
+    To enable verification of universal quantum computations, the following questions are added: 
+    \item does this class of state constitute a resource for UQC ?
+    \item is this protocol sound in the adversarial setting ?
+    Lastly, for near-term devices:
+    \item is this protocol suited for fault-tolerance implementation ?
+\end{enumerate*}
+
+
+\paragraph{Verifying states relevant for Universal Quantum Computations, in adversarial scenario.} Verification of universal quantum computations is inherently a setting in which the server is arbitrarily malicious. No assumption on the received states can be made, in particular the i.i.d one. Protocols might thus differ from the typical state certification ones. On the other hand, the problem is different, as we do not aim to provide a method to verify all quantum states. We are free to restrict ourselves to classes of states, at the condition that they constitute a resource for universal quantum computation. Here, we explore such classes. 
+\begin{itemize}
+    % \item Stabilizer states. They benefit from certification procedures in a constant number of samples from Direct Fidelity Estimation \cite{FL11direct,FOS24optimal}, including in adversarial setting.
+    \item Graph states. Measurement-Based Quantum Computing uses graph states as computational resource, and adaptive planar measurements to perform any quantum computation.
+     They are a particular kind of stabilizer states. They have a verification method in a constant number of samples. They have been subject to a long study \cite{HM15verifiable,ZH19efficient,TMMM18resource,TM17verification}. Throughout this study, the relevant metrics to evaluate the protocols is the scaling of the number of required samples in function of the number of qubits $n$, the fidelity error $\varepsilon$ with respect to the target state, and the failure probability $\delta$. See \cite[Fig.2, Supplementary note 3]{LZH23robust} for a vast review of graph state verification, including the adversarial setting. The state-of-the-art protocol is \cite{LZH23robust}, reaches an optimal scaling in $n, \varepsilon, \delta$, and proves some noise-robustness.\\
+    
+    The big advantage of verification of quantum computations through graph state certification is that it is very efficient in the number of samples, and that the verification procedure requires only Pauli measurements. However, in order to perform universal quantum computations, the computation phase inevitably requires to perform non-Pauli measurements, like measurements in the $\T-$basis.
+
+    \item Hypergraph states. They also benefit from a particular interest as a computational resource, and hence from a vast study. Indeed, their practical interest compared to graph state comes from the fact that they allow universal quantum computation through the use of Pauli measurements only. Verification procedures in the same setup also exist, but the best scaling that has been achieved is in $O(n)$ \cite{ZH18efficient}. Furthermore, hypergraph state preparation involves multi-controlled-$\Z$ gates, which are non-Clifford, hence making this model of computation less suitable for Fault-Tolerant Quantum Computations than the graph version, where $\CZ$ gates are Clifford.
+\end{itemize}
+
+In short, in the receive-and-measure setting for Verifying Quantum Computations, graph states and hypergraph states have been the main targets due to their relation to universal QC in MBQC, preferably through single-qubit Pauli measurements. They have received the most interest. In answer to this subdivision, in the present work we present a class that allows to reach the best of both worlds. We introduce the class of \concept{Magic-Clifford states}, which are states of the form
+\[
+    C\left(
+        \bigotimes_{i=1}^n \ket{\psi_i}
+    \right)    
+\]
+where $C$ is an arbitrary $n-$qubit Clifford circuit, and $\ket{\psi_i}$ are arbitrary single-qubit states, possibly magic states. Computing using this class is known as Magic-State Injection, and together with adaptive single-qubit Pauli measurements, this model is known to be universal for Quantum Computations  \cite{BK04universal}.
+In particular, when the Clifford circuit consists in only $\CZ$ gates, we call the restricted class \concept{Magic-Graph states}. It is a variant of the traditional Measurement-Based Quantum Computation model that uses only Pauli measurements \cite{SDKO07direct}. 
+
+The protocol that we propose uses single-qubit Pauli measurements only, both for the verification and computation phases,  and relies on a Clifford ciruit. Those two properties make it particularly suitable for FTQC. Furthermore, the class of Magic-Graph states allows an optimization of the protocol, reducing the number of samples exploiting the underlying graph structure.\\
+
+The classification can be depicted on the following diagram and the following table. In summary, we can state the following comparison between the classes.
+Graph states need non-Pauli measurements to become useful for universal QC. Hypergraph states and Magic graph states require only Pauli measurements, but among them, only Magic graph states rely on only Clifford gates to construct the resource state. We give a protocol to certify efficiently Magic-Clifford states, including Magic graph states, using only Pauli measurements.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|cc|c}
+        & $C$ & $\ket{\psi_i}$& measurements\\
+        \hline
+        Magic Clifford & $\in Cl(n)$ & stabilizer $+$ magic states&  Pauli\\
+        Stabilizer & $\in Cl(n)$ & stabilizer states & Non-Pauli\\
+        \hline
+        Graph states & $\prod_{i,j\in E} \CZ_{i,j}$  & stabilizer states & Non-Pauli \\
+        Magic graph states & $\prod_{i,j\in E} \CZ_{i,j}$  & stabilizer $+$ magic states & Pauli \\
+        Hypergraph states & $\prod_{S \in E} \CZ_{S}$  & stabilizer $+$ magic states & Pauli\\
+    \end{tabular}
+    \caption{Description of the different considered classes: types of gates and states required to build the resource state, and types of measurements to achieve universal quantum computation.}
+\end{table}
+\paragraph{Review on state certification in general.}
+The literature on quantum state certification is vast, but only a few results use \emph{local} measurements to enable the estimation of meaningful quantities about a received quantum state using a small number of samples. The most notable among them are \cite{HPS24certifying}, followed by \cite{GHO25few,LZ25universal}.
+
+\begin{itemize}
+    \item \cite{HPS24certifying}: proposes a procedure compatible with single-qubit \emph{Pauli} measurements (in contrast to the previous ones). The method is efficient only if the \emph{mixing time} associated with the state is polynomial in its size. Although this is not provable for all states, it is the first work to propose a Pauli-measurement--based procedure that can certify a large class of quantum states, including non-stabilizer and highly entangled ones.
+    \item \cite{GHO25few}: uses local projective measurements (non-Pauli) and requires $O(n)$ samples.
+    \item \cite{LZ25universal}: local projective measurements as well, and the sample complexity depends on the \emph{spectral gap $\nu$ of the verification operator} $\Omega$, $\nu(\Omega)$, that is applied on the different copies. Because this certification technique relies on hypothesis testing on the different copies, \emph{aka} evaluating $\Omega$ and outputting a boolean value on each copy, the framework of \cite{ZH19efficient} can  be leveraged to lift this protocol to the adversarial, non-i.i.d setting, with at most a constant overhead in the sample complexity.
+    Only numerical simulations suggest that most of the cases, a constant number of samples is enough.
+    In other terms, it looks like \cite{HPS24certifying} in the claims, but uses non-Pauli measurements ; on the other hand, it is valid in the adversarial setting as well.
+    \item Comparing \cite{HPS24certifying} and \cite{LZ25universal}. \cite{HPS24certifying}'s sample complexity depends on the target state, because the verification procedure is fixed and involves sampling local measurements randomly. \cite{LZ25universal}'s sample complexity depends on the verification procedure (the spectral gap of the verification operator).
+\end{itemize}
+Traditional state certification methods imply:
+\begin{itemize}
+    \item Direct Fidelity Estimation. From \cite{FL11direct}, scales with the dimension, and \cite{FOS24optimal} introduces tight bounds for this approach.
+    \item Fidelity witnesses \cite{CGKM21efficient}: combine multiple single-qubit fidelities into a witness of the global fidelity.
+\end{itemize}
+
+\paragraph{Review on removing the i.i.d.\ assumption.}
+\begin{itemize}
+    \item \cite{ZH19efficient}: introduces a general reduction that transforms state certification into state \emph{verification}, which can often be made efficient with at most a constant overhead in sample complexity. However, it applies only to verification procedures that can be framed as \emph{binary hypothesis tests}, i.e., producing a pass/fail outcome for each copy. It does not apply to fidelity-estimation--based approaches, where measurement outcomes from many copies are aggregated to produce a single fidelity estimate. It could be applied for graph state verification techniques, nevertheless, to enable verification with constant sample complexity \cite{LZH23robust}, or other methods to certify states based on binary hypothesis testing such as \cite{LZ25universal}.
+    \item \cite{FKMO24learning}: provides concentration bounds for properties of the received state in the non-i.i.d.\ setting. These bounds may apply to fidelity estimators as well, though this connection remains to be investigated in more detail.
+\end{itemize}
+
+\subsection{Quantum state certification with few Pauli measurements}
+\subsubsection{Preliminaries}
+\paragraph{Relevant notations}
+\begin{itemize}
+    \item $W(\P)$, $\P\in\Pauli_n$: support of $\P$
+    \item If $\P$ is a Pauli operator on $n$ qubits, $\P_k$ denote the single-qubit Pauli at the $k-$th index.
+\end{itemize}
+
+\paragraph{Brief overview of Direct Fidelity Estimation}
+\begin{itemize}
+    \item Target state $\ket\psi$, with density matrix $\rho =\ketbra \psi$: we receive $\sigma$, we want to produce an estimate of $F(\ket\psi, \sigma) = \Tr[\rho\sigma]$ . Indeed, when one of the states is a pure state, the fidelity between the states is equivalent to their overlap.
+    \item Direct Fidelity Estimation builds an estimator for $F(\ket\psi, \sigma)$ from outcomes of measurements produced on $N$ requested copies of the state $\sigma$ from the Prover.
+    \item 
+    Under the assumption that the states produced by the prover are \emph{independent and identically distributed} (i.i.d. assumption), we can assume that the prover produces a state $\sigma = \bigotimes_{i=1}^n \sigma^{(i)}$, so the measurement outcomes on different copies are independent from one another.
+    \end{itemize}
+    An optimal protocol is the following \cite{FOS24optimal}, for a state $\ket\psi \in \mathcal H^{\otimes n}$:
+    \begin{enumerate}
+        \item \concept{Setup phase.} Define $N\in \mathbb N$, and compute the probability distribution on $\Pauli_n$:
+        \begin{equation}
+            \mathcal D(\P) = \dfrac{\abs{\Tr[\rho\P]}}{\sum_{\Q\in\Pauli_n}\abs{\Tr[\rho\Q]}}
+        \end{equation}
+        \item \concept{Measurement phase.} For each $i\leq N$, sample $\P^{(i)}$ from $\mathcal D$, ask the Prover for a state, and measure the binary Pauli observable $\P^{(i)}$ on the state, yielding in the outcome $y^{(i)}\in\{-1, +1\}$.
+        \item \concept{Post-processing phase.} Compute the estimator 
+        \begin{equation}
+            \bar X = \dfrac{1}{N} \sum_{i=1}^N
+            y^{(i)}
+            \;
+            \times
+            \mathrm{sgn}\left( 
+                \Tr[\rho\P^{(i)}]
+             \right)
+             \times
+             \sum_{\Q\in\Pauli_n}\abs{\Tr[\rho\Q]}
+        \end{equation}
+        and set it as output of fidelity estimate for $F(\rho, \sigma)$ for the last state $\sigma$ sent by the Prover.
+        The security of the protocol, for an i.i.d prover, is stated in the following theorem.
+    \end{enumerate}
+
+    \begin{theorem}[Security of Direct Fidelity Estimation \cite{FOS24optimal}]
+        \label{thm:dfe_correctness}
+        Let $\rho = \ketbra{\psi}$ be an $n$-qubit pure target state, and let $\sigma$ denote the state produced by the prover. 
+        Assume that the prover provides $N$ independent and identically distributed copies of $\sigma$, i.e. the joint state is $\sigma^{\otimes N}$. 
+        Let $\bar X$ be the estimator defined above, obtained by performing the Direct Fidelity Estimation protocol with $N$ samples.
+        
+        Then, for any accuracy parameter $\varepsilon > 0$ and failure probability $\delta \in (0,1)$, 
+        if the number of samples satisfies
+        \begin{equation}
+            N \geq \frac{d}{\varepsilon^2} \log\!\left(\frac{1}{\delta}\right),
+        \end{equation}
+        where $d$ is the dimension of the Hilbert space of $\rho$, the following guarantee holds:
+        \begin{equation}
+            \Pr\!\left[
+                \big| \bar X - F(\rho,\sigma) \big| \le \varepsilon
+            \right]
+            \ge 1 - \delta.
+        \end{equation}
+        In particular, $\bar X$ is an unbiased estimator of the fidelity $F(\rho,\sigma) = \Tr[\rho\sigma]$, and concentrates around its expectation with variance $\mathcal O(d/N)$.
+        \end{theorem}
+        
+\paragraph{Brief overview of Robust fidelity witnesses.} [TODO]
+\paragraph{Measurement back-propagation.}
+\begin{itemize}
+    \item 
+    Let $\P\in\Pauli_n$ be a $n-$qubit Pauli observable. Measuring it yields in the binary output $y\in\{+1, -1\}$. Note that the observable can be measured qubit by qubit, on its support $W(\P)$. Indeed, for each $k\in W(\P)$, measure the single-qubit Pauli $\P_k$, get binary outcome $y_k$. Then, $y = \prod_{k\in W(\P)}y_k$.
+    \item Let $\C$ be a $n-$qubit operator from the Clifford group. Then, by definition, for any $\P\in\Pauli_n$ we have $\C^\dagger\P\C = \tilde \P\in \Pauli_n$. \emph{Back-propagating} the observable $\P$ through $\C$ is the action of measuring the observable $\C^\dagger\P\C$ instead of $\P$, to simulate the uncomputation of $\C^\dagger$ on the target state before measurement. Indeed, let $\rho$ be a $n-$qubit quantum state. Measuring the observable $\P$ on $\C\rho\C^\dagger$ is the same as measuring $\C^\dagger \P\C$ on $\rho$, per circularity of the trace operation: $\Tr[\C\rho\C^\dagger\P] = \mathrm{Tr}[\rho \;{\C^\dagger\P\C}] = \mathrm{Tr}[\rho\tilde \P]$. Therefore, we measure the observable $\tilde \P$ qubit by qubit, and average the outcomes. We uncomputed $\C$ without touching the target state, just by modifying the observable to measure, from Pauli to Pauli, a classical evolution: that is called \emph{back-propagation of observable}.
+\end{itemize}
+
+\subsubsection{Main protocol}
+Let the target Magic-Clifford state be $\ket\Psi = \C(\bigotimes_{i=1}^n \ket{\psi_i})$. Let $\rho = \ketbra \Psi$, and let $\rho_i = \Tr_{\backslash i}[\rho]$. The idea is to uncompute $\C$ on the received state and estimate the fidelity of the $i-$th qubit to $\ket{\psi_i}$. Then, the robust fidelity witness technique explains how to combine the single-qubit fidelities into a robust global fidelity witness. For the $i-$th qubit, the protocol to estimate the single-qubit fidelity $F(\sigma_i, \rho_i)$, is
+\begin{enumerate}
+    \item \concept{Setup phase.} Define $N\in \mathbb N$, and compute the probability distribution on $\Pauli_1$:
+        \begin{equation}
+            \mathcal D_i(\P) = \dfrac{\abs{\Tr[\ketbra{\psi_i}\P]}}{\sum_{\Q\in\Pauli_1}\abs{\Tr[\ketbra{\psi_i}\Q]}}
+        \end{equation}
+        \item \concept{Measurement phase.} For each $i\leq N$, sample $\P^{(i)}$ from $\mathcal D$, ask the Prover for a state, and measure the binary Pauli observable $\C^\dagger\P^{(i)}\C$ by back-propagation as indicated above, yielding in the outcome $y^{(i)}\in\{-1, +1\}$.
+        \item \concept{Post-processing phase.} Compute the estimator 
+        \begin{equation}
+            \bar X = \dfrac{1}{N} \sum_{i=1}^N
+            y^{(i)}
+            \;
+            \times
+            \mathrm{sgn}\left( 
+                \Tr[\rho\P^{(i)}]
+             \right)
+             \times
+             \sum_{\Q\in\Pauli_n}\abs{\Tr[\rho\Q]}
+        \end{equation}
+        and set it as output of fidelity estimate for $F(\rho, \sigma)$ for the last state $\sigma$ sent by the Prover.
+\end{enumerate}
+When $N \geq \frac{2}{\varepsilon^{2}}\log(1/\delta)$, we have a guarantee that the estimate is $\varepsilon-$close to $F(\sigma_i, \rho_i)$ with probability $1-\delta$.
+
+\subsection{Optimization for the case of magic graph states}
+\subsection{Verification of universal quantum computations with few Pauli measurements}
+Here, the aim is different, we can afford a weaker guarantee: we do not seek a fidelity estimation, rather the correctness of a computation performed on a state that we wish to be close to the target one. We hereby define a protocol that looks similar, but that implements a different operation.
+The pre-requisites for this protocol are the definitions of the probability distributions, for $i\in\{1, ..., n\}$ and $\P\in\Pauli_1$:
+\begin{equation}
+    \mu(i) = \dfrac{\|\chi_{\psi_i}\|_1}{n'} \quad \text{and} \quad \mathcal D_i(\P) = \dfrac{|\chi_{\psi_i}(\P)|}{\|\chi_{\psi_i}\|_1}\; ,\qquad \text{where}\; n' = \sum_{j=1}^n \|\chi_{\psi_j}\|_1\; .
+\end{equation}
+
+\paragraph{Protocol.}
+Choose $\delta, \epsilon\in[0,1]$, and the number of total rounds $N$ as well as the number of required number acceptances $K$ according to theorem \ref{theorem: security iid}.
+Then,
+\begin{itemize}
+    \item
+    For $j\leq N$:
+    \begin{itemize}
+        \item 
+        sample $i\sim \mu$,
+        \item 
+        sample $\P \sim \mathcal D_i$,
+        \item 
+        measure $\C^\dagger\P\C$ via back-propagation, yielding outcome $y^{(j)}$.
+        \item 
+        Compute $x^{(j)}=\mathrm{sgn}(\chi_{\psi_i}(\P))\times y^{(j)}$, and store the boolean value  $X^{(j)}=(1+x^{(j)})/2$.
+    \end{itemize}
+    \item Compute $\bar X = \frac{1}{N}\sum_{j=1}^N X^{(j)} \in [0, 1]$.
+    \item Output $\mathsf{Accept}$ if $\bar X > K$.
+\end{itemize}
+We can interpret the above protocol as $N$ rounds of test according to the following verification operator, which can be related to the target state by construction:
+\begin{equation}
+    \hat\Omega = \mathbb E_{
+    \stackrel{i\sim\mu}{\P\sim\mathcal D_i}    
+    }[\mathrm{sgn}(\chi_{\psi_i}(\P)) \; \P] = \dfrac{1}{n'}\sum_{i=1}^n \ketbra{\psi_i}\otimes \mathds{1}_{\backslash i}
+\end{equation}
+In particular, when the prover sends a state $\sigma$ on $n$ qubits, the probability that it passes a test corresponds to $\Tr[\hat\Omega\sigma]$.
+
+\begin{theorem}[Security of the protocol; i.i.d. prover]
+    \label{theorem: security iid}
+    Let $\epsilon,\delta\in[0,1]$ and define
+    \[
+    p_\psi:=\frac{n}{n'},\qquad p_{\mathrm{bad}}:=\frac{n-\epsilon}{n'},\qquad 
+    \kappa:=\frac{p_\psi+p_{\mathrm{bad}}}{2}=\frac{2n-\epsilon}{2n'}.
+    \]
+    Run $N$ rounds and \emph{accept iff} the number of passes is at least $K:=\lceil N\kappa\rceil$.
+    If the prover’s states are i.i.d. across rounds, then for
+    \[
+    N \;\ge\; \frac{2\,n'^2}{\epsilon^2}\,\ln\frac{1}{\delta}
+    \]
+    the protocol satisfies:
+    \begin{itemize}
+    \item \emph{Completeness:} if the prover sends $\ket\psi$ every round, the verifier accepts with probability at least $1-\delta$.
+    \item \emph{Soundness (i.i.d.):} if the prover sends a state $\sigma$ with $F(\sigma,\ket\psi)\le 1-\epsilon$ every round, the verifier accepts with probability at most $\delta$.
+    \end{itemize}
+    \end{theorem}
+    
+\begin{proof}
+    To show both completeness and soundness straightforwardly, let us first evaluate the probabilities on a single round for \begin{enumerate*}[label=\roman*)]
+        \item the correct state $\ket\psi$ to pass the test -- that we denote $p_\psi$
+        \item a bad state $\sigma$ with $F(\sigma, \ket\psi)\leq 1-\epsilon$ to pass the test -- that we denote $p_{bad}$.
+    \end{enumerate*}
+    For the correct state we have by construction:
+    \begin{equation}
+        p_{\psi}
+        =
+        \Tr[\hat \Omega \ketbra \psi] = \Tr[
+            \left( \dfrac{1}{n'}
+            \sum_{i=1}^n
+            \ketbra{\psi_i} \right)
+            \;
+            \ketbra{\psi}
+        ]
+        =
+        \dfrac{n}{n'}\; .
+    \end{equation}
+    On the other hand, for a bad state $\epsilon-$far from $\ket\psi$, we have
+    \begin{align}
+        p_{bad} &= \Tr[\hat\Omega \sigma]
+        = \dfrac{1}{n'}\Tr[\left( \sum_{i=1}^n \ketbra{\psi_i} \right)\sigma]
+        = \dfrac{1}{n'}
+        \left( \sum_{i=1}^n F(\sigma_i, \ket{\psi_i}) \right)
+        \leq 
+        \dfrac{n-\epsilon}{n'}\; .
+    \end{align}
+    Thus, let us define the gap $\Delta = p_\psi-p_{bad}$ and the threshold as $\kappa= (p_\psi+p_{bad})/2$. 
+    Let $\bar X$ be the random variable resulting in the outcome of executing the protocol on the received states by the prover (in the honest case on $\ket\psi$, and $\sigma$ in the malicious case).
+    \begin{itemize}
+        \item Honest case: we can bound the probability of not succeeding more than $K=\lceil N\kappa\rceil$ tests using Hoeffding's theorem, with
+        \begin{equation}
+            \Pr[\bar X \leq K] = \Pr[\bar X - p_\psi \leq -\dfrac{\Delta}{2}] \leq \exp{
+                -2N (\dfrac{\Delta}{2})^2
+            }
+            =
+            \exp{-N\Delta^2/2}
+        \end{equation}
+        \item Malicious case: we can bound the probability of accepting more than $K=\lceil N\kappa\rceil$ similarly, yielding in
+        \begin{equation}
+            \Pr[\bar X \geq K] = \Pr[\bar X - p_{bad} \geq -\dfrac{\Delta}{2}] \leq \exp{
+                -2N (\dfrac{\Delta}{2})^2
+            }
+            =
+            \exp{-N\Delta^2/2}
+        \end{equation}
+    \end{itemize}
+    Altogether, we see that by setting $\delta$ such that $\delta \leq \exp{-N\Delta^2/2}$, we need to have $N\geq (2n^{\prime 2}/\epsilon^2 \; \log(1/\delta))$ to satisfy both completeness and correctness.
+
+
+\end{proof}
+\newpage
+\bibliography{bibliography}
+\bibliographystyle{alpha}
+
+
+
+\end{document}

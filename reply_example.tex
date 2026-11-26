@@ -1,0 +1,535 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath,amssymb,amstext,braket}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{bm}
+%\usepackage{bbold,braket}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\usepackage{filecontents}
+
+\begin{filecontents}{jobname.bib}
+@article{Beverland_2020,
+   title={Lower bounds on the non-Clifford resources for quantum computations},
+   volume={5},
+   ISSN={2058-9565},
+   url={http://dx.doi.org/10.1088/2058-9565/ab8963},
+   DOI={10.1088/2058-9565/ab8963},
+   number={3},
+   journal={Quantum Science and Technology},
+   publisher={IOP Publishing},
+   author={Beverland, Michael and Campbell, Earl and Howard, Mark and Kliuchnikov, Vadym},
+   year={2020},
+   month=jun, pages={035009} }
+   @article{Mele_2025,
+   title={Learning quantum states of continuous-variable systems},
+   volume={21},
+   ISSN={1745-2481},
+   url={http://dx.doi.org/10.1038/s41567-025-03086-2},
+   DOI={10.1038/s41567-025-03086-2},
+   number={12},
+   journal={Nature Physics},
+   publisher={Springer Science and Business Media LLC},
+   author={Mele, Francesco A. and Mele, Antonio A. and Bittel, Lennart and Eisert, Jens and Giovannetti, Vittorio and Lami, Ludovico and Leone, Lorenzo and Oliviero, Salvatore F. E.},
+   year={2025},
+   month=nov, pages={2002–2008} }
+\end{filecontents}
+\addbibresource{jobname.bib}
+%\usepackage[numbers,sort&compress]{natbib}
+\usepackage{txfonts}
+%\usepackage{comment}
+\usepackage{dcolumn}
+\usepackage{hyperref}
+\usepackage[normalem]{ulem}
+\usepackage{physics}
+\usepackage{dsfont}
+\usepackage{breakurl}
+\usepackage[svgnames]{xcolor}
+\usepackage[english]{babel}
+\usepackage[a4paper,left=2 cm, right=2 cm,top=2.5 cm, bottom=2.5 cm]{geometry} 
+\usepackage{mathtools}
+\usepackage{enumitem}
+%\usepackage{amsthm}
+\usepackage{comment}
+\definecolor{darkGreen}{RGB}{0,110,0}
+\definecolor{darkBlue}{RGB}{0,0,130}
+\usepackage{float}
+
+\newcommand{\rtext}[1]{{\color{red} #1} }
+\newcommand{\btext}[1]{{\color{darkBlue} #1}}
+\newcommand{\ctext}[1]{{\color{Cyan} #1}}
+\newcommand{\otext}[1]{{\color{Orange} #1}}
+\newcommand{\gtext}[1]{{\color{Green} #1 }}
+\newcommand{\ptext}[1]{{\color{Purple} #1}}
+\newcommand{\mtext}[1]{{\color{Magenta} #1}}
+
+\definecolor{forestgreen}{rgb}{0.1, 0.6, 0.2}
+
+\newcommand{\mdm}[1]{\textcolor{blue}{#1}}
+\newcommand{\gc}[1]{\textcolor{forestgreen}{GC: #1}}
+
+\newenvironment{Referee}[1]
+{\noindent {\bf Comment #1:} \begin{quote} }
+{\end{quote}\vspace{0 cm}}
+
+\newenvironment{Minor}[1]
+{\noindent {\bf Point #1:} \begin{quote}}
+{\end{quote}\vspace{0 cm}}
+
+\newenvironment{Comment}[0]
+{\noindent {\bf General Comment:} \begin{quote}}
+{\end{quote}\vspace{0 cm}}
+
+\newenvironment{Response}
+{\noindent \color{RawSienna}{\bf Response:} }
+{\vspace{0.4 cm}}
+\newcommand{\st}[1]{\ket{#1}\!\!\bra{#1}}
+%\newcommand{\tr}[0]{\operatorname{Tr}}
+\def\bbbone{{\mathchoice {\rm 1\mskip-4mu l} {\rm 1\mskip-4mu l}
+{\rm 1\mskip-4.5mu l} {\rm 1\mskip-5mu l}}}
+\newcommand{\spec}[0]{\operatorname{spec}}
+\def\doi{http://dx.doi.org/}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bec}{\begin{equation*}}
+\newcommand{\eec}{\end{equation*}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\la}{\lambda}
+\newcommand{\up}{\uparrow}
+\newcommand{\down}{\downarrow}
+\newcommand{\neel}{|\cdots\up\down\up\down\cdots\rangle}
+\newcommand{\aneel}{|\cdots\down\up\down\up\cdots\rangle}
+\newcommand{\ferro}{|\cdots\up\up\up\up\cdots\rangle}
+\def\nn{\nonumber\\}
+\def\fr#1{(\ref{#1})}
+\def\pp{\upsilon}
+\def\nn{\mathfrak{n}}
+\def\sgn{\operatorname{sgn}}    
+\newcommand\h{{\cal H}}
+%\newcommand{\qed}{$\hfill \Box$}
+\newcommand{\ra}{{\rightarrow}}
+%\newcommand{\rank}[1]{{\operatorname{rank}({#1})}}
+\newcommand{\ba}{\begin{eqnarray}}
+\newcommand{\bigzero}{\mbox{\normalfont\Large\bfseries 0}}
+\newcommand{\ea}{\end{eqnarray}}
+%\newcommand\tr{{\operatorname{tr}}}
+\DeclareMathOperator{\card}{card}
+\newcommand\stab{{\operatorname{STAB}}}
+\newcommand{\otoc}[0]{\text{OTOC}}
+\newcommand{\p}[0]{\prime}
+\newcommand{\haar}[0]{\mathcal U(d)}
+
+%%%%%
+%%% OTHER COMMANDS
+\newcommand{\partder}[2]{\frac{\partial #1}{\partial #2}}
+%\newcommand{\ket}[1]{\left | {#1} \right \rangle }
+\newcommand{\refstate}[0]{\textbf{0}}
+%\newcommand{\vacket}[0]{\ket{\text{Re}fstate}}
+%\newcommand{\vacbra}[0]{\bra{\text{Re}fstate}}
+%\newcommand{\bra}[1]{\left \langle {#1} \right | }
+%\newcommand{\ketbra}[1]{\ket{#1} \bra{#1}}
+\newcommand{\innerprod}[2]{\left \langle {{#1} | {#2}} \right \rangle}
+\newcommand{\uket}[0]{\ket{\uparrow}}
+\newcommand{\dket}[0]{\ket{\downarrow}}
+\newcommand{\ubra}[0]{\bra{\uparrow}}
+\newcommand{\dbra}[0]{\bra{\downarrow}}
+\newcommand{\hadj}[1]{{#1}^{\dagger}}
+\newcommand{\de}[0]{{\operatorname{d}}}
+\newcommand{\conj}[1]{{#1}^{\ast}}
+%\newcommand{\cosine}[1]{\mathrm{cos}\left ( {#1}\right )}
+%\newcommand{\sine}[1]{\mathrm{sin}\left ( {#1}\right )}
+\newcommand{\cosinep}[2]{\mathrm{cos}^{#2}\left ( {#1}\right )}
+\newcommand{\sinep}[2]{\mathrm{sin}^{#2}\left ( {#1}\right )}
+\newcommand{\expf}[1]{\mathrm{exp}\left ( {#1}\right )}
+%\newcommand{\determinant}[1]{\mathrm{det}\left ( {#1}\right )}
+%\newcommand{\trace}[1]{\mathrm{Tr}\left ( {#1}\right )}
+\newcommand{\parent}[1]{\left( {#1} \right)}
+\newcommand{\aver}[1]{ \left\langle  {#1}  \right\rangle }
+\newcommand{\absval}[1]{\left| {#1} \right|}
+\newcommand{\sset}[1]{\left\lbrace {#1} \right\rbrace }
+\newcommand{\iden}[1]{\mathbf{1}_{#1}}
+\newcommand{\ssum}[2]{\displaystyle\sum\limits_{#1}^{#2}}
+\newcommand{\pprod}[2]{\displaystyle\prod\limits_{#1}^{#2}}
+\newcommand{\commut}[2]{\left[ {#1} , {#2} \right]}
+\newcommand{\acommut}[2]{\left\lbrace  {#1} , {#2} \right\rbrace }
+\newcommand{\id}{\mathds{1}}
+\newcommand{\spann}[1]{\mathrm{span} \parent{{#1}}}
+\newcommand{\ttrace}[2]{\mathrm{Tr}_{#1} \parent{#2}}
+\newcommand{\logt}[1]{\mathrm{log_2} \parent{{#1}}}
+\newcommand{\hilbert}[1]{\mathcal{H}_{{#1}}}
+\newcommand{\genus}{g}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\gsfun}[0]{\eta_{GS}}
+\newcommand{\vvec}[1]{\textbf{{#1}}}
+\newcommand{\sig}[2]{\sigma_{#1}^{#2}}
+\newcommand{\epr}[0]{\operatorname{EPR}}
+\newcommand{\sym}{\text{sym}}
+\newcommand{\pur}{\operatorname{Pur}}
+\newcommand{\kerf}{\operatorname{ker}}
+\newcommand{\cnot}{\operatorname{CNOT}}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+
+\title{The symplectic rank of non-Gaussian quantum states}
+
+\date{}
+\maketitle
+
+
+\section{Reply to the editor}
+
+Dear Editor,
+
+\medskip
+
+We are pleased to resubmit our manuscript, \emph{The symplectic rank of non-Gaussian quantum states} to PRX Quantum and we are grateful to the referees for their thoughtful and constructive feedback, which has helped strengthen the work.
+
+\medskip
+
+Referee A provided a detailed and generally positive assessment, highlighting the value of the connection between compressibility and symplectic rank and the irreversibility results for non-Gaussianity under Gaussian operations. They asked for clarifications on the computability of the mixed-state definition, the coarse-grained nature of the measure, the interpretation of some operational claims, and the overall structure of the manuscript. 
+
+Referee B was exceptionally positive, recommending publication after minor clarifications concerning the practicality of the mixed-state definition, the scope of the “strictly stronger” comparison to other measures, and the applicability of the witnessing protocol. 
+
+Referee C also recommended publication, requesting several technical clarifications, including distinctions from other non-Gaussianity measures, the relation to stellar-rank bounds, the choice of heterodyne versus homodyne measurements, consistency of energy constraints, and justification of scaling assumptions.
+
+\medskip
+
+We have carefully addressed all comments. The manuscript now contains a clearer explanation that the efficient computability of the symplectic rank applies primarily to pure states, together with a discussion of the challenges and opportunities of extending this to mixed states. We refined the discussion of the operational meaning of our simulation and tomography results and provided all requested technical clarifications, including those regarding the witnessing protocol, measurement choices, energy constraints, and scaling assumptions. We also clarified that the coarse-grained nature of the symplectic rank is a feature rather than a limitation that enables the derivation of strong and universal no-go theorems.
+
+\medskip
+
+We believe the revised manuscript meets the acceptance criteria of PRX Quantum. The connection between compressibility and symplectic rank provides a new operational framework for understanding non-Gaussianity and represents a conceptual advance in bosonic resource theory. The irreversibility results and the limitations of post-selected Gaussian protocols provide unexpected and broad insights with direct relevance to continuous-variable quantum information, simulation, and optics. Two referees explicitly recommended publication, while the third acknowledged the novelty and significance of the main results.
+
+\medskip
+
+We thank the referees again for their constructive engagement and believe that the revised version satisfactorily addresses all concerns. We appreciate your consideration of our resubmission.
+
+
+
+\section{Reply to Referee A}
+
+We thank the referee for their careful reading of our manuscript and for recognizing the strong conceptual contributions of our work, particularly the connection between compressibility and the symplectic rank, and the powerful no-go results regarding the irreversibility of non-Gaussianity under Gaussian operations. We are pleased that the referee found these results to provide ``novel insights into non-Gaussianity.''
+
+We appreciate the referee's thoughtful critique regarding the presentation and scope of our claims. We agree that several aspects of the manuscript could benefit from clarification and have substantially revised the manuscript to address the concerns raised. In particular:
+
+
+We provide detailed point-by-point responses to each of the referees' comments. 
+\newline
+
+
+
+\iffalse
+\newline
+
+
+\begin{Comment}
+The paper proposes to use the symplectic rank to quantify non-Gaussianity in bosonic systems. The symplectic rank of a quantum state is the number of symplectic eigenvalues of the covariance matrix that are bigger than 1. The symplectic rank has already been used for Gaussian quantum states, but this work extends its usage to arbitrary states and shows that it is a monotone for the resource theory of non-Gaussianity. Importantly, the authors show that the symplectic rank is the minimum number of modes into which a quantum state can be compressed using Gaussian operations, providing an operational interpretation of this monotone. Furthermore, the authors argue that the symplectic rank bounds the non-Gaussian gate complexity of state preparation, the sample complexity of quantum tomography, and the computational complexity of bosonic circuits. Using the symplectic rank, the authors show the impossibility of dilution of non-Gaussianity using post-selected Gaussian protocols and the irreversibility of the resource theory of non-Gaussianity using post-selected Gaussian protocols. At the end, they extend the monotone to the approximate setting and show robustness to small perturbations.
+
+This paper deals with the important problem of measuring non-Gaussianity, which is one of the most important resources for bosonic quantum computation. The authors propose to assess and compare the non-classical capabilities of bosonic quantum computers using the symplectic rank as the main application. However, the symplectic rank has two major drawbacks that may hinder it usage for this task. The first one is that the symplectic rank is only easily accessible if the state is guaranteed to be pure. It is known that a mixed Gaussian state and any non-Gaussian state can have the same covariance matrix. The authors provide an extension to mixed states, but this seems not to be computable. The second problem is that the symplectic rank is nearly as coarse-grained as it gets. It basically counts the number of modes that are needed for a certain non-Gaussian pure state. Thus, any more fine comparison between states and conversion bounds, which are the bread and butter of resource theories, are heavily restricted and do not provide much insight.
+
+The strengths of this paper are the strong conceptual results. The connection between compressibility and the symplectic rank is very powerful. The symplectic rank has very strong monotonicity properties, which allow one to provide strong no-go results. This is why I think the symplectic rank is less of a non-Gaussian monotone that is used practically, such as the Wigner negativity/stellar rank (which seems what the authors try to position it as), and more of a theoretical tool. The authors show the strength of the symplectic rank as a theoretical tool by proving two very interesting results. Namely, the authors show that it is impossible to spread non-Gaussianity when using Gaussian protocols, even when post-selection is allowed. The even stronger result they obtain is that the resource theory of non-Gaussianity with post-selected Gaussian protocols is irreversible.
+
+I think the paper is well written; however, the structure makes it hard to digest the results. The paper could benefit from restructuring and highlighting the important results and having an appendix.
+\end{Comment}
+\fi
+\begin{Referee}{1}
+The authors claim in the introduction that existing monotones are either ``(i) sensitive to a specific type of non-Gaussianity, or (ii) not known to possess an operational interpretation.'' I am not quite sure what the authors understand under type of non-Gaussianity. However, all the monotones they list do have an operational interpretation and provide comparable values for states with the same energy (except the stellar rank). So I don't agree with this statement.
+\end{Referee}
+
+\begin{Response}
+We recognize that our original phrasing regarding operational meaning may have been unclear. To clarify, when we referred to operational meaning, we specifically meant that certain measures can be directly connected to particular quantum information tasks - analogous to how entropic measures relate to state discrimination protocols. We did not intend to suggest any universal operational interpretation across all possible tasks or platforms. Due to our failure in clearly conveying this message, and recognizing that the notion of operational meaning can indeed be broader than our specific usage of the term, we have revised the text as follows:
+\begin{quote}
+    \textit{While these non-Gaussianity measures connect to specific operational contexts, their practical applicability remains constrained. The stellar rank, for example, precisely quantifies resource requirements for state preparation through photon addition/subtraction operations~[40,41] - a particularly natural framework for photonic platforms~[48]. However, its inherent tie to this specific operational paradigm limits its broader applicability. The fundamental task-dependence of these measures creates significant obstacles when attempting cross-platform comparisons of non-Gaussian capabilities. Some metrics become computationally prohibitive for certain states, while others remain confined to narrow operational contexts that do not readily translate between different physical implementations. As a result, the field currently lacks a unified measure capable of comprehensively capturing non-Gaussian state complexity in a platform-agnostic manner.
+This situation raises a critical question in quantum technology development: How can we systematically assess and compare the non-classical capabilities of bosonic quantum computers built on fundamentally different physical platforms with distinct native operations? The current limitations in comparative metrics underscore the urgent need for more versatile and computationally accessible measures of non-Gaussianity that could enable meaningful cross-platform evaluations.}
+\end{quote}
+\end{Response}
+
+\begin{Referee}{2}
+The symplectic rank is coarse monotone as it provides an integer/mode count rather than a real-valued continuous monotone. Thus while it gives a coarse ``mode-count'' measure of non-Gaussianity, it may lack discrimination between different states with the same mode count but very different ``depth'' of non-Gaussianity (e.g., highly non-Gaussian in each mode versus weakly non-Gaussian across many modes). Because of this coarseness, its utility as a monotone for fine-grained resource transformations may be limited. The limitations should be more thoroughly discussed. Furthermore, what are the advantages to existing monotones?
+\end{Referee}
+
+\begin{Response} To answer the question, although the quantity is not continuous, this does not limit its usefulness. The symplectic rank in itself can be thought as an equivalent of the Schmidt rank of the entanglement, for non-Gaussianity. For pure states, the symplectic rank provides returns if a state is compressible or not. For mixed states, it captures the possibility of expressing the state as a mixture of compressible components. Despite being discrete, it still yields meaningful conversion bounds, analogous to the role played by the stabilizer nullity in the discrete setting, as shown in~\cite{Beverland_2020}. It is also effective for establishing new no-go results, since its monotonicity under post-selected Gaussian protocols allows one to rule out even probabilistic transformations, as demonstrated in the manuscript. Finally, we introduce a regularized version of the symplectic rank, the approximate symplectic rank, which provides a robust version of the symplectic rank (detecting for instance the case of multimode, weakly non-Gaussian states).
+\end{Response} 
+
+\begin{Referee}{3}
+The claim that ``bosonic quantum computations with low symplectic rank can be simulated efficiently by classical computers'' seems overly broad. Simulating bosonic systems consisting of only a handful and thus low symplectic rank is already challenging in practice as it involves in principle infinite dimensional Hilbert spaces.
+\end{Referee}
+
+\begin{Response} We agree with the referee that the previous phrasing may have been unclear. This statement indeed assumes that the underlying states of the computation have bounded energy: we have modified this phrasing to ``energy-bounded bosonic quantum computations with low symplectic rank can be simulated efficiently by classical computers''.
+    
+\end{Response}
+
+\begin{Referee}{4}
+The authors should comment on the mixed-state case. A key claim is that the symplectic rank ``is easy to compute'' (abstract). The case of mixed states is however a bit opaque. For pure states the covariance matrix can be computed and the symplectic eigenvalues extracted. A mixed state extension is provided in the paper, but no algorithm is provided to even compute in principle. Additionally, the generalization from pure to mixed states looks different from the standard convex roof. Why was this different approach chosen? In any case, it seems that it is impossible to compute or to prove that the minimum is reached. Is the symplectic rank then in practice a pure-state monotone? The claim of ``easy to compute'' thus appears overstated unless further clarification is provided. The same seems to hold true for the claim that it is easy to witness in experiment as states in an experiment are usually mixed.
+\end{Referee}
+
+\begin{Response}
+    We thank the referee for raising this point. The symplectic rank is defined for mixed states via the same convex roof construction as the Schmidt rank and the stellar rank, which does make it hard to compute in general (although easy to upper bound). 
+To avoid any potential confusion, we now explicitly mention that the efficient computation of the symplectic rank holds for pure states:
+\begin{quote}
+    We extend its definition to arbitrary non-Gaussian quantum states and show that it provides a powerful measure for characterizing bosonic devices that is efficiently computable for pure states.
+\end{quote}
+
+That being said, as we explain in Section II F, the fact that the symplectic rank of mixed states is hard to compute does not preclude our ability to witness the symplectic rank of an experimental (mixed) state, by testing its fidelity with a given target pure state and comparing it with the symplectic fidelities of the target state. In the revised version of the manuscript (see Section II F and Section VIII C), we now provide the explicit example of the two-mode target state $\ket1^{\otimes2}$, for which we obtain that the symplectic fidelities are given by $f^{\mathfrak s}_0(\ket1^{\otimes2})=\frac14$ and $f^{\mathfrak s}_1(\ket1^{\otimes2})=\frac12$. In particular, this implies that preparing experimentally a (mixed) state $\rho$ and measuring a fidelity with the state $\ket1^{\otimes2}$ greater that $0.25$ (resp.\ $0.5$) implies that the state $\rho$ has symplectic rank at least $1$ (resp.\ $2$).
+
+To illustrate the relevance of this approach, consider the two-mode mixed quantum state $\frac12\ket0\!\bra0^{\otimes2}+\frac12\ket1\!\bra1^{\otimes2}$. This state has symplectic rank at most $2$ by definition, but it also has symplectic rank of at least $2$, since its fidelity with the state $\ket1^{\otimes2}$ is $0.5\ge f^{\mathfrak s}_1(\ket1^{\otimes2})$. Hence, even though the convex roof definition is intractable in general, symplectic fidelities of pure states can allow us to determine the symplectic rank of some mixed states.
+\end{Response}
+
+\begin{Referee}{5}
+The compression of non-Gaussian states seems very powerful. How does one find the correct unitary to do that for arbitrary pure states? Is there a constructive procedure? With the given definition, how does a compression for mixed states look?
+\end{Referee}
+
+\begin{Response}
+The procedure is outlined in Theorems~3 and~21. The core idea involves first computing or estimating the first moments of the state and then computing or measuring its covariance matrix. Once the covariance matrix is determined, its Williamson decomposition is performed, and the corresponding Gaussian unitary is constructed. The final unitary is obtained by composing the adjoint of the displacement operator associated with the first moment and the Gaussian unitary defined by the symplectic matrix that transforms the covariance matrix into Williamson form. A similar procedure was first introduced in~\cite{Mele_2025}, where it is applied in the context of learning $t$-doped Gaussian states.
+
+
+\end{Response}
+
+\begin{Referee}{6}
+I don't fully understand the emphasis the authors put on the results of Theorems 7 and 8 throughout the paper. This does not seem to be a new result but follows directly from the connection between the symplectic rank and compression. As far as I understand, no new idea is presented. Especially, the simulator just uses the standard Fock basis and the symplectic rank to bound the number of modes required. The algorithm presented is not a full simulation algorithm as well, as things like update rules, etc., are missing. Furthermore, if one, let's say, mirrors a qubit quantum teleportation and uses a cubic phase state teleportation gadget instead of a T-gadget, the number of non-Gaussian states is known to perform a certain task. So in what sense does the symplectic rank quantify the simulation cost? Furthermore, the symplectic rank is only useful for multimode systems, but Fock space simulators are notoriously bad in that setting. The simulator does not seem very useful to me, and the connection to the symplectic rank not that relevant as the main ``variable'' driving the cost seems to be the energy. The same, but to a lesser extent, seems true for the tomography case as well. I feel, although technically correct, the claim that the symplectic rank has the operational interpretation of simulation cost and cost of tomography is a bit strenuous.
+\end{Referee}
+
+\begin{Response}
+    Indeed, Theorems 7 and 8 follow from the structure theorem (Theorem 2) of the symplectic rank. That being said, both results involve the combination of nontrivial technical results, which is why they are phrased as theorems rather than simply as corollaries: in Theorem 7, we refine the proof technique from Ref.\ [34] to improve the energy dependency, while in Theorem 8, we leverage a recent randomized classical simulation algorithm from Ref.\ [103].
+
+    Regarding the operational interpretations of symplectic rank, the sentence ``Specifically, we demonstrate how the symplectic rank quantifies the difficulty of performing \emph{quantum state tomography} and \emph{classical simulation}.'' may have been a bit overclaiming. We have toned it down to ``Specifically, we demonstrate how the symplectic rank relates to the difficulty of performing \emph{quantum state tomography} and \emph{classical simulation}.'' To be precise, as stated in the abstract, the symplectic rank governs the sample complexity of quantum tomography (via both a lower and an upper bound) and bounds the computational complexity of bosonic circuits (via an upper bound).
+\end{Response}
+
+\begin{Referee}{7}
+Theorem 9 seems to aim at investigating the experimental accessibility of the symplectic rank. The mixed-state version seems not measurable, however. Furthermore, if one still wants to use the pure-state version, it seems to me that the theorem is in the wrong direction for an experiment. Can the authors comment on how it can be assured that the results is not measuring a value that is too high?
+\end{Referee}
+
+\begin{Response}
+    Actually, the purpose of Theorem 9 is only to show the existence of witnesses for the symplectic rank of states that are sufficiently close to a pure states. This idea is pushed further in the following sections with the introduction of approximate symplectic rank and symplectic fidelities, which allow for witnessing stellar rank of mixed states by only computing pure state quantities (see the response to the next comment for more details). We have added the following sentence after Theorem 9 to clarify this point: ``A consequence of this result is that we can derive witnesses for the symplectic rank, as we explain in the following sections.''
+\end{Response}
+
+\begin{Referee}{8}
+The introduction of the approximate version seems not intuitive since the symplectic rank is a very coarse measure. Is it a meaningful quantity in this setting? Can the authors provide an example where it is useful? The authors seem to agree since it is treated like an addendum.
+\end{Referee}
+
+\begin{Response}
+    Rather than an afterthought, the approximate symplectic rank (equivalently, the symplectic fidelities) is in fact instrumental in witnessing the symplectic rank. In the previous version of the manuscript, we provided an explicit protocol for using it to certify the symplectic rank of an experimental mixed state: ``(i) pick a pure target state $\psi$ and compute its symplectic fidelities $f_k^\mathfrak s(\psi)$; (ii) measure several copies of $\rho$ and witness its fidelity with $\psi$ using the samples; (iii) compare the estimated lower bound on the fidelity with the symplectic fidelities --- if it is above $f_k^\mathfrak s(\psi)$ for some $k$, this implies $\mathfrak s(\rho)>k$, thus witnessing the symplectic rank of the experimental state.''
+
+    As mentioned above, in the revised version of the manuscript, we now include an explicit example of this protocol, where the target state is the two-mode pure state $\ket1^{\otimes2}$. We have computed numerically its stellar fidelities (using Lemma 13) as $f^{\mathfrak s}_0(\ket1^{\otimes2})=\frac14$ and $f^{\mathfrak s}_1(\ket1^{\otimes2})=\frac12$. In particular, this implies that preparing experimentally a (mixed) state $\rho$ and measuring a fidelity with the state $\ket1^{\otimes2}$ greater that $0.25$ (resp.\ $0.5$) implies that the state $\rho$ has symplectic rank at least $1$ (resp.\ $2$).
+
+    Beyond witnessing the symplectic rank, the monotonicity of the approximate symplectic rank (equivalently, of the symplectic fidelities) also has consequences for constraining approximate Gaussian conversion via no-go theorems. For instance, the above example shows that our no-go for non-Gaussian splitting may be very robust: the best fidelity with $\ket1^{\otimes2}$ using any single-mode non-Gaussian state and Gaussian protocols is in fact at most $0.5$. We leave a detailed exploration of these no-go results for approximate Gaussian conversion to future work, as mentioned in the conclusion.
+\end{Response}
+
+\begin{Referee}{9}
+In contrast to that, the parts that deal with the results of compression and monotonicity are very important. The results on spreading non-Gaussianity and irreversibility give novel insights into non-Gaussianity. This is why I think the authors should emphasize these parts more in their work.
+\end{Referee}
+
+\begin{Response}
+    We believe that with the above clarifications, the presentation of the results is now adequate.
+\end{Response}
+
+\section{Reply to Referee B}
+\iffalse 
+\begin{Comment}
+This manuscript introduces the ``symplectic rank'' as a novel measure for quantifying non-Gaussianity in continuous-variable quantum systems. The authors define the rank for pure states as the number of symplectic eigenvalues of the covariance matrix that are strictly greater than one. The work's central achievement is to rigorously prove that this simple, algebraic quantity is a robust resource monotone that is operationally equivalent to the concept of ``t-compressibility.'' This crucial link allows the authors to demonstrate that the symplectic rank directly governs the exponential complexity of two fundamental tasks: the classical simulation of bosonic circuits and the experimental tomography of quantum states. The paper argues that this provides a simpler, more powerful, and hardware-agnostic tool for benchmarking quantum devices and establishing no-go theorems for state conversion than existing measures.
+
+The work is well-structured, the proofs appear sound, and the results are of high interest to the quantum information community. I recommend publication in PRX Quantum after the authors address a few key points of clarification below.
+
+While the core results are strong, the manuscript would be improved by addressing the following points, where the claims seem to extend beyond what has been rigorously demonstrated.
+\end{Comment}
+\fi
+We thank the referee for their exceptionally positive and insightful evaluation of our manuscript. We are pleased that the referee found the work to be ``well-structured'' with ``sound'' proofs and results of ``high interest to the quantum information community.'' We are particularly grateful for the recommendation for publication in PRX Quantum.
+
+We have carefully addressed each of the three key points raised by the referee:
+
+
+\begin{Referee}{1}
+On the practicality of the mixed-state definition: The authors compellingly argue for the symplectic rank's simplicity. However, the generalization to mixed states via the convex roof construction (Eq. 2) appears to sacrifice this key advantage. This min-max optimization is, as far as I know, generally computationally intractable. Could the authors comment on the practical computability of the rank for mixed states? It would strengthen the paper to explicitly state that the ``easy to compute'' property is a key advantage primarily for pure states, and to discuss the challenges that remain for the more general mixed-state case, which is important for experiment.
+\end{Referee}
+
+\begin{Response}
+We thank the referee for raising this point. Indeed, much like the Schmidt rank and the stellar rank, the symplectic rank is defined via a convex roof construction for mixed states, which makes it hard to compute (although easy to upper bound). 
+To avoid any potential confusion, we now explicitly mention that the efficient computation of the symplectic rank holds for pure states:
+\begin{quote}
+    We extend its definition to arbitrary non-Gaussian quantum states and show that it provides a powerful measure for characterizing bosonic devices that is efficiently computable for pure states.
+\end{quote}
+
+That being said, as we explain in Section II F, the fact that the symplectic rank of mixed states is hard to compute does not preclude our ability to witness the symplectic rank of an experimental (mixed) state, by testing its fidelity with a given target pure state and comparing it with the symplectic fidelities of the target state. In the revised version of the manuscript (see Section II F and Section VIII C), we now provide the explicit example of the two-mode target state $\ket1^{\otimes2}$, for which we obtain that the symplectic fidelities are given by $f^{\mathfrak s}_0(\ket1^{\otimes2})=\frac14$ and $f^{\mathfrak s}_1(\ket1^{\otimes2})=\frac12$. In particular, this implies that preparing experimentally a (mixed) state $\rho$ and measuring a fidelity with the state $\ket1^{\otimes2}$ greater that $0.25$ (resp.\ $0.5$) implies that the state $\rho$ has symplectic rank at least $1$ (resp.\ $2$).
+
+To illustrate the relevance of this approach, consider the two-mode mixed quantum state $\frac12\ket0\!\bra0^{\otimes2}+\frac12\ket1\!\bra1^{\otimes2}$. This state has symplectic rank at most $2$ by definition, but it also has symplectic rank of at least $2$, since its fidelity with the state $\ket1^{\otimes2}$ is $0.5\ge f^{\mathfrak s}_1(\ket1^{\otimes2})$. Hence, even though the convex roof definition is intractable in general, symplectic fidelities of pure states can allow us to determine the symplectic rank of some mixed states.
+\end{Response}
+
+\begin{Referee}{2}
+On the universality of ``strictly stronger'' no-go theorems: The no-go theorem for the $|4\rangle \to |1\rangle\otimes|1\rangle$ conversion (discussed in Section II.B) is a clear and powerful demonstration of the symplectic rank's utility. However, the claim that this makes the measure ``strictly stronger'' than others, such as the stellar rank, may be an overstatement based on a single example. The advantage in this case seems to stem from the additivity of the rank for pure tensor-product states, a property that becomes sub-additive for mixed states. Could the authors provide a broader argument for this ``strictly stronger'' claim?
+\end{Referee}
+
+\begin{Response}
+    We thank the referee for raising this point. We agree that the sentence in the abstract was an overstatement: the symplectic rank identifies the impossibility of certain conversions which other measures do not, but the converse is also true (e.g., $\ket1\mapsto\ket2$). We have rephrased this sentence from ``...leading to strictly stronger no-go theorems for Gaussian conversion than those previously known.'' to ``...leading to new no-go theorems for Gaussian conversion.''
+\end{Response}
+
+\begin{Referee}{3}
+On the applicability of the witnessing protocol: Regarding the proposed experimental protocol for ``Witnessing the symplectic rank'' (Section II.F), I am not sure about its direct applicability for benchmarking. The protocol requires one to ``pick a pure target state $\psi$'' and then compute its symplectic fidelities via an optimization over all Gaussian unitaries (Eq. 7). This procedure seems: 
+\begin{itemize}
+\item[(a)] Logically circular for blind benchmarking, where the state is unknown. It appears more suited to state verification against a known target.
+\item[(b)] Computationally demanding for many-mode systems, as the authors themselves note.
+\end{itemize}
+Could the authors clarify the intended use-case of this protocol? A more explicit discussion of its limitations—namely that it is not a blind benchmarking tool and is only efficient for small systems—would provide a more complete picture for the reader and prevent potential misinterpretation of its practical scope.
+\end{Referee}
+
+\begin{Response}
+    We thank the referee for raising this point. Indeed, our witnessing protocol requires a target state and thus does not qualify as a blind benchmarking tool (which we did not claim in the manuscript). The intended use case of this protocol is the benchmarking of quantum information processing devices via the identification of necessary resources for quantum advantage---in the present case quantum non-Gaussianity as measured by the symplectic rank. Note that, in the context of quantum information processing, the requirement of the existence of a target state for the device is far from being unreasonable.
+    
+    Regarding symplectic fidelities, we had written after Lemma 13: ``While the optimization above is still non-trivial when the number of modes increases, Lemma 13 implies that the approximate symplectic rank can be computed efficiently for continuous-variable quantum systems over a small number of modes'' as well as ``for many modes, however, we expect the optimization to be more challenging and leave a detailed numerical study to future work'' after Lemma 51, thus explicitly acknowledging the challenge in numerically computing symplectic fidelities for a large number of modes. To further clarify this point, we have now modified the corresponding sentence in the conclusion from ``[...] ultimately showing that the symplectic rank can be effectively witnessed in experiments'' to ``[...] ultimately showing that the symplectic rank can be effectively witnessed in small-scale experiments''.
+\end{Response}
+
+\section{Reply to Referee C}
+\iffalse
+\begin{Comment}
+This work proposes a novel measure of non-Gaussianity, termed the symplectic rank. The measure is particularly useful for characterizing the non-Gaussianity of multipartite state, as it identifies the smallest number of modes onto which all the non-Gaussianity can be compressed via Gaussian unitaries. The symplectic rank exhibits desirable properties in the resource-theoretic framework, including monotonicity under Gaussian channel. This study establishes strict no-go theorems for Gaussian conversion, demonstrating that the resource theory of non-Gaussianity is irreversible under Gaussian operations. This result addresses a central problem in quantum resource theory, and provides valuable insights in the manipulation of non-Gaussian states. Furthermore, the symplectic rank provides useful applications in quantum informational tasks, yielding bounds for the complexity in quantum state tomography and circuit simulation.
+
+The manuscript summarizes the main results in Sections I--III, followed by detailed derivations and discussions of the theorems in Sections IV--X. The authors provide helpful details that guide the reader through the results step by step. Nevertheless, I would like to point out a few issues that I believe require clarification.
+\end{Comment}
+\fi 
+
+We thank the referee for their positive assessment of our work and for recognizing that it ``addresses a central problem in quantum resource theory, and provides valuable insights in the manipulation of non-Gaussian states.'' We are pleased that the referee found the manuscript well-organized with helpful step-by-step guidance through the results.
+
+We have carefully addressed all five points raised by the referee:
+
+
+\begin{Referee}{1}
+It appears that the symplectic rank captures a different aspect of non-Gaussianity compared to existing measures such as the Wigner negativity or the stellar rank. It allows the derivation of a strict no-go theorem in conversion between non-Gaussian states, which has not been observed with other non-Gaussianity measures. To enhance the reader's understanding of the meaning of the symplectic rank, I recommend to highlight the difference with other non-Gaussianity measures from a general perspective, while the distinction is discussed only in the problem of state conversion (Page 26).
+\end{Referee}
+
+\begin{Response}
+We thank the referee for their relevant suggestion. We have added the following high-level paragraph at the end of the introduction of the revised manuscript:
+\begin{quote}
+    At a high level, compared to other non-Gaussianity measures such as the negative volume of the Wigner function and the stellar rank, the symplectic rank is a fundamentally multimode measure, which characterizes how non-Gaussianity may be compressed to a small number of modes, in a way that is agnostic to the type of non-Gaussianity.
+\end{quote}
+\end{Response}
+
+\begin{Referee}{2}
+In Theorems 37 and 38, the complexity bounds are given in terms of the symplectic rank. The analysis could provide more insights by relating these results to the bounds derived in authors' previous works using the stellar rank (e.g.\ Ref.\ [46]). While a rigorous analysis may be outside the scope of this manuscript, presenting at least a qualitative discussion of how these two approaches relate would be beneficial.
+\end{Referee}
+
+\begin{Response}
+Theorem 37 only exploits the compressibility of a quantum state to estimate overlaps with Gaussian states and is thus essentially incomparable to the strong classical simulation algorithms based on stellar rank from Refs.\ [46,70]. However, when combining both approaches (symplectic rank and stellar rank), this leads to an improved classical strong simulation algorithm as described in Theorem 45. We have added the following discussion after Theorem 37 for clarification:
+\begin{quote}
+    Compared to existing strong simulation algorithms for bosonic computations based on stellar rank from [46,70], Theorem provides a classical algorithm for the simpler task of estimating overlaps with Gaussian states. We combine both approaches in Theorem 45 to refine the strong simulation algorithm from [70] for Gaussian circuits doped with photon additions and subtractions.
+\end{quote}
+
+\end{Response}
+
+\begin{Referee}{3}
+In Definition 24, the heterodyne measurement is employed as a building block of Gaussian operations rather than using the homodyne measurement. Infinite squeezing is required to implement a homodyne measurement using a heterodyne measurement, while a simple beamsplitter operation suffices in the opposite case. When infinite squeezing is involved, a careful analysis is necessary to ensure that no subtleties arise from this choice. In particular, it would be helpful to clarify whether the monotonicity continues to hold when homodyne measurements are taken into account.
+\end{Referee}
+
+\begin{Response}
+We thank the referee for this insightful comment. It led us to add a paragraph in the revised version of the manuscript to clarify this point, and it also prompted us to think more carefully about the mathematical subtleties of homodyne measurements. As the referee notes, in Definition~24 we take heterodyne measurements as a basic building block of Gaussian operations rather than homodyne measurements. Below we explain why this choice is the most convenient one if one aims at a fully rigorous framework while allowing for arbitrary (possibly non-Gaussian) input states.
+
+
+
+We agree that ideal homodyne detection does not \emph{exactly} fit the axioms of Gaussian operations as formulated in the manuscript. Operationally, however---as the referee also notes---homodyne detection can be viewed as a limit of admissible Gaussian measurements: one may approximate a homodyne measurement by first applying a squeezing unitary with very large (but finite) squeezing, then performing a heterodyne measurement, and finally rescaling the classical outcome. In this way, ``homodyne'' arises as the limit of a family of perfectly well-defined Gaussian measurements that are already included in our framework, and it can be approximated arbitrarily well for any practical purpose.
+
+
+
+The delicate point is that the usual ``ideal'' description of homodyne, namely the POVM with ``elements'' $\ket{x}\!\bra{x}$ (projectors onto generalized, unnormalised eigenstates of the position observable), is not mathematically rigorous as a post-selected operation on arbitrary non-Gaussian states. Indeed, conditioning on a \emph{single} outcome $x$ would amount to the map $\ket{\psi}\mapsto \bra{x}_1\ket{\psi}$, but for a proper input vector $\ket{\psi}$ the post-measurement vector $\bra{x}_1\ket{\psi}$ need not be normalisable. To see this explicitly, let $\ket{\psi}$ be a (possibly non-Gaussian) multimode pure state and consider a homodyne measurement on the first mode with outcome $x=0$. The post-outcome vector $\bra{x=0}_1\ket{\psi}$ may fail to be normalisable. For example, consider a two-mode state with wavefunction
+\[
+\psi(x,y)\ \propto\ \frac{1}{\sqrt{1+|y|}\,\bigl(1+x^2(1+y^2)\bigr)}\,.
+\]
+This wavefunction is square-integrable on $\mathbb{R}^2$ (so $\ket{\psi}$ is a proper pure state), but the section $y\mapsto \psi(0,y)$ has infinite $L^2$ norm. Hence, $\bra{x=0}_1\ket{\psi}$ is not a proper (normalised) state, even though $\ket{\psi}$ is.
+
+
+A fully rigorous definition of ideal homodyne can be given in terms of \emph{coarse graining}: one conditions on a measurable set $A\subset\mathbb{R}$ of non-zero measure, rather than on a single point. For instance, for a two-mode state $\rho_{12}$ the probability that the homodyne outcome on mode~1 lies in $A$ is
+\[
+p(A)=\Tr\bigl[(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\bigr],
+\qquad
+\Pi_A\coloneqq \int_{x\in A}\ket{x}\!\bra{x}\,\mathrm{d}x,
+\]
+and the corresponding post-selected state is
+\[
+\rho_{12}\,\big|_A
+=
+\frac{(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\,(\Pi_A\otimes \mathbf{1}_2)}{\Tr\bigl[(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\bigr]}\,.
+\]
+With this definition, homodyne detection is perfectly well defined and post-selected outputs are genuine states. However, in this fully rigorous setting, post-selecting on coarse-grained homodyne outcomes can map a Gaussian state to a \emph{non}-Gaussian conditional state (it is easy to construct examples where $\rho_{12}$ is Gaussian but $\rho_{12}\,|\,A$ is not). In particular, this coarse-grained version of ideal homodyne---despite being the mathematically correct one---does not belong to the class of Gaussian operations as axiomatized in the manuscript.
+
+For these reasons, we believe that the most physically and mathematically meaningful way to treat homodyne within our framework is via \emph{approximate homodyne}, i.e.\ by modelling it as heterodyne preceded by large (but finite) squeezing (and outcome rescaling). Our monotonicity result applies directly to this class and therefore covers any physically implementable homodyne scheme. If one insists on ``perfect'' homodyne in a fully rigorous sense, one may employ coarse graining, and then post-selection may take Gaussian inputs to non-Gaussian outputs; in that case it is consistent that such post-selected operations are not included among the Gaussian operations considered in the paper. We hope this clarifies the point raised by the referee.
+
+
+
+We added the following paragraph to the new version of the manuscript:
+\begin{quote}
+    In Definition~24 we take heterodyne measurements as a basic building block of Gaussian operations rather than homodyne measurements. Operationally, homodyne detection may be viewed as a ``limit'' of admissible Gaussian measurements in the sense of Definition~24: one can approximate a quadrature measurement by first applying a squeezing unitary with very large (but finite) squeezing, then performing a heterodyne measurement, and finally rescaling the classical outcome. In this way, ``homodyne'' is recovered as the limiting case of a family of perfectly well-defined Gaussian measurements that are already contained in our framework.
+
+At the same time, the usual ``ideal'' description of homodyne in terms of the (generalized) quadrature eigenstates $\{\ket{x}\}_{x\in\mathbb{R}}$ is not mathematically rigorous as a post-selected operation on arbitrary states. In particular, conditioning on a \emph{single} outcome $x$ is only distributionally defined and, in general, does not produce a proper post-selected map (for instance, it may send a normalised input state to a non-normalisable post-measurement vector). A fully rigorous definition of ideal homodyne post-selection can be given in terms of \emph{coarse graining}: namely, one conditions on a measurable set $A\subset\mathbb{R}$ of non-zero measure, rather than on a single point. The corresponding projector is
+\[
+\Pi_A \coloneqq \int_{x\in A}\ket{x}\!\bra{x}\,\mathrm dx,
+\]
+and for a two-mode state $\rho_{12}$ the probability that the homodyne outcome on mode~$1$ lies in $A$ is
+\[
+p(A)=\Tr\bigl[(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\bigr],
+\]
+while the corresponding post-selected state is
+\[
+\rho_{12}\big|_A
+=
+\frac{(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\,(\Pi_A\otimes \mathbf{1}_2)}
+{\Tr\bigl[(\Pi_A\otimes \mathbf{1}_2)\,\rho_{12}\bigr]}\,.
+\]
+With this definition, homodyne detection is perfectly well-defined mathematically, and post-selected outputs are proper states. However, in this fully rigorous setting, post-selecting on coarse-grained homodyne outcomes can map Gaussian states to non-Gaussian conditional states; hence such post-selected operations do not belong to the class of Gaussian operations as axiomatized in this manuscript.
+\end{quote}
+
+
+    
+\end{Response}
+
+
+
+
+
+\begin{Referee}{4}
+The condition for a state to be energy-constrained is explicitly described, in the 2nd paragraph of Sec. VI (page 29), with the operator $\hat{E}^2$. However, the constraint is instead expressed with $\hat{N}^2$ in Theorem 36 and $\hat{N}$ in Theorem 37. I would appreciate clarification on whether these different forms of energy constraints are indeed necessary. If not, it would be preferable to use a consistent formulation of the energy constraint throughout the theorems.
+\end{Referee}
+\begin{Response}
+We thank the referee for raising this point. The apparent discrepancy between $\hat E$ and $\hat N$ is purely notational: the energy operator $\hat E$ and the total photon-number operator $\hat N$ differ only by a constant offset, namely $\hat E=\hat N+\frac n2\,\mathbf{1}$. Consequently, any energy constraint written in terms of $\hat E$ can be translated into an equivalent one in terms of $\hat N$ (and vice versa) by a trivial reparametrization of the bound (e.g.\ $\Tr[\rho\,\hat E]\le E$ if and only if $\Tr[\rho\,\hat N]\le E-\frac n2$, and similarly for second-moment constraints). Our choice to sometimes work with $\hat E$ and other times with $\hat N$ is purely for notational convenience, in order to avoid carrying additional $n/2$ terms throughout.
+
+
+
+The only substantive distinction is \emph{which moment is constrained}: a \emph{first-moment} constraint (mean energy/mean photon number, such as $\Tr[\rho\,\hat E]\le E$ or $\Tr[\rho\,\hat N]\le N$) versus a \emph{second-moment} constraint (such as $\Tr[\rho\,\hat E^2]\le E^2$ or $\Tr[\rho\,\hat N^2]\le N^2$).
+
+
+Throughout the paper, whenever we assume a \emph{second-moment} constraint (as in Sec.~VI and Theorem~36), this stronger assumption is essential for the perturbation and continuity bounds we require. While finiteness of the mean energy is enough to guarantee that the covariance matrix of $\rho$ is finite (see Lemma~14), it is not sufficient for the continuity properties needed in several analyses of quantum information with continuous-variable systems. For example, in tomography (see Section~VII) and in the perturbation analysis of the symplectic rank (see Section~VI), one needs that ``if two states are close in trace distance, then their covariance matrices are close.'' Such an implication cannot be derived from a mean-energy constraint alone; it becomes possible only under control of the \emph{second moment} of the energy, i.e.\ a bound on $\Tr[\rho\,\hat E^2]$ (or equivalently on $\Tr[\rho\,\hat N^2]$). Note that a second-moment constraint is strictly stronger than a first-moment one: by Jensen's inequality we always have $\Tr[\rho\,\hat E]\le \sqrt{\Tr[\rho\,\hat E^2]}$.
+
+
+Let us now give an explicit example showing that a finite mean photon number does not suffice to guarantee that a small perturbation in trace distance induces only a small perturbation of the covariance matrix. Consider the vacuum state $\ketbra{0}$ and, for $k\ge 2$, the single-mode states $\rho_k \coloneqq (1-\frac{1}{k})\ketbra{0}+\frac{1}{k}\ketbra{k}{k}$. A direct computation yields $\|\rho_k-\ketbra{0}\|_1=2/k\to 0$ as $k\to\infty$, while the mean photon number remains uniformly bounded: $\Tr[\rho_k\,\hat N]=1$ and $\Tr[\ketbra{0}\,\hat N]=0$. Despite the fact that the two states become closer and closer in trace distance, the corresponding covariance matrices do \emph{not} approach one another: since for a Fock state $\ket{k}$ one has $V(\ketbra{k})=(2k+1)\mathbf{1}$, it follows that $V(\rho_k)=(1-\frac{1}{k})\mathbf{1}+\frac{1}{k}(2k+1)\mathbf{1}=3\,\mathbf{1}$, and hence $V(\rho_k)-V(\ketbra{0})=2\,\mathbf{1}$ for all $k\ge 2$. The reason behind this behaviour is that the second moment diverges, i.e.~$\Tr[\rho_k\,\hat N^2]=k\to\infty$. This example illustrates the general phenomenon that, without a finite second-moment constraint, small trace distance does not guarantee a small distance between covariance matrices. In contrast, in Section~IX we show that under a finite second-moment energy constraint, closeness in trace distance does imply closeness of covariance matrices. This is precisely why a second-moment energy constraint is needed in Sec.~VI and Theorem~36.
+
+
+By contrast, the proof of Theorem~37 only requires a \emph{first-moment} (mean-energy/mean-photon-number) constraint, and imposing a stronger second-moment condition there would be unnecessary.
+
+To avoid confusion, we have revised the manuscript by adding, in the preliminaries section, a dedicated paragraph titled ``\emph{Energy constraints}'' that clarifies the notion of energy constraints and explicitly indicates when a first-moment assumption suffices and when a second-moment assumption is genuinely required.  
+\end{Response}
+
+
+
+
+
+
+
+
+
+\begin{Referee}{5}
+It is hard to understand the assumption that $\gamma$'s are $O(\text{poly}(n))$ and $E=O(\text{poly}(n)^s)$ in Theorem 42, since these quantities appear to be parameters independent of the number of modes $n$. It would be helpful if a justification of this assumption could be provided.
+\end{Referee}
+\begin{Response}
+    We appreciate the referee’s observation and agree that cubicity parameters typically do not scale with system size. However, in Theorem 42, we establish an efficient classical simulation of low symplectic rank bosonic circuits for $\gamma = \mathcal{O}(\poly(n))$, which in particular implies the physically realistic case $\gamma = \mathcal{O}(\poly(n))$. This choice of scaling for the cubicity ensures that the energy throughout the computation---which would realistically be $E = \mathcal{O}(n)$---remains in a regime where classical simulation is computationally feasible. In summary, we can simulate the physically realistic setting ($\gamma=\mathcal{O}(1)$ and $E=\mathcal{O}(n)$), because we can simulate the more general---and rather unrealistic---case of $\gamma = \mathcal{O}(\poly(n))$. We have clarified this after Theorem 42 in the revised version of the manuscript:
+\begin{quote}
+    Furthermore, although the scaling $\gamma = \mathcal{O}(\poly(n))$ deviates from the realistic $\mathcal{O}(1)$ behavior of cubicity parameters, Theorem 42 demonstrates that efficient classical simulation of low symplectic rank bosonic circuit remains viable in this more general regime of parameters, and even if the energy scales beyond the physical expectation of $E = \mathcal{O}(n)$.
+\end{quote}
+Note that in the revised version of the work, we have also fixed a scaling issue on the upper bound of the energy implied by the condition $\gamma=\mathcal O(\poly(n))$, which now reads $E=\mathcal O(\poly(n)^{2^s})$. The proof has also been updated so that it is better self-contained. The conclusion of the theorem (efficient simulation for low symplectic rank $s=\mathcal O(1)$) is not affected by these changes.
+\end{Response}
+\printbibliography
+
+
+\section{}
+\end{document}
