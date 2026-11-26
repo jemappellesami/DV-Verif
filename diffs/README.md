@@ -14,8 +14,10 @@ read), then read each step in order.
 Two kinds of PDFs:
 
 - **Step 2** ([`v3.2_highlighted.pdf`](v3.2_highlighted.pdf)) is the paper
-  itself, with the text added in v3.2 in **red** (the table below says which
-  referee comment each change answers). Removed text is not shown (two passages were replaced: the
+  itself, with the text added in v3.2 in **red**, each change preceded by a
+  bold tag naming the referee comment it answers: **(R1.1)** for Reviewer 1,
+  comment 1, **(R2.3)** for Reviewer 2, comment 3, and so on. Red text
+  without a tag answers no referee comment. Removed text is not shown (two passages were replaced: the
   sentence on the optimality of DFE in Sec. 2.1, and the names `c`, `s` of
   the completeness and soundness variables in Sec. 3).
 - **Step 1** and the cumulative diff are latexdiff outputs: the full paper
@@ -176,9 +178,9 @@ sh revision/mkdiff.sh arxiv-v2 v3.3
 
 which write `diffs/v3.2_to_v3.3.pdf` and `diffs/tex/v3.2_to_v3.3.tex` (and
 the cumulative diff from arXiv). Alternatively, as for v3.2, the new text is
-wrapped in `revision/main.tex` with `\revone{...}` (Reviewer 1),
-`\revtwo{...}` (Reviewer 2) or `\revother{...}` (other changes), all
-printed in red, and the compiled `revision/main.pdf` is copied here as
+wrapped in `revision/main.tex` with `\rev{R1.1}{...}` (red, with the tag
+of the comment it answers), `\revtag{R1.1}` (the tag alone, e.g. in a
+`\paragraph` title) or `\revother{...}` (red, no tag), and the compiled `revision/main.pdf` is copied here as
 `v3.x_highlighted.pdf`. The colours are switched off for the final version
 by replacing `\highlightchangestrue` by `\highlightchangesfalse` in the
 preamble of `revision/main.tex`. While editing, `sh revision/mkdiff.sh`

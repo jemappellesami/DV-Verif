@@ -18,8 +18,9 @@ version-to-version changes, and the reply to the referees.
    has a PDF of the paper with the changes highlighted, a table of every
    change with its page and the referee comment it answers, and
    instructions to comment. For v3.2, the PDF is the paper itself with the
-   new text in red; for v3.1, where Section 3 changed a lot, it is a
-   latexdiff.
+   new text in red, each change tagged with the comment it answers, e.g.
+   **(R1.1)** for Reviewer 1, comment 1; for v3.1, where Section 3 changed
+   a lot, it is a latexdiff.
 3. **The reply to the referees:** [`response/response.tex`](response/response.tex)
    (compiled: `response/response.pdf` once built). Each referee comment has
    a status and a suggested reply, still to be rewritten.
@@ -82,10 +83,10 @@ cd revision && latexmk -pdf main.tex       # the revision
 cd response && latexmk -pdf response.tex   # the reply to the referees
 ```
 
-In `revision/main.tex`, the text added in v3.2 is wrapped in `\revone{...}`,
-`\revtwo{...}` or `\revother{...}` and printed in colour; replace
-`\highlightchangestrue` by `\highlightchangesfalse` in its preamble to
-print the paper without colours.
+In `revision/main.tex`, the text added in v3.2 is wrapped in `\rev{R1.1}{...}`
+(red, with the tag of the referee comment it answers) or `\revother{...}`
+(red, no tag); replace `\highlightchangestrue` by `\highlightchangesfalse`
+in its preamble to print the paper without colours nor tags.
 
 The figures of the revision are already compiled (`revision/figures/*.pdf`).
 To change one, edit its `.tex` in `revision/figures/` and compile it there
