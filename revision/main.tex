@@ -455,11 +455,11 @@ In this section, we propose a protocol to check whether an i.i.d.\ prover correc
             \begin{equation}
             \label{eq:certification:sample iid}
             N_{iid}\in\O\left(
-                    \frac{n^2}{\epsilon^2} \log\left(\frac{1}{\delta}\right)
+                    \frac{(1+t)^2}{\epsilon^2} \log\left(\frac{1}{\delta}\right)
                     \right)
                     \; ,
             \end{equation}
-                 then Protocol~\ref{protocol:certification} rejects if $F(\rho,\ket\Psi)<1-\epsilon$ and accepts if $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3n}$\footnote{The constant $\frac13$ is chosen for simplicity and can be replaced by $1-\frac2k$ for any $k\in\mathcal O(1)$ with a constant increase in sample complexity, by replacing the acceptance condition in step 3 of Protocol~\ref{protocol:certification} by $\bar W\ge1-(1-\frac1k)\epsilon$ and setting $\lambda=\frac\epsilon k$ in the proof.}, with probability greater than $1-\delta$.
+                 then Protocol~\ref{protocol:certification} rejects if $F(\rho,\ket\Psi)<1-\epsilon$ and accepts if $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3(1+t)}$\footnote{The constant $\frac13$ is chosen for simplicity and can be replaced by $1-\frac2k$ for any $k\in\mathcal O(1)$ with a constant increase in sample complexity, by replacing the acceptance condition in step 3 of Protocol~\ref{protocol:certification} by $\bar W\ge1-(1-\frac1k)\epsilon$ and setting $\lambda=\frac\epsilon k$ in the proof.}, with probability greater than $1-\delta$.
         \end{theorem}
 
         \begin{proof}
