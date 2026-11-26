@@ -14,8 +14,10 @@
 *.toc
 *.synctex.gz
 
-# Compiled PDFs at the root (figures/ and reviews/ PDFs are tracked)
+# Compiled PDFs (figure and review PDFs are tracked)
 /*.pdf
+/paper/*.pdf
+/response/*.pdf
 
 # Kept on disk but out of the repo
 /GdR TeQ/
