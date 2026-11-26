@@ -2,7 +2,15 @@
 # Build diff.pdf: the changes of the revision (revision/main.tex) with
 # respect to the paper on arXiv (paper/main.tex), deletions in red and
 # additions in blue. Run from anywhere: sh revision/mkdiff.sh
+# The build happens in a temporary folder, so it does not clash with an
+# editor compiling in revision/; only diff.pdf is copied back.
 set -e
-cd "$(dirname "$0")"
-latexdiff ../paper/main.tex main.tex > diff.tex
-latexmk -pdf -interaction=nonstopmode diff.tex
+HERE="$(cd "$(dirname "$0")" && pwd)"
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+cp -R "$HERE"/. "$TMP"/
+cd "$TMP"
+latexdiff "$HERE/../paper/main.tex" main.tex > diff.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error diff.tex
+cp diff.pdf "$HERE/diff.pdf"
+echo "Written: $HERE/diff.pdf"
