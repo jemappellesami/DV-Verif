@@ -20,8 +20,11 @@
 /revision/*.pdf
 /response/*.pdf
 
-# latexdiff output (revision/mkdiff.sh)
+# latexdiff output (revision/mkdiff.sh): local diffs are not committed;
+# the version-to-version diffs in diffs/ are (except PDFs compiled by hand
+# from diffs/tex/)
 /revision/diff.tex
+/diffs/tex/*.pdf
 
 # Kept on disk but out of the repo
 /GdR TeQ/
