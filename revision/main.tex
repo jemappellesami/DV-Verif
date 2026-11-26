@@ -464,6 +464,9 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
         \end{proof}
         As a result, we can efficiently certify any $n$-qubit $\mCEPS$ using only (non-adaptive) single-qubit Pauli measurements on a number of samples that scales quadratically in the number $t$ of non-stabilizer states $\ket{\psi_i}$, independently of the number $s$ of stabilizer ones, and with efficient sampling and post-processing of measurement outcomes.
 
+        \paragraph{Joint estimation of the witness.}
+        A naive way to estimate the witness would be to estimate the fidelities of the $1+t$ blocks individually, with one DFE for each block, and then to combine these estimates, in a union-bound type of argument. However, each of these estimates would then need precision $\epsilon/(3(1+t))$, so that each of the $t$ DFE on non-stabilizer qubits would cost $O((1+t)^2\epsilon^{-2}\log((1+t)/\delta))$ copies, hence a number of copies scaling as $t^3$ in total. Instead, Protocol~\ref{protocol:certification} estimates the witness jointly, with a single estimator: intuitively, the statistical fluctuations of the different blocks compensate each other, which allows to estimate the witness with a number of copies scaling only as $t^2$ (Theorem~\ref{theorem:certification}).
+
 
 \subsection{Extension to the non-i.i.d.\ setting}
 
