@@ -297,7 +297,7 @@ The efficiency analysis of the protocol consists of computing how many samples t
 
 If the prover is not i.i.d., the state received by the verifier might be entangled across the $N$ samples, so they cannot be considered as independent copies anymore. However the verifier has the same aim: perform Pauli measurements on some of the received samples, and leave one remaining subsystem that is accepted if its fidelity is close enough to the target state.
 
-We introduce some notations in Section\ \ref{subsection:notations}, describe the i.i.d.\ protocol in Section\ \ref{subsection:iid} and generalize that approach to the non-i.i.d.\ setting in Section\ \ref{rmk:malicious}. In both cases, we provide theorems showing that the protocols are efficient. In the i.i.d.\ setting, $N \sim O((1+t)^2/\epsilon^2 \; \log(1/\delta))$, while in the non-i.i.d.\ setting, we have $N\sim \tilde O(n^5/(\delta^2\epsilon^6))$, with $\tilde O$ hiding polylogarithmic factors.
+We introduce some notations in Section\ \ref{subsection:notations}, describe the i.i.d.\ protocol in Section\ \ref{subsection:iid} and generalize that approach to the non-i.i.d.\ setting in Section\ \ref{rmk:malicious}. In both cases, we provide theorems showing that the protocols are efficient. In the i.i.d.\ setting, $N \sim O((1+t)^2/\epsilon^2 \; \log(1/\delta))$, while in the non-i.i.d.\ setting, we have $N\sim \tilde O(n(1+t)^4/(\delta^2\epsilon^6))$, with $\tilde O$ hiding polylogarithmic factors.
 
 
 \subsection{Notations}
@@ -509,16 +509,17 @@ size $N_{2}$ (\texttt{test}), $N_1-N_2-1$ (\texttt{discard}), and $1$ (\texttt{k
             \log^2\!\Big(\frac{\Niid}{\delta}\Big)
             \right),
             \)
-            then Protocol~\ref{protocol:verification} rejects if $F(\rho_{\mathrm{fin}},\ket\Psi)<1-\epsilon$ and accepts if $F(\rho_{\mathrm{fin}},\ket\Psi)\ge1-\frac\epsilon{3n}$, with probability greater than $1-\delta$.
+            then Protocol~\ref{protocol:verification} rejects if $F(\rho_{\mathrm{fin}},\ket\Psi)<1-\epsilon$ and accepts if $F(\rho_{\mathrm{fin}},\ket\Psi)\ge1-\frac\epsilon{3(1+t)}$, with probability greater than $1-\delta$.
         \end{theorem}
 
 
         As a corollary of the above, verifying an $n$-qubit state of the \CEPS~class with precision $\epsilon$ and failure probability at most $\delta$ requires a total number of samples $N_1\geq \Nnoniid$ where
         \begin{equation}
             \label{eq:verification:scaling}
-        \Nnoniid \in \tilde\O\left(\frac{n^5}{\delta^2\epsilon^6}\right)\;,
+        \Nnoniid \in \tilde\O\left(\frac{n(1+t)^4}{\delta^2\epsilon^6}\right)\;,
         \end{equation}
         with $\tilde O$ hiding polylogarithmic factors in $n,\epsilon, \delta$.
+        The factor $(1+t)^4$ comes from the square of $\Niid$ in Lemma~\ref{lemma:prelim:iid} (Appendix~\ref{section:verification}). The remaining linear factor $n$ comes from the factor $n=\log d$ in the same lemma, that is, from the dimension of the $n$-qubit registers sent by the prover, which does not depend on the structure of the target state.
 
     
 
@@ -558,7 +559,7 @@ Completeness is stated for the honest i.i.d.\ prover, since an honest prover is 
 \begin{theorem}[Efficient verification of quantum computations \textit{via} Pauli measurements]
     Let $\epsilon,\delta>0$, and let $\ket{\Psi}$ be the $\mCEPS$ resource state associated with a target Pauli-MBQC computation with ideal output $\ket{\Psi_{\rm out}}$. Protocol~\ref{protocol:verification of UQC} satisfies the following two properties:
     \begin{enumerate}
-        \item \textbf{Completeness:} for an honest i.i.d.\ prover preparing systems in a state $\rho$ such that $F(\rho,\ket{\Psi})\geq 1-\epsilon/(3n)$, the protocol accepts with probability at least $1-\delta$.
+        \item \textbf{Completeness:} for an honest i.i.d.\ prover preparing systems in a state $\rho$ such that $F(\rho,\ket{\Psi})\geq 1-\epsilon/(3(1+t))$, the protocol accepts with probability at least $1-\delta$.
 
         \item \textbf{Soundness:} for any prover, except with probability at most $\delta$, if the protocol accepts, then the output guarantee~\eqref{eq:verification-output-guarantee} holds.
     \end{enumerate}
@@ -570,7 +571,7 @@ Completeness is stated for the honest i.i.d.\ prover, since an honest prover is 
 \end{theorem}
 
 \begin{proof}
-    We first prove completeness. Consider an honest i.i.d.\ prover preparing systems in a state $\rho$ such that $F(\rho,\ket{\Psi})\geq 1-\epsilon/(3n)$. By Theorem~\ref{theorem:certification}, the certification Protocol~\ref{protocol:certification} accepts with probability at least $1-\delta$. Therefore, Protocol~\ref{protocol:verification of UQC} proceeds to the computation phase with probability at least $1-\delta$.
+    We first prove completeness. Consider an honest i.i.d.\ prover preparing systems in a state $\rho$ such that $F(\rho,\ket{\Psi})\geq 1-\epsilon/(3(1+t))$. By Theorem~\ref{theorem:certification}, the certification Protocol~\ref{protocol:certification} accepts with probability at least $1-\delta$. Therefore, Protocol~\ref{protocol:verification of UQC} proceeds to the computation phase with probability at least $1-\delta$.
 
     We now prove soundness. Upon acceptance of the certification Protocol~\ref{protocol:certification} or Protocol~\ref{protocol:verification}, we have the guarantee that
     \begin{equation}
@@ -793,7 +794,7 @@ Let $\mathcal{A}$ be a certification protocol for an $n$-qubit target state $\ke
     $\Pr\left[\mathcal{A}(\rho^{\otimes \Niid}) = \Accept \; \middle|\;  F(\rho, \ket{\Psi}) < 1-\epsilon\right] \leq \delta$
     \item 
     %
-    $\Pr\left[\mathcal{A}(\rho^{\otimes \Niid}) = \Reject \; \middle|\;  F(\rho, \ket{\Psi}) \geq 1-\frac{\epsilon}{3n}\right] \leq \delta$ 
+    $\Pr\big[\mathcal{A}(\rho^{\otimes \Niid}) = \Reject \;\big|\;  F(\rho, \ket{\Psi}) \geq 1-\frac{\epsilon}{3(1+t)}\big] \leq \delta$ 
 \end{itemize}
 
 Now consider a protocol $\mathcal{B}$ acting on an arbitrary (potentially entangled) joint state $\rho^{1\ldots \Nnoniid} \in (\mathcal{H}^{\otimes n})^{\otimes \Nnoniid}$ . Protocol $\mathcal{B}$ proceeds as follows :
@@ -806,7 +807,8 @@ Now consider a protocol $\mathcal{B}$ acting on an arbitrary (potentially entang
 Then, protocol $\mathcal{B}$ inherits the performance guarantees of $\mathcal{A}$ relative to the held-out state $\rho_{\mathrm{fin}}$ :
 \begin{align}
     \Pr\left[\mathcal{B}(\rho) = \Accept \; \middle|\;  F(\rho_{\mathrm{fin}}, \ket{\Psi}) < 1-\epsilon\right] &\leq \delta \text{,} \\
-    \Pr\left[\mathcal{B}(\rho) = \Reject \; \middle|\;  F(\rho_{\mathrm{fin}}, \ket{\Psi}) \geq 1-\frac{\epsilon}{3n}\right] &\leq \delta \text{,} 
+    \Pr\Big[\mathcal{B}(\rho) = \Reject \;\Big|\; \nonumber \\
+    F(\rho_{\mathrm{fin}}, \ket{\Psi}) \geq 1-\frac{\epsilon}{3(1+t)}\Big] &\leq \delta \text{,} 
 \end{align}
 provided the total sample complexity satisfies :
 \begin{equation}
