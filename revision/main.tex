@@ -40,9 +40,9 @@
 % print the paper without colours.
 \usepackage{xcolor}
 \newif\ifhighlightchanges \highlightchangestrue
-\definecolor{revone}{RGB}{0,70,200}    % answers to Reviewer 1
-\definecolor{revtwo}{RGB}{190,0,110}   % answers to Reviewer 2
-\definecolor{revother}{RGB}{0,128,64}  % other changes
+\colorlet{revone}{red}    % answers to Reviewer 1
+\colorlet{revtwo}{red}    % answers to Reviewer 2
+\colorlet{revother}{red}  % other changes
 \newcommand{\revone}[1]{\ifhighlightchanges{\color{revone}#1}\else#1\fi}
 \newcommand{\revtwo}[1]{\ifhighlightchanges{\color{revtwo}#1}\else#1\fi}
 \newcommand{\revother}[1]{\ifhighlightchanges{\color{revother}#1}\else#1\fi}

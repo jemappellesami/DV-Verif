@@ -14,9 +14,8 @@ read), then read each step in order.
 Two kinds of PDFs:
 
 - **Step 2** ([`v3.2_highlighted.pdf`](v3.2_highlighted.pdf)) is the paper
-  itself, with the text added in v3.2 in colour: **blue** for the answers to
-  Reviewer 1, **magenta** for the answers to Reviewer 2, **green** for the
-  other changes. Removed text is not shown (two passages were replaced: the
+  itself, with the text added in v3.2 in **red** (the table below says which
+  referee comment each change answers). Removed text is not shown (two passages were replaced: the
   sentence on the optimality of DFE in Sec. 2.1, and the names `c`, `s` of
   the completeness and soundness variables in Sec. 3).
 - **Step 1** and the cumulative diff are latexdiff outputs: the full paper
@@ -97,17 +96,17 @@ Commits of this step (each one can be opened and commented on GitHub):
 
 The PDF is the current revision (v3.2, plus two later edits of the author:
 the reference DHZ20 for the `eps^-1` dependence in Sec. 2.1 and the end of
-the "Robustness loss" paragraph), with the v3.2 changes in colour.
+the "Robustness loss" paragraph), with the v3.2 changes in red.
 
-| Where | What changed | Referee comment | Colour | Page |
-|-------|--------------|-----------------|--------|------|
-| Introduction | "we combine existing techniques, namely ..." | Reviewer 2, comment 3 (position the contribution) | magenta | 3 |
-| Sec. 2.1 (DFE) | The `eps^-2` dependence is optimal for fidelity estimation; the dependence in `d` is not universally optimal (`O(2^n)` in the worst case, `O(1)` for stabilizer states), which is why DFE is used here only on small systems and stabilizer states. Replaces the sentence "DFE achieves the information-theoretically optimal scaling". | Reviewer 1, comment 1 ("information-theoretically optimal") | blue | 4 |
-| Sec. 3 (introduction) | Completeness and soundness variables renamed `eps_c` and `eps_s` (they were `c` and `s`; `s` is now the number of stabilizer inputs). | – (notation) | green | 6 |
-| Sec. 3.2, new paragraph "Joint estimation of the witness" | Estimating each block separately with a union bound would cost `t^3`; the joint estimator costs `t^2`. | Reviewer 1, comment 3 (witness vs union bound) | blue | 9–10 |
-| Sec. 3.2, new paragraph "Robustness loss" | Why there is a loss in robustness, why it is linear in `1+t`, and why it is realistic for fault-tolerant resource states. | Reviewer 2, comment 2 (is the margin realistic?) | magenta | 10 |
-| Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | magenta | 11 |
-| App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | green | 17 |
+| Where | What changed | Referee comment | Page |
+|-------|--------------|-----------------|------|
+| Introduction | "we combine existing techniques, namely ..." | Reviewer 2, comment 3 (position the contribution) | 3 |
+| Sec. 2.1 (DFE) | The `eps^-2` dependence is optimal for fidelity estimation; the dependence in `d` is not universally optimal (`O(2^n)` in the worst case, `O(1)` for stabilizer states), which is why DFE is used here only on small systems and stabilizer states. Replaces the sentence "DFE achieves the information-theoretically optimal scaling". | Reviewer 1, comment 1 ("information-theoretically optimal") | 4 |
+| Sec. 3 (introduction) | Completeness and soundness variables renamed `eps_c` and `eps_s` (they were `c` and `s`; `s` is now the number of stabilizer inputs). | – (notation) | 6 |
+| Sec. 3.2, new paragraph "Joint estimation of the witness" | Estimating each block separately with a union bound would cost `t^3`; the joint estimator costs `t^2`. | Reviewer 1, comment 3 (witness vs union bound) | 9–10 |
+| Sec. 3.2, new paragraph "Robustness loss" | Why there is a loss in robustness, why it is linear in `1+t`, and why it is realistic for fault-tolerant resource states. | Reviewer 2, comment 2 (is the margin realistic?) | 10 |
+| Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | 11 |
+| App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | 17 |
 
 Not addressed yet: the second half of Reviewer 2, comment 1 (a sampled
 Pauli string can involve `O(n)` elementary measurements).
@@ -177,9 +176,9 @@ sh revision/mkdiff.sh arxiv-v2 v3.3
 
 which write `diffs/v3.2_to_v3.3.pdf` and `diffs/tex/v3.2_to_v3.3.tex` (and
 the cumulative diff from arXiv). Alternatively, as for v3.2, the new text is
-wrapped in `revision/main.tex` with `\revone{...}` (Reviewer 1, blue),
-`\revtwo{...}` (Reviewer 2, magenta) or `\revother{...}` (other changes,
-green), and the compiled `revision/main.pdf` is copied here as
+wrapped in `revision/main.tex` with `\revone{...}` (Reviewer 1),
+`\revtwo{...}` (Reviewer 2) or `\revother{...}` (other changes), all
+printed in red, and the compiled `revision/main.pdf` is copied here as
 `v3.x_highlighted.pdf`. The colours are switched off for the final version
 by replacing `\highlightchangestrue` by `\highlightchangesfalse` in the
 preamble of `revision/main.tex`. While editing, `sh revision/mkdiff.sh`

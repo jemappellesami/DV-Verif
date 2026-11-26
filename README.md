@@ -18,8 +18,8 @@ version-to-version changes, and the reply to the referees.
    has a PDF of the paper with the changes highlighted, a table of every
    change with its page and the referee comment it answers, and
    instructions to comment. For v3.2, the PDF is the paper itself with the
-   new text in colour (blue: Reviewer 1, magenta: Reviewer 2, green: other
-   changes); for v3.1, where Section 3 changed a lot, it is a latexdiff.
+   new text in red; for v3.1, where Section 3 changed a lot, it is a
+   latexdiff.
 3. **The reply to the referees:** [`response/response.tex`](response/response.tex)
    (compiled: `response/response.pdf` once built). Each referee comment has
    a status and a suggested reply, still to be rewritten.
