@@ -121,6 +121,7 @@ Commits of this step:
 - [`cb2bb2b`](https://github.com/jemappellesami/DV-Verif/commit/cb2bb2b) Response letter: suggested replies
 - [`682ee7d`](https://github.com/jemappellesami/DV-Verif/commit/682ee7d) Author edits: reference for eps^-1, wording of "Robustness loss"
 - [`e45ec26`](https://github.com/jemappellesami/DV-Verif/commit/e45ec26), [`4d418a6`](https://github.com/jemappellesami/DV-Verif/commit/4d418a6), [`92c2473`](https://github.com/jemappellesami/DV-Verif/commit/92c2473) v3.2 changes highlighted in red in the paper, tagged with the comment they answer
+- [`780dccb`](https://github.com/jemappellesami/DV-Verif/commit/780dccb), [`22a16c8`](https://github.com/jemappellesami/DV-Verif/commit/22a16c8) R2 C1, second part: number of single-qubit measurements
 
 ---
 
