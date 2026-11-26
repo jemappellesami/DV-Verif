@@ -267,9 +267,9 @@ A central task in quantum characterization and verification is the estimation of
 Let $\Pauli_n$ denote the group of $n$-qubit Pauli operators, and define the \emph{characteristic function} of a pure state $\ket{\psi}$ as
 \begin{equation}
     \chi_\psi: \Pauli_n \to [-1,1], \quad 
-    \chi_\psi(P) = 
-    % \frac 1 d
-    \Tr[\ketbra{\psi} P] 
+    \chi_\psi(P) =
+    \frac 1 d
+    \Tr[\ketbra{\psi} P]
     .
 \end{equation}
 We have the expansion
@@ -280,10 +280,10 @@ We have the expansion
 \end{equation}
 The $\ell_1$-norm of the characteristic function is defined by
 \begin{equation}
-    \norm{\chi_\psi}_1 = \frac{1}{d}\sum_{P\in\Pauli_n \setminus \{\mathbb I\}} \abs{\chi_\psi(P)} \leq {\sqrt{d}},
+    \norm{\chi_\psi}_1 = \sum_{P\in\Pauli_n} \abs{\chi_\psi(P)} \leq {\sqrt{d}},
 \end{equation}
-where $d = 2^n$ is the Hilbert space dimension. In particular: stabilizer states satisfy $\norm{\chi_\psi}_1=1/d$,
-    and magic states such as $\ket\psi=T\ket+ = 1/\sqrt 2(\ket0+e^{i\pi/4}\ket 1)$ satisfy $\norm{\chi_\psi}_1=1/\sqrt{d}$.
+where $d = 2^n$ is the Hilbert space dimension. In particular: stabilizer states satisfy $\norm{\chi_\psi}_1=1$,
+    and magic states such as $\ket\psi=T\ket+ = 1/\sqrt 2(\ket0+e^{i\pi/4}\ket 1)$ satisfy $\norm{\chi_\psi}_1=(1+\sqrt2)/2$.
 % stabilizer states satisfy $\norm{\chi_\psi}_1 = 1$.
 
 Based on this, we define a probability distribution over Pauli operators as
@@ -311,8 +311,9 @@ so that $F(\rho, \ket{\psi}) = \mathbb{E}_{P \sim \mathcal{D}_\psi}[f(P)]$.
 
 By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and averaging the outcomes, one obtains an unbiased estimator of the fidelity. To achieve additive precision $\epsilon$ and failure probability $\delta$, $N> N' \in O(d\, \epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, following Hoeffding's inequality (Lemma \ref{lemma:prelim:hoeffding}). 
 The distribution $\mathcal{D}_\psi$ can be sampled from in $O(d)$ time.
+For a stabilizer state, $\norm{\chi_\psi}_1=1$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$.
 
-Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the measurement cost grows exponentially with the system size $n$, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
+Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the measurement cost grows exponentially with the system size $n$ for general target states, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
 
 \subsubsection{Fidelity witnesses}
 \label{subsection:prelims:witness}
