@@ -207,7 +207,7 @@ By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and av
 For a stabilizer state, $\norm{\chi_\psi}_1=d$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$ \cite{DHZ20Optimal}.
 
 
-Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation, the sample cost grows exponentially with the system size $n$ for general target states, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems.
+The dependence of DFE in $\epsilon^{-2}$ is optimal as far as fidelity estimation is concerned \cite{FOS24optimal}: a dependence in $\epsilon^{-1}$ can be obtained, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal. In DFE, it is $O(d)=O(2^n)$ in the worst case, meaning that the sample cost grows exponentially with the system size $n$. For specific classes of states, it can be significantly reduced: for instance, it is $O(1)$ for stabilizer states, as seen above. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states: this is the context in which we use DFE in this work.
 
 \subsection{Fidelity witnesses}
 \label{subsection:prelims:witness}
