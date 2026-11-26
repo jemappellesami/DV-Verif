@@ -353,9 +353,9 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
             Let $\ket\Psi = C\left(\bigotimes_{\qubit=1}^n\ket{\psi_\qubit}\right)$ be the target state to certify and let $\epsilon>0$ be a precision parameter. With the notations above, the protocol goes as follows:
             \begin{enumerate}
                 \item The verifier receives $N+1$ copies of $\rho$ and sets the last copy aside, unmeasured; we denote it $\rho_{\mathrm{fin}}$.
-                \item For each copy $\copyindex\leq N$, sample classically $(\qubit_j, P_j)\sim \pdist$, then measure $C P_j^{(i_j)} C^\dagger$ on $\rho$ (where $P^{(i)}$ denotes the $n$-qubit Pauli operator acting as $P$ on the $i$-th qubit and as identity on all the other qubits), obtaining the outcome $x_j\in\{-1, 1\}$.
-                \item Compute $\bar X \coloneqq \frac{1}{N}\sum_{\copyindex=1}^N \tfrac 1 2 \mathrm{sgn}(\chi_{\psi_{\qubit_j}}(P_j)) \,x_j$.
-                \item Output $\bar W\coloneqq 1-n+\np\times \bar X$ together with the unmeasured copy $\rho_{\mathrm{fin}}$. Accept if $\bar W\ge1-\frac23\epsilon$, reject otherwise.
+                \item For each copy $\copyindex\leq N$, sample classically $(b_j, P_j)\sim \pdist$, then measure $C P_j^{(b_j)} C^\dagger$ on $\rho$ (where $P^{(b)}$ denotes the $n$-qubit Pauli operator acting as $P$ on block $b$ and as identity on all the other qubits), obtaining the outcome $x_j\in\{-1, 1\}$.
+                \item Compute $\bar X \coloneqq \frac{1}{N}\sum_{\copyindex=1}^N \tfrac 1 2 \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j$.
+                \item Output $\bar W\coloneqq 1-(1+t)+\np\times \bar X$ together with the unmeasured copy $\rho_{\mathrm{fin}}$. Accept if $\bar W\ge1-\frac23\epsilon$, reject otherwise.
             \end{enumerate}
         \end{protocol}
 
