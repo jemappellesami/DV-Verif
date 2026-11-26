@@ -526,6 +526,7 @@ size $N_{2}$ (\texttt{test}), $N_1-N_2-1$ (\texttt{discard}), and $1$ (\texttt{k
         \end{equation}
         with $\tilde O$ hiding polylogarithmic factors in $n,\epsilon, \delta$.
         The factor $(1+t)^4$ comes from the square of $\Niid$ in Lemma~\ref{lemma:prelim:iid} (Appendix~\ref{section:verification}). The remaining linear factor $n$ comes from the factor $n=\log d$ in the same lemma, that is, from the dimension of the $n$-qubit registers sent by the prover, which does not depend on the structure of the target state.
+        This adversarial sample complexity is large because we took a generic approach: Lemma~\ref{lemma:prelim:iid} applies to any protocol with non-adaptive and incoherent measurements, so that the bound is not tight and can be subject to optimization. We leave this optimization to further work, as it is not the main focus here. Note that such an optimization has already been done for stabilizer states, in particular graph states \cite{ZH19efficient, LZH23robust}.
 
     
 
