@@ -1,7 +1,7 @@
 \documentclass[a4paper,twocolumn,11pt,unpublished]{../../revision/quantumarticle}
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL old.tex    Thu Nov 26 20:40:00 2026
-%DIF ADD main.tex   Thu Nov 26 20:40:00 2026
+%DIF DEL old.tex    Thu Nov 26 21:09:39 2026
+%DIF ADD main.tex   Thu Nov 26 21:09:39 2026
 \pdfoutput=1
 
 \usepackage{mathtools}
@@ -38,6 +38,21 @@
 \renewcommand{\O}{\mathcal O}
 \newcommand{\ketbra}[1]{\ket{#1}\!\bra{#1}}
 \newcommand{\abs}[1]{\left|#1\right|}
+%DIF 38a38-50
+% Highlighting of the changes made after v3.1 (for the co-authors and the %DIF > 
+% referees). Replace \highlightchangestrue by \highlightchangesfalse to %DIF > 
+% print the paper without colours nor tags. %DIF > 
+%   \rev{R1.1}{text}  text in red, preceded by the tag (R1.1): the comment %DIF > 
+%                     it answers (Reviewer 1, comment 1); %DIF > 
+%   \revtag{R1.1}     the tag alone (e.g. inside a \paragraph title); %DIF > 
+%   \revother{text}   text in red, without tag (changes that answer no %DIF > 
+%                     referee comment). %DIF > 
+\usepackage{xcolor} %DIF > 
+\newif\ifhighlightchanges \highlightchangestrue %DIF > 
+\newcommand{\revother}[1]{\ifhighlightchanges{\color{red}#1}\else#1\fi} %DIF > 
+\newcommand{\revtag}[1]{\ifhighlightchanges\textcolor{red}{\textbf{(#1)}}\ \fi} %DIF > 
+\newcommand{\rev}[2]{\revother{\revtag{#1}#2}} %DIF > 
+%DIF -------
 \title{Efficient certification of intractable quantum states with few Pauli measurements}
 %
 
@@ -260,7 +275,9 @@ By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and av
 
 \DIFdelbegin \DIFdel{Although DFE achieves the information-theoretically optimal scaling for direct fidelity estimation , the }\DIFdelend \DIFaddbegin \DIFadd{The dependence of DFE in $\epsilon^{-2}$ is optimal as far as fidelity estimation is concerned \mbox{%DIFAUXCMD
 \cite{FOS24optimal}}\hskip0pt%DIFAUXCMD
-: a dependence in $\epsilon^{-1}$ can be obtained, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal. In DFE, it is $O(d)=O(2^n)$ in the worst case, meaning that the }\DIFaddend sample cost grows exponentially with the system size $n$\DIFdelbegin \DIFdel{, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems }\DIFdelend \DIFaddbegin \DIFadd{. For specific classes of states, it can be significantly reduced: for instance, it is $O(1)$ for stabilizer states, as seen above. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states: this is the context in which we use DFE in this work}\DIFaddend .
+: a dependence in $\epsilon^{-1}$ can be obtained \mbox{%DIFAUXCMD
+\cite{DHZ20Optimal}}\hskip0pt%DIFAUXCMD
+, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal. In DFE, it is $O(d)=O(2^n)$ in the worst case, meaning that the }\DIFaddend sample cost grows exponentially with the system size $n$\DIFdelbegin \DIFdel{, since $d = 2^n$. Consequently, this method remains practical only for small-scale quantum systems }\DIFdelend \DIFaddbegin \DIFadd{. For specific classes of states, it can be significantly reduced: for instance, it is $O(1)$ for stabilizer states, as seen above. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states: this is the context in which we use DFE in this work}\DIFaddend .
 
 \subsection{Fidelity witnesses}
 \label{subsection:prelims:witness}
@@ -571,7 +588,7 @@ We introduce some notations in Section\ \ref{subsection:notations}, describe the
 }
 
         \paragraph{\DIFadd{Robustness loss.}}
-        \DIFadd{Observe that the guarantee of Theorem~\ref{theorem:certification} comes with a loss in robustness: the protocol rejects states with $F(\rho,\ket\Psi)<1-\epsilon$, but it is only guaranteed to accept states with $F(\rho,\ket\Psi)\ge1-\frac{\epsilon}{3(1+t)}$. First, no loss in robustness at all would mean estimating the fidelity itself, as DFE does, and this cannot be done efficiently with DFE for \CEPS, since its sample complexity grows with $\norm{\chi_\Psi}_1$, which is exponential in the number of magic inputs (see Appendix~\ref{appendix:l-1 norm of CPS}). Second, the loss here is linear in the number $1+t$ of blocks, hence at most linear in $n$. It is not a lower bound, and how far it can be reduced is left for future work. Finally, this loss is not necessarily unrealistic: our protocol certifies states produced in the context of fault-tolerant quantum computation (Clifford circuits, magic-state injection and Pauli measurements), that is, in a regime where high fidelities are expected, so that the protocol with this guarantee remains meaningful and does not abort all the time.
+        \DIFadd{Observe that the guarantee of Theorem~\ref{theorem:certification} comes with a loss in robustness: the protocol rejects states with $F(\rho,\ket\Psi)<1-\epsilon$, but it is only guaranteed to accept states with $F(\rho,\ket\Psi)\ge1-\frac{\epsilon}{3(1+t)}$. First, no loss in robustness at all would mean estimating the fidelity itself, as DFE does, and this cannot be done efficiently with DFE for \CEPS, since its sample complexity grows with $\norm{\chi_\Psi}_1$, which is exponential in the number of magic inputs (see Appendix~\ref{appendix:l-1 norm of CPS}). Second, the loss here is linear in the number $1+t$ of blocks, hence at most linear in $n$. It is not a lower bound, and how far it can be reduced is left for future work. Finally, this loss is not necessarily unrealistic: our protocol certifies states produced in the context of fault-tolerant quantum computation (Clifford circuits, magic-state injection and Pauli measurements), that is, in a regime where high fidelities are expected, so that the protocol with this guarantee remains meaningful and does not abort in presence of small infidelities.
 }
 
 
