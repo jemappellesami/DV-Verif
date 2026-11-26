@@ -17,8 +17,13 @@
 # Compiled PDFs (figure and review PDFs are tracked)
 /*.pdf
 /paper/*.pdf
+/revision/*.pdf
 /response/*.pdf
+
+# latexdiff output (revision/mkdiff.sh)
+/revision/diff.tex
 
 # Kept on disk but out of the repo
 /GdR TeQ/
 /v2.tex
+/notes/
