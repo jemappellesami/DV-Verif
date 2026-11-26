@@ -37,7 +37,7 @@ On p.~4, please clarify the statement that DFE is ``information-theoretically op
 \begin{Referee}{2}
 The sample-complexity analysis seems somewhat pessimistic for resource states relevant to Pauli-MBQC, where many of the product inputs may be stabilizer states such as $\ket0$, while only a subset are magic states. It would be useful to express the complexity in terms of the numbers $n_0$ and $n_H$ of stabilizer and magic inputs. Then, the sample complexity can be improved since $\ket0$ inputs can be verified more efficiently than generic single-qubit states, i.e., $O((n_0/\epsilon)\log(1/\delta))$ samples, rather than the $O(n_0^2/\epsilon^2)$ scaling resulting from additive fidelity estimation. It would be helpful for readers to write this refined sample complexity.
 \end{Referee}
-\status{DONE in the paper (git tag \texttt{R1.2-done}). Reply: suggested text below, to be rewritten.}
+\status{DONE in the paper, v3.1 (git tag \texttt{v3.1}). Reply: suggested text below, to be rewritten.}
 
 \begin{Response}
 (Suggested text, to be rewritten.)
@@ -50,19 +50,20 @@ We thank the referee for this suggestion, which we followed: the sample complexi
 
     \item \textbf{Back-propagation.} As before, back-propagation reduces the estimation of the witness on the received state $\rho$ to its estimation on $C^\dagger\rho C$, up to a rewriting of the Pauli measurements, so that the product structure of the target state is recovered. Estimating the witness then reduces to estimating the fidelity $F_S$ of the stabilizer block and the single-qubit fidelities $F_i$, $i\in M$.
 
-    \item \textbf{DFE on each block.} These fidelities are estimated with DFE, which is efficient here for two reasons: for a stabilizer state, $\|\chi_\psi\|_1=1$, so that DFE requires a number of copies that does not depend on its number of qubits; and the non-stabilizer blocks are single qubits, for which $d=2$.
+    \item \textbf{DFE on each block.} These fidelities are estimated with DFE, which is efficient here for two reasons: for a stabilizer state, $\|\chi_\psi\|_1=d$, so that DFE requires a number of copies that does not depend on its number of qubits; and the non-stabilizer blocks are single qubits, for which $d=2$.
 
-    \item \textbf{One estimator for the witness.} Writing the fidelities in the Pauli basis, the witness becomes a weighted sum of characteristic functions, which we normalize with $m=1+\sum_{i\in M}\|\chi_{\psi_i}\|_1\le1+t\sqrt2$ (instead of $m=\sum_{i=1}^n\|\chi_{\psi_i}\|_1\le n\sqrt2$). The witness is then the expectation value of a random variable over a joint distribution: the verifier samples a stabilizer test with probability $1/m$, or a test of the non-stabilizer qubit $i$ with probability $\|\chi_{\psi_i}\|_1/m$, which depends on $\ket{\psi_i}$. For the stabilizer test, the Pauli operator is sampled uniformly from the stabilizer group of $\ket{\psi_S}$, which can be done efficiently; for the test of qubit $i$, it is sampled from the single-qubit DFE distribution, as before.
+    \item \textbf{One estimator for the witness.} Writing the fidelities in the Pauli basis, the witness becomes a weighted sum of characteristic functions, which we normalize with $m=2+\sum_{i\in M}\|\chi_{\psi_i}\|_1\le2+t(1+\sqrt3)$ (instead of $m=\sum_{i=1}^n\|\chi_{\psi_i}\|_1\le n(1+\sqrt3)$): the terms of the non-stabilizer qubits are unchanged, and the whole stabilizer block weighs as a single stabilizer qubit. The witness is then the expectation value of a random variable over a joint distribution: the verifier samples a stabilizer test with probability $2/m$, or a test of the non-stabilizer qubit $i$ with probability $\|\chi_{\psi_i}\|_1/m$, which depends on $\ket{\psi_i}$. For the stabilizer test, the Pauli operator is sampled uniformly from the stabilizer group of $\ket{\psi_S}$, which can be done efficiently; for the test of qubit $i$, it is sampled from the single-qubit DFE distribution, as before.
 
     \item \textbf{Sample complexity.} Hoeffding's inequality then gives $N_{iid}\in O\big((1+t)^2\epsilon^{-2}\log(1/\delta)\big)$, independently of $s$ (instead of $O(n^2\epsilon^{-2}\log(1/\delta))$), and the protocol accepts as soon as $F\ge1-\epsilon/(3(1+t))$ (instead of $1-\epsilon/(3n)$).
 \end{enumerate}
 
 \noindent The corresponding changes in the manuscript are the following.
 \begin{itemize}
-    \item Section~2.3.3 (DFE): we added that DFE of a stabilizer state requires $O(\epsilon^{-2}\log(1/\delta))$ copies, independently of the dimension [DHZ20Optimal]. We also corrected the convention of the characteristic function and the values of its $\ell_1$-norm.
-    \item Section~2.3.4 (fidelity witnesses): we introduced the block fidelity witness and its robustness.
-    \item Section~3: new notations (splitting of the target state, normalization $m$, distributions $\mu$ and $\mathcal D_{\psi_b}$ with their interpretation), Protocol~1, the paragraph that follows it, Theorem~1 and its proof are written for the $1+t$ blocks.
-    \item Section~4: the adversarial scaling becomes $\tilde O\big(n(1+t)^4/(\delta^2\epsilon^6)\big)$ instead of $\tilde O(n^5/(\delta^2\epsilon^6))$. The remaining linear factor $n$ comes from the factor $\log d$ of Lemma~2, that is, from the dimension of the registers sent by the prover.
+    \item Section~2.1 (DFE): we added that DFE of a stabilizer state requires $O(\epsilon^{-2}\log(1/\delta))$ copies, independently of the dimension [DHZ20Optimal].
+    \item Section~2.2 (fidelity witnesses): we introduced the block fidelity witness and its robustness.
+    \item Section~3: the introduction of the section states the new scalings; Section~3.1 (notations: splitting of the target state, normalization $m$, distributions $\mu$ and $\mathcal D_{\psi_b}$ with their interpretation) and Section~3.2 (Protocol~1, the paragraph that follows it, Theorem~1 and its proof) are written for the $1+t$ blocks.
+    \item Section~3.3 and Appendix~C: the acceptance threshold becomes $1-\epsilon/(3(1+t))$ in Theorem~2 and Lemma~2, and the adversarial scaling becomes $\tilde O\big(n(1+t)^4/(\delta^2\epsilon^6)\big)$ instead of $\tilde O(n^5/(\delta^2\epsilon^6))$. The remaining linear factor $n$ comes from the factor $n=\log d$ of Lemma~2, that is, from the dimension of the registers sent by the prover.
+    \item Section~4: the completeness condition of the theorem becomes $F\ge1-\epsilon/(3(1+t))$.
     \item Figure~4 and its caption now show the two kinds of tests and the block structure.
 \end{itemize}
 \end{Response}
