@@ -6,13 +6,20 @@
 % ----------------------------------------------------------------------
 % Original request (author): redraw the submitted figure in TikZ, keeping
 % its content and colours (the submitted one was exported from Inkscape).
+% Revision (R1.2): the protocol now samples a block b in {S} u M (the
+% stabilizer block S, or one non-stabilizer qubit i in M) instead of a
+% qubit index i; variant "B" chosen by the author: the two kinds of test
+% are spelled out and the wires are grouped into the block S and a qubit i.
 % ----------------------------------------------------------------------
-% What is drawn, as in the submitted figure (446 x 229 bp page):
+% What is drawn (446 x 229 bp page, layout of the submitted figure):
 %   - a stack of cards, one per copy j <= N (double arrow, top left): a
 %     blue card at the back, then three identical red cards;
-%   - on each red card, left: the sampling by mu of the target index i
-%     (white die) and, by D_i, of the Pauli observable P in P_1 (blue
-%     die); right, three panels: receive rho (blue), measure CP_iC^dagger
+%   - on each red card, left: the sampling by mu of the test b (white
+%     die; S with probability 1/m, i in M with probability
+%     ||chi_psi_i||_1/m) and, by D_psi_b, of the Pauli observable P on
+%     block b (blue die; uniform on Stab(psi_S) if b = S, single-qubit if
+%     b = i); right, three panels: receive rho (blue; the first two wires
+%     form the block S, the last one is a qubit i), measure CP^(b)C^dagger
 %     by back-propagation (pink, dashed box), binary outcome x_j as the
 %     product of the outcomes (grey);
 %   - below: Xbar = (1/N) sum g(x_j) => Wbar.
@@ -26,6 +33,7 @@
 % ======================================================================
 \documentclass[tikz,border=0pt]{standalone}
 \input{figpreamble}
+\usetikzlibrary{decorations.pathreplacing}
 \figsansfonts
 % Big operators (sum, prod) scale with the font size here.
 \DeclareFontFamily{OMX}{lmex}{}
@@ -115,16 +123,24 @@
   \fill (64.598,121.848) -- (62.266,124.016) -- (60.762,123.965) -- (63.098,121.793) -- (60.926,119.457) -- (62.426,119.512) -- cycle;
   \node[anchor=south west] at (63.0755,137.934)
     {\includegraphics[width=27.587bp, height=27.598bp]{img/die-blue.png}};
+  % blocks of the wires
+  \draw[line width=0.5bp, decorate, decoration={brace, amplitude=1.6bp}]
+    (200.3,109.2) -- (200.3,72.6);
+  \node[font=\figsize{7}, anchor=east] at (198.4,90.9) {$S$};
+  \node[font=\figsize{7}, anchor=east] at (199.4,136.0) {$i$};
   % labels
   \node[font=\figsize{17.59}] at (50.76,64.89) {$\boldsymbol{\mu}$};
-  \node[font=\figsize{7.07}] at (94.23,80.19) {Target index};
-  \node[font=\figsize{6.67}] at (83.07,89.01) {$i\leq n$};
-  \node[font=\figsize{9.65}] at (68.13,110.07) {$\mathcal{D}_i$};
-  \node[font=\figsize{5.85}] at (103.95,114.84) {Pauli obs.};
-  \node[font=\figsize{4.80}] at (100.80,122.76) {$P\in\mathcal{P}_1$};
+  \node[font=\figsize{7.07}, anchor=west] at (75.1,78.5) {Test $b$};
+  \node[font=\figsize{4.5}, anchor=west] at (75.1,85.6) {$S$: $1/m$};
+  \node[font=\figsize{4.5}, anchor=west] at (75.1,91.6) {$i\in M$: $\|\chi_{\psi_i}\|_1/m$};
+  \node[font=\figsize{9.65}] at (70.5,110.07) {$\mathcal{D}_{\psi_b}$};
+  \node[font=\figsize{5.85}, anchor=west] at (90.8,114.84) {Pauli obs.};
+  \node[font=\figsize{4.3}, anchor=west] at (90.8,121.5) {$P$ on block $b$};
+  \node[font=\figsize{4.6}] at (78.9,143.2) {$b=S$: $P$ uniform on $\mathrm{Stab}(\ket{\psi_S})$};
+  \node[font=\figsize{4.6}] at (78.9,149.0) {$b=i$: $P\sim\mathcal{D}_{\psi_i}$, single-qubit};
   \node[font=\figsize{7.32}] at (79.02,159.93) {Meas.\ basis sampling};
-  \node[font=\figsize{6.82}] at (78.93,168.93) {$\Rightarrow\ i, P$};
-  \node[font=\figsize{31.46}] at (187.83,103.59) {$\rho$};
+  \node[font=\figsize{6.82}] at (78.93,168.93) {$\Rightarrow\ b, P$};
+  \node[font=\figsize{31.46}] at (176.5,103.59) {$\rho$};
   \node[font=\figsize{11.18}] at (189.63,157.23) {Receive $\rho$};
   \node[font=\figsize{8.92}] at (273.87,157.86) {Measure};
   \node[font=\figsize{6.87}] at (275.49,170.64) {(Back-Propagation)};
@@ -132,8 +148,8 @@
   \node[font=\figsize{6.86}] at (360.18,166.86) {for sample $j$};
   \node[font=\figsize{18.17}] at (366.39,103.86) {$x_j$};
   \node[font=\figsize{8.61}] at (341.28,79.92) {$\displaystyle\prod$};
-  \node[font=\figsize{8.38}] at (231.39,126.18) {$P_i$};
-  \node[font=\figsize{10.56}] at (274.41,126.81) {$CP_iC^\dagger$};
+  \node[font=\figsize{8.38}, anchor=east] at (236.2,126.18) {$P^{(b)}$};
+  \node[font=\figsize{9.2}, anchor=west] at (259.6,126.81) {$CP^{(b)}C^\dagger$};
 \end{scope}}
 
 \begin{document}

@@ -420,7 +420,7 @@ In this section, we propose a protocol to check whether an i.i.d.\ prover correc
             \begin{figure*}[t]
                 \centering
                 \includegraphics[width=\textwidth]{figures/sf-protocol-ceps.pdf} 
-                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sampled $\qubit, P$, we have $g(x) = \mathrm{sgn}(\chi_{\psi_{\qubit_j}}(P_j)) \,x_j$. Also, the estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-n+\np\times \bar X$. 
+                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sampled $b, P$, we have $g(x) = \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j$. The test $b$ is either the stabilizer block $S$, with probability $1/\np$, or a non-stabilizer qubit $i\in M$, with probability $\norm{\chi_{\psi_i}}_1/\np$; here, the first two wires form the block $S$ and the last one is a qubit $i\in M$. Also, the estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-(1+t)+\np\times \bar X$.
                 The samples in red boxes are used for certification, while
                 the blue box is a sample that is untouched, left to be used for the computation.}
                 \label{fig:protocol:certification}
