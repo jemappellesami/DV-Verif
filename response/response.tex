@@ -1,0 +1,76 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,braket}
+\usepackage[svgnames]{xcolor}
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+
+% Structure taken from reply_example.tex.
+\newenvironment{Referee}[1]
+{\noindent {\bf Comment #1:} \begin{quote}}
+{\end{quote}\vspace{0cm}}
+\newenvironment{Response}
+{\noindent \color{RawSienna}{\bf Response:} }
+{\medskip}
+% Working notes, to be removed before sending.
+\newcommand{\status}[1]{\noindent{\color{DarkGreen}\textbf{Status:} #1}\par\medskip}
+\newcommand{\todo}[1]{\noindent{\color{red}\textbf{TODO:} #1}\par\medskip}
+
+\begin{document}
+
+\title{Reply to the referees\\[4pt]
+\large Efficient certification of intractable quantum states with few Pauli measurements}
+\date{}
+\maketitle
+
+\section{Reply to the editor}
+
+\todo{Letter to the editor.}
+
+%-----------------------------------------------------------------------
+\section{Reply to Reviewer 1}
+
+\begin{Referee}{1}
+On p.~4, please clarify the statement that DFE is ``information-theoretically optimal.'' Its $O(\epsilon^{-2})$ dependence is optimal, but the dependence on the Hilbert-space dimension or the number of qubits is not universally optimal and depends on the allowed measurement model and the target state.
+\end{Referee}
+\status{Open.}
+
+\begin{Referee}{2}
+The sample-complexity analysis seems somewhat pessimistic for resource states relevant to Pauli-MBQC, where many of the product inputs may be stabilizer states such as $\ket0$, while only a subset are magic states. It would be useful to express the complexity in terms of the numbers $n_0$ and $n_H$ of stabilizer and magic inputs. Then, the sample complexity can be improved since $\ket0$ inputs can be verified more efficiently than generic single-qubit states, i.e., $O((n_0/\epsilon)\log(1/\delta))$ samples, rather than the $O(n_0^2/\epsilon^2)$ scaling resulting from additive fidelity estimation. It would be helpful for readers to write this refined sample complexity.
+\end{Referee}
+\status{Resolved in the paper. Reply: TODO.}
+
+\noindent Changes in the paper (for writing the reply):
+\begin{itemize}
+    \item Preliminaries, DFE: convention of the characteristic function fixed; for a stabilizer state, $\|\chi_\psi\|_1=1$ and DFE needs $O(\epsilon^{-2}\log(1/\delta))$ copies, independently of the dimension.
+    \item Preliminaries, fidelity witnesses: block fidelity witness, with robustness $1-B(1-F)\le W\le F$ for $B$ blocks.
+    \item Section~3: the $s$ stabilizer inputs are gathered in one block $S$ and the $t$ non-stabilizer inputs are single-qubit blocks ($n=s+t$); new normalization $m=1+\sum_{i\in M}\|\chi_{\psi_i}\|_1\le1+t\sqrt2$; protocol, intuition, theorem and proof on the $1+t$ blocks. Result: $N_{iid}\in O\big((1+t)^2\epsilon^{-2}\log(1/\delta)\big)$, independent of $s$, and acceptance for $F\ge1-\epsilon/(3(1+t))$ (instead of $1-\epsilon/(3n)$).
+    \item Section~4: $N_{non-iid}\in\tilde O\big(n(1+t)^4/(\delta^2\epsilon^6)\big)$ instead of $\tilde O(n^5/(\delta^2\epsilon^6))$; the remaining factor $n$ comes from $\log d$ in Lemma~2.
+    \item Figure~4 and its caption: the protocol samples a stabilizer test or a test of a non-stabilizer qubit.
+\end{itemize}
+
+\todo{Reply to Reviewer~1, comment~2. Point to make: the dependence on the number of stabilizer inputs is removed entirely (not only made linear), with $N_{iid}\in O((1+t)^2\epsilon^{-2}\log(1/\delta))$. The $\epsilon^{-2}$ remains: our method estimates the fidelity witness to additive precision $\epsilon$ with DFE, whose estimator is squared in Hoeffding's bound, so it cannot give $\epsilon^{-1}$. The $O((n_0/\epsilon)\log(1/\delta))$ scaling suggested by the reviewer is reached by another, weaker, method of certification, which we do not address here. (To check before writing: which reference the reviewer has in mind for $\epsilon^{-1}$, and the exact sense in which that method is weaker.)}
+
+\begin{Referee}{3}
+The fidelity witness in Eq.~(9) appears closely related to a straightforward local-certification argument: if each single-qubit reduced state has infidelity at most $\epsilon_i$, then the global infidelity is bounded by $\sum_i\epsilon_i$. It would be helpful if the authors clarified more explicitly what is gained by introducing the fidelity-witness formalism rather than certifying the single-qubit states separately and applying a union-bound-type argument. My understanding is that the main advantage is statistical: the proposed protocol directly estimates a weighted sum of local fidelities through importance sampling (based on Eq.~(14)), thereby avoiding separate estimation and confidence bounds for all $n$ qubits and improving the overall sample complexity.
+\end{Referee}
+\status{Open.}
+
+%-----------------------------------------------------------------------
+\section{Reply to Reviewer 2}
+
+\begin{Referee}{1}
+The adversarial complexity may be large. Moreover, a sampled Pauli string can involve $O(n)$ elementary measurements, so copy complexity understates the total experimental cost.
+\end{Referee}
+\status{Open. Note: the adversarial scaling is now $\tilde O(n(1+t)^4/(\delta^2\epsilon^6))$ (see Reviewer~1, comment~2).}
+
+\begin{Referee}{2}
+The guaranteed acceptance requires $F(\rho,\Psi)\ge1-\frac{\epsilon}{3n}$. The paper should discuss whether this tolerance margin is realistic.
+\end{Referee}
+\status{Open. Note: the margin is now $1-\frac{\epsilon}{3(1+t)}$ (see Reviewer~1, comment~2).}
+
+\begin{Referee}{3}
+The novelty lies in a combination of known techniques for CPS states. This is useful, but the manuscript should position the contribution accordingly.
+\end{Referee}
+\status{Open.}
+
+\end{document}
