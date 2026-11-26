@@ -237,6 +237,22 @@ This expression combines local fidelities into a global quantity that certifies 
 \end{equation}
 In other words, if $F(\rho,\ket\psi)=1-\alpha$, then the bound only guarantees $W(\rho,|\psi\rangle)\geq 1-n\alpha$: the infidelity may be amplified by a factor $n$ at the level of the witness. We refer to this amplification factor as the robustness loss of the witness, which is here linear in the system size. Conversely, obtaining $W(\rho,|\psi\rangle)\geq 1-\epsilon$ requires $F(\rho,|\psi\rangle)\geq 1-\epsilon/n$.
 
+This witness extends to target states that are products of states on blocks of qubits. Indeed,
+for $\ket{\psi}=\bigotimes_{b=1}^{B}\ket{\psi_b}$, where the $B$ blocks form a partition of the $n$ qubits and each $\ket{\psi_b}$ is a pure state on block $b$, ref.~\cite{UC24efficient} defined the \emph{block fidelity witness} as
+\begin{equation}
+    \label{eq:prelims:blockwitness}
+    W(\rho, \ket{\psi})
+    \coloneqq 1 -
+    \sum_{b=1}^{B}
+    \big(1 - F(\rho_b, \ket{\psi_b})\big),
+\end{equation}
+where $\rho_b$ denotes the reduced state of $\rho$ on block $b$. The robustness property then becomes
+\begin{equation}
+    \label{eq:prelims:blockwitness:robustness}
+    1-B(1-F(\rho, \ket\psi)) \leq W(\rho, \ket\psi)\leq F(\rho, \ket\psi)\; .
+\end{equation}
+Eq.~\eqref{eq:prelims:witness} is the case where each block is a single qubit, with $B=n$.
+
 
 \subsection{Measurement back-propagation}
 \label{subsection:prelims:backprop}
