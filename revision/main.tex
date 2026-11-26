@@ -35,6 +35,17 @@
 \renewcommand{\O}{\mathcal O}
 \newcommand{\ketbra}[1]{\ket{#1}\!\bra{#1}}
 \newcommand{\abs}[1]{\left|#1\right|}
+% Highlighting of the changes made after v3.1 (for the co-authors and the
+% referees). Replace \highlightchangestrue by \highlightchangesfalse to
+% print the paper without colours.
+\usepackage{xcolor}
+\newif\ifhighlightchanges \highlightchangestrue
+\definecolor{revone}{RGB}{0,70,200}    % answers to Reviewer 1
+\definecolor{revtwo}{RGB}{190,0,110}   % answers to Reviewer 2
+\definecolor{revother}{RGB}{0,128,64}  % other changes
+\newcommand{\revone}[1]{\ifhighlightchanges{\color{revone}#1}\else#1\fi}
+\newcommand{\revtwo}[1]{\ifhighlightchanges{\color{revtwo}#1}\else#1\fi}
+\newcommand{\revother}[1]{\ifhighlightchanges{\color{revother}#1}\else#1\fi}
 \title{Efficient certification of intractable quantum states with few Pauli measurements}
 %
 
@@ -119,7 +130,7 @@ These relationships between \CEPS~and other known classes of states are summariz
 
 We therefore arrive at the central problem addressed in this paper: although \CEPS~form a natural family of resource states for Pauli-based quantum computation, no existing method efficiently certifies arbitrary \CEPS~using only Pauli measurements and the circuit description of the target state. Here we close this gap by introducing a certification protocol that is both sample-efficient and time-efficient: the number of required copies scales polynomially with the relevant parameters, and the associated classical pre- and post-processing can be performed in polynomial time.
 
-To achieve this, we combine existing techniques, namely Direct Fidelity Estimation \cite{FL11direct, FOS24optimal} with a recent framework of robust fidelity witnesses \cite{CGKM21efficient}, while exploiting the Clifford structure of \CEPS~through Pauli measurement back-propagation \cite{UC24efficient}. 
+To achieve this, we combine \revtwo{existing techniques, namely} Direct Fidelity Estimation \cite{FL11direct, FOS24optimal} with a recent framework of robust fidelity witnesses \cite{CGKM21efficient}, while exploiting the Clifford structure of \CEPS~through Pauli measurement back-propagation \cite{UC24efficient}. 
 \begin{comment}
 A direct application of Direct Fidelity Estimation is not sufficient for arbitrary \CEPS: we show that both its sample complexity and its classical running time scale exponentially with the system size. 
 This motivates certifying the state through a different route, notably by estimating a certified lower bound on the fidelity rather than the fidelity itself.
@@ -207,7 +218,7 @@ By performing repeated Pauli measurements according to $\mathcal{D}_\psi$ and av
 For a stabilizer state, $\norm{\chi_\psi}_1=d$ and $\mathcal{D}_\psi$ is the uniform distribution over the $d$ Pauli operators of its stabilizer group (up to signs), which can be sampled from efficiently. In that case, $O(\epsilon^{-2} \log(1/\delta))$ copies of $\rho$ are sufficient, independently of $d$ \cite{DHZ20Optimal}.
 
 
-The dependence of DFE in $\epsilon^{-2}$ is optimal as far as fidelity estimation is concerned \cite{FOS24optimal}: a dependence in $\epsilon^{-1}$ can be obtained \cite{DHZ20Optimal}, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal. In DFE, it is $O(d)=O(2^n)$ in the worst case, meaning that the sample cost grows exponentially with the system size $n$. For specific classes of states, it can be significantly reduced: for instance, it is $O(1)$ for stabilizer states, as seen above. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states: this is the context in which we use DFE in this work.
+\revone{The dependence of DFE in $\epsilon^{-2}$ is optimal as far as fidelity estimation is concerned \cite{FOS24optimal}: a dependence in $\epsilon^{-1}$ can be obtained \cite{DHZ20Optimal}, but for other figures of merit than an estimate of the fidelity. The dependence in $d$, however, is not universally optimal. In DFE, it is $O(d)=O(2^n)$ in the worst case, meaning that the sample cost grows exponentially with the system size $n$. For specific classes of states, it can be significantly reduced: for instance, it is $O(1)$ for stabilizer states, as seen above. As a consequence, DFE remains practical for small systems (e.g.\ $n=1$) and for stabilizer states: this is the context in which we use DFE in this work.}
 
 \subsection{Fidelity witnesses}
 \label{subsection:prelims:witness}
@@ -292,7 +303,7 @@ In this section, we give a protocol to check whether a prover correctly prepares
 %
 the verifier holds the classical description of $\ket\Psi$ ($C$ and the single-qubit states) and defines a target precision $\epsilon$ and the maximum allowed failure probability $\delta$, meaning that the protocol should succeed with probability $\geq 1-\delta$. Then, we first consider the case where the verifier receives from the prover $N+1$ copies of an unknown quantum state $\rho$ on $n$ qubits, one of which is set aside unmeasured to serve as the protocol's output state (the prover is said to be \textit{i.i.d.}).
 %
-The goal of the protocol is for the verifier to use (non-adaptive) Pauli measurements and classical post-processing to output an acceptance flag if $F(\rho, \ket\Psi) \geq 1-\epsilon_c$, a rejection flag if $F(\rho, \ket\Psi)\leq 1-\epsilon_s$ where $\epsilon_c$ and $\epsilon_s$ are completeness and soundness variables parametrized by $\epsilon$ (Theorem~\ref{theorem:certification} achieves $\epsilon_c=\frac{\epsilon}{3(1+t)}$ and $\epsilon_s=\epsilon$, where $t\le n$ is the number of non-stabilizer single-qubit states $\ket{\psi_i}$).
+The goal of the protocol is for the verifier to use (non-adaptive) Pauli measurements and classical post-processing to output an acceptance flag if $F(\rho, \ket\Psi) \geq 1-\revother{\epsilon_c}$, a rejection flag if $F(\rho, \ket\Psi)\leq 1-\revother{\epsilon_s}$ where $\revother{\epsilon_c}$ and $\revother{\epsilon_s}$ are completeness and soundness variables parametrized by $\epsilon$ (Theorem~\ref{theorem:certification} achieves $\revother{\epsilon_c}=\frac{\epsilon}{3(1+t)}$ and $\revother{\epsilon_s}=\epsilon$, where $t\le n$ is the number of non-stabilizer single-qubit states $\ket{\psi_i}$).
 The efficiency analysis of the protocol consists of computing how many samples the verifier has to ask from the prover in order to achieve this certification task with precision $\epsilon$ and success probability $\geq1-\delta$, knowing the state has size $n$. In other terms, it amounts to computing how $N$ scales with $\epsilon, \delta, n$.
 
 If the prover is not i.i.d., the state received by the verifier might be entangled across the $N$ samples, so they cannot be considered as independent copies anymore. However the verifier has the same aim: perform Pauli measurements on some of the received samples, and leave one remaining subsystem that is accepted if its fidelity is close enough to the target state.
@@ -464,11 +475,11 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
         \end{proof}
         As a result, we can efficiently certify any $n$-qubit $\mCEPS$ using only (non-adaptive) single-qubit Pauli measurements on a number of samples that scales quadratically in the number $t$ of non-stabilizer states $\ket{\psi_i}$, independently of the number $s$ of stabilizer ones, and with efficient sampling and post-processing of measurement outcomes.
 
-        \paragraph{Joint estimation of the witness.}
-        A naive way to estimate the witness would be to estimate the fidelities of the $1+t$ blocks individually, with one DFE for each block, and then to combine these estimates, in a union-bound type of argument. However, each of these estimates would then need precision $\epsilon/(3(1+t))$, so that each of the $t$ DFE on non-stabilizer qubits would cost $O((1+t)^2\epsilon^{-2}\log((1+t)/\delta))$ copies, hence a number of copies scaling as $t^3$ in total. Instead, Protocol~\ref{protocol:certification} estimates the witness jointly, with a single estimator: intuitively, the statistical fluctuations of the different blocks compensate each other, which allows to estimate the witness with a number of copies scaling only as $t^2$ (Theorem~\ref{theorem:certification}).
+        \revone{\paragraph{Joint estimation of the witness.}
+        A naive way to estimate the witness would be to estimate the fidelities of the $1+t$ blocks individually, with one DFE for each block, and then to combine these estimates, in a union-bound type of argument. However, each of these estimates would then need precision $\epsilon/(3(1+t))$, so that each of the $t$ DFE on non-stabilizer qubits would cost $O((1+t)^2\epsilon^{-2}\log((1+t)/\delta))$ copies, hence a number of copies scaling as $t^3$ in total. Instead, Protocol~\ref{protocol:certification} estimates the witness jointly, with a single estimator: intuitively, the statistical fluctuations of the different blocks compensate each other, which allows to estimate the witness with a number of copies scaling only as $t^2$ (Theorem~\ref{theorem:certification}).}
 
-        \paragraph{Robustness loss.}
-        Observe that the guarantee of Theorem~\ref{theorem:certification} comes with a loss in robustness: the protocol rejects states with $F(\rho,\ket\Psi)<1-\epsilon$, but it is only guaranteed to accept states with $F(\rho,\ket\Psi)\ge1-\frac{\epsilon}{3(1+t)}$. First, no loss in robustness at all would mean estimating the fidelity itself, as DFE does, and this cannot be done efficiently with DFE for \CEPS, since its sample complexity grows with $\norm{\chi_\Psi}_1$, which is exponential in the number of magic inputs (see Appendix~\ref{appendix:l-1 norm of CPS}). Second, the loss here is linear in the number $1+t$ of blocks, hence at most linear in $n$. It is not a lower bound, and how far it can be reduced is left for future work. Finally, this loss is not necessarily unrealistic: our protocol certifies states produced in the context of fault-tolerant quantum computation (Clifford circuits, magic-state injection and Pauli measurements), that is, in a regime where high fidelities are expected, so that the protocol with this guarantee remains meaningful and does not abort in presence of small infidelities.
+        \revtwo{\paragraph{Robustness loss.}
+        Observe that the guarantee of Theorem~\ref{theorem:certification} comes with a loss in robustness: the protocol rejects states with $F(\rho,\ket\Psi)<1-\epsilon$, but it is only guaranteed to accept states with $F(\rho,\ket\Psi)\ge1-\frac{\epsilon}{3(1+t)}$. First, no loss in robustness at all would mean estimating the fidelity itself, as DFE does, and this cannot be done efficiently with DFE for \CEPS, since its sample complexity grows with $\norm{\chi_\Psi}_1$, which is exponential in the number of magic inputs (see Appendix~\ref{appendix:l-1 norm of CPS}). Second, the loss here is linear in the number $1+t$ of blocks, hence at most linear in $n$. It is not a lower bound, and how far it can be reduced is left for future work. Finally, this loss is not necessarily unrealistic: our protocol certifies states produced in the context of fault-tolerant quantum computation (Clifford circuits, magic-state injection and Pauli measurements), that is, in a regime where high fidelities are expected, so that the protocol with this guarantee remains meaningful and does not abort in presence of small infidelities.}
 
 
 \subsection{Extension to the non-i.i.d.\ setting}
@@ -526,7 +537,7 @@ size $N_{2}$ (\texttt{test}), $N_1-N_2-1$ (\texttt{discard}), and $1$ (\texttt{k
         \end{equation}
         with $\tilde O$ hiding polylogarithmic factors in $n,\epsilon, \delta$.
         The factor $(1+t)^4$ comes from the square of $\Niid$ in Lemma~\ref{lemma:prelim:iid} (Appendix~\ref{section:verification}). The remaining linear factor $n$ comes from the factor $n=\log d$ in the same lemma, that is, from the dimension of the $n$-qubit registers sent by the prover, which does not depend on the structure of the target state.
-        This adversarial sample complexity is large because we took a generic approach: Lemma~\ref{lemma:prelim:iid} applies to any protocol with non-adaptive and incoherent measurements, so that the bound is not tight and can be subject to optimization. We leave this optimization to further work, as it is not the main focus here. Note that such an optimization has already been done for stabilizer states, in particular graph states \cite{ZH19efficient, LZH23robust}.
+        \revtwo{This adversarial sample complexity is large because we took a generic approach: Lemma~\ref{lemma:prelim:iid} applies to any protocol with non-adaptive and incoherent measurements, so that the bound is not tight and can be subject to optimization. We leave this optimization to further work, as it is not the main focus here. Note that such an optimization has already been done for stabilizer states, in particular graph states \cite{ZH19efficient, LZH23robust}.}
 
     
 
@@ -790,7 +801,7 @@ Using the fact that $d = 2^n$, we can rewrite this $T$-state value as $\norm{\ch
 
 In many quantum verification tasks, security or correctness analyses rely on the assumption that all copies of the quantum state are produced independently and identically distributed (i.i.d.).
 In an adversarial scenario, however, this assumption may fail: the subsystems across different rounds can be arbitrarily correlated.
-The following result, adapted directly from~\cite[Theorem~3]{FKMO24learning}, shows that for protocols requiring non-adaptive, single-copy (incoherent) measurements only, the same estimation guarantees obtained in the i.i.d.\ case can still be achieved in the general, non-i.i.d.\ case — at the price of requiring a larger number of total samples, which is captured by Lemma \ref{lemma:prelim:iid}. In \cite{FKMO24learning}, this result is stated for a generic precision parameter; we state it here with the completeness and soundness parameters of our certification protocol, $\epsilon_c=\frac{\epsilon}{3(1+t)}$ and $\epsilon_s=\epsilon$ (see Theorem~\ref{theorem:certification}).
+The following result, adapted directly from~\cite[Theorem~3]{FKMO24learning}, shows that for protocols requiring non-adaptive, single-copy (incoherent) measurements only, the same estimation guarantees obtained in the i.i.d.\ case can still be achieved in the general, non-i.i.d.\ case — at the price of requiring a larger number of total samples, which is captured by Lemma \ref{lemma:prelim:iid}. \revother{In \cite{FKMO24learning}, this result is stated for a generic precision parameter; we state it here with the completeness and soundness parameters of our certification protocol, $\epsilon_c=\frac{\epsilon}{3(1+t)}$ and $\epsilon_s=\epsilon$ (see Theorem~\ref{theorem:certification}).}
 \begin{lemma}[State Certification in the Non-i.i.d. Setting \cite{FKMO24learning}]
 \label{lemma:prelim:iid}
 Let $\mathcal{A}$ be a certification protocol for an $n$-qubit target state $\ket{\Psi}$ (where $d=2^n$) that consumes $\Niid$ independent copies and satisfies the following conditions:

@@ -15,9 +15,11 @@ version-to-version changes, and the reply to the referees.
 1. **The referee reports:** [`reviews/DV-Verif-reviews.pdf`](reviews/DV-Verif-reviews.pdf)
    (two referees, three comments each).
 2. **What changed, step by step:** [`diffs/`](diffs/README.md). Each step
-   has a PDF of the paper with the changes highlighted (blue = added,
-   small red = removed), a table of every change with its page and the
-   referee comment it answers, and instructions to comment.
+   has a PDF of the paper with the changes highlighted, a table of every
+   change with its page and the referee comment it answers, and
+   instructions to comment. For v3.2, the PDF is the paper itself with the
+   new text in colour (blue: Reviewer 1, magenta: Reviewer 2, green: other
+   changes); for v3.1, where Section 3 changed a lot, it is a latexdiff.
 3. **The reply to the referees:** [`response/response.tex`](response/response.tex)
    (compiled: `response/response.pdf` once built). Each referee comment has
    a status and a suggested reply, still to be rewritten.
@@ -79,6 +81,11 @@ cd paper    && latexmk -pdf main.tex       # arXiv v2
 cd revision && latexmk -pdf main.tex       # the revision
 cd response && latexmk -pdf response.tex   # the reply to the referees
 ```
+
+In `revision/main.tex`, the text added in v3.2 is wrapped in `\revone{...}`,
+`\revtwo{...}` or `\revother{...}` and printed in colour; replace
+`\highlightchangestrue` by `\highlightchangesfalse` in its preamble to
+print the paper without colours.
 
 The figures of the revision are already compiled (`revision/figures/*.pdf`).
 To change one, edit its `.tex` in `revision/figures/` and compile it there

@@ -8,19 +8,26 @@ read), then read each step in order.
 | # | Read this | Changes from → to | What it covers |
 |---|-----------|-------------------|----------------|
 | 1 | [`arxiv-v2_to_v3.1.pdf`](arxiv-v2_to_v3.1.pdf) | arXiv v2 → v3.1 | Reviewer 1, comment 2 (the large change): the cost of certification depends only on the number of non-stabilizer inputs. Also the figures, redrawn in TikZ. |
-| 2 | [`v3.1_to_v3.2.pdf`](v3.1_to_v3.2.pdf) | v3.1 → v3.2 | Reviewer 1, comments 1 and 3; Reviewer 2, comments 1, 2 and 3; two small notation fixes. |
+| 2 | [`v3.2_highlighted.pdf`](v3.2_highlighted.pdf) | v3.1 → v3.2 | Reviewer 1, comments 1 and 3; Reviewer 2, comments 1, 2 and 3; two small notation fixes. Shown as the paper itself, with the new text in colour. |
 | – | [`arxiv-v2_to_v3.2.pdf`](arxiv-v2_to_v3.2.pdf) | arXiv v2 → v3.2 | Steps 1 and 2 together: everything changed since arXiv (this is the "version with the changes highlighted" Quantum asks for). |
 
-Each PDF is the full paper with the changes marked:
+Two kinds of PDFs:
 
-- **added text** is in blue sans-serif;
-- **removed text** is in small red;
-- a **changed equation** is shown entirely, once removed (red) and once
-  added (blue), even if only one symbol changed;
-- figures are always the new ones (the diff cannot mark changes inside a
-  figure; changed figures are listed below).
+- **Step 2** ([`v3.2_highlighted.pdf`](v3.2_highlighted.pdf)) is the paper
+  itself, with the text added in v3.2 in colour: **blue** for the answers to
+  Reviewer 1, **magenta** for the answers to Reviewer 2, **green** for the
+  other changes. Removed text is not shown (two passages were replaced: the
+  sentence on the optimality of DFE in Sec. 2.1, and the names `c`, `s` of
+  the completeness and soundness variables in Sec. 3).
+- **Step 1** and the cumulative diff are latexdiff outputs: the full paper
+  with **added text** in blue sans-serif and **removed text** in small red;
+  a **changed equation** is shown entirely, once removed (red) and once
+  added (blue), even if only one symbol changed. Section 3 changed a lot in
+  step 1, so it is mostly blue there.
 
-The page numbers below are those of the diff PDFs.
+Figures are always the new ones (changes inside a figure are not marked;
+changed figures are listed below). The page numbers below are those of each
+PDF.
 
 The current text of the revision is [`revision/main.tex`](../revision/main.tex),
 the paper on arXiv is [`paper/main.tex`](../paper/main.tex), and the reply to
@@ -85,18 +92,22 @@ Commits of this step (each one can be opened and commented on GitHub):
 
 ## Step 2: v3.1 → v3.2 — the other referee comments
 
-[`v3.1_to_v3.2.pdf`](v3.1_to_v3.2.pdf) · source
-[`tex/v3.1_to_v3.2.tex`](tex/v3.1_to_v3.2.tex) · git tags `v3.1` → `v3.2`
+[`v3.2_highlighted.pdf`](v3.2_highlighted.pdf) · source
+[`../revision/main.tex`](../revision/main.tex) · git tags `v3.1` → `v3.2`
 
-| Where | What changed | Referee comment | Page |
-|-------|--------------|-----------------|------|
-| Introduction | "we combine existing techniques, namely ..." | Reviewer 2, comment 3 (position the contribution) | 3 |
-| Sec. 2.1 (DFE) | The `eps^-2` dependence is optimal for fidelity estimation; the dependence in `d` is not universally optimal (`O(2^n)` in the worst case, `O(1)` for stabilizer states), which is why DFE is used here only on small systems and stabilizer states. | Reviewer 1, comment 1 ("information-theoretically optimal") | 4 |
-| Sec. 3 (introduction) | Completeness and soundness variables renamed `eps_c` and `eps_s` (`s` is now the number of stabilizer inputs). | – (notation) | 6 |
-| Sec. 3.2, new paragraph "Joint estimation of the witness" | Estimating each block separately with a union bound would cost `t^3`; the joint estimator costs `t^2`. | Reviewer 1, comment 3 (witness vs union bound) | 9 |
-| Sec. 3.2, new paragraph "Robustness loss" | Why there is a loss in robustness, why it is linear in `1+t`, and why it is realistic for fault-tolerant resource states. | Reviewer 2, comment 2 (is the margin realistic?) | 10 |
-| Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | 11 |
-| App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | 17 |
+The PDF is the current revision (v3.2, plus two later edits of the author:
+the reference DHZ20 for the `eps^-1` dependence in Sec. 2.1 and the end of
+the "Robustness loss" paragraph), with the v3.2 changes in colour.
+
+| Where | What changed | Referee comment | Colour | Page |
+|-------|--------------|-----------------|--------|------|
+| Introduction | "we combine existing techniques, namely ..." | Reviewer 2, comment 3 (position the contribution) | magenta | 3 |
+| Sec. 2.1 (DFE) | The `eps^-2` dependence is optimal for fidelity estimation; the dependence in `d` is not universally optimal (`O(2^n)` in the worst case, `O(1)` for stabilizer states), which is why DFE is used here only on small systems and stabilizer states. Replaces the sentence "DFE achieves the information-theoretically optimal scaling". | Reviewer 1, comment 1 ("information-theoretically optimal") | blue | 4 |
+| Sec. 3 (introduction) | Completeness and soundness variables renamed `eps_c` and `eps_s` (they were `c` and `s`; `s` is now the number of stabilizer inputs). | – (notation) | green | 6 |
+| Sec. 3.2, new paragraph "Joint estimation of the witness" | Estimating each block separately with a union bound would cost `t^3`; the joint estimator costs `t^2`. | Reviewer 1, comment 3 (witness vs union bound) | blue | 9–10 |
+| Sec. 3.2, new paragraph "Robustness loss" | Why there is a loss in robustness, why it is linear in `1+t`, and why it is realistic for fault-tolerant resource states. | Reviewer 2, comment 2 (is the margin realistic?) | magenta | 10 |
+| Sec. 3.3, after Theorem 2 | The adversarial cost is large because the approach is generic; optimizing it is left to future work, as was done for stabilizer states. | Reviewer 2, comment 1 (adversarial cost) | magenta | 11 |
+| App. C, before Lemma 2 | Lemma 2 adapts the result of [FKMO24] to our completeness and soundness parameters. | – (precision) | green | 17 |
 
 Not addressed yet: the second half of Reviewer 2, comment 1 (a sampled
 Pauli string can involve `O(n)` elementary measurements).
@@ -111,6 +122,7 @@ Commits of this step:
 - [`cbbeaf9`](https://github.com/jemappellesami/DV-Verif/commit/cbbeaf9) R2 C2: robustness loss
 - [`f722202`](https://github.com/jemappellesami/DV-Verif/commit/f722202) R2 C1: adversarial sample complexity
 - [`cb2bb2b`](https://github.com/jemappellesami/DV-Verif/commit/cb2bb2b) Response letter: suggested replies
+- [`682ee7d`](https://github.com/jemappellesami/DV-Verif/commit/682ee7d) Author edits: reference for eps^-1, wording of "Robustness loss" (after the tag v3.2)
 
 ---
 
@@ -122,7 +134,7 @@ commenting on.
 1. **On the PDF.** Annotate the diff PDF of a step (highlights and notes in
    Preview, Acrobat, or any PDF reader) and send it back, or commit it in
    `diffs/comments/` with your initials in the file name, for instance
-   `diffs/comments/v3.1_to_v3.2_UC.pdf`.
+   `diffs/comments/v3.2_highlighted_UC.pdf`.
 2. **On GitHub, line by line.** Open one of the commits listed above, find
    the changed lines of `revision/main.tex`, and click the `+` next to a
    line to leave a comment on it. Everyone with access to the repository
@@ -137,13 +149,15 @@ with the step (for instance "v3.1 → v3.2: robustness paragraph") works well.
 
 ## Compiling a `.tex` of this folder
 
-The files in [`tex/`](tex/) are the latexdiff sources of the PDFs above.
+The files in [`tex/`](tex/) are the latexdiff sources of step 1 and of the
+cumulative diff. (The source of step 2 is [`revision/main.tex`](../revision/main.tex)
+itself.)
 They use the class, style, bibliography and figures of `revision/`, so
 compile them from `diffs/tex/` in a copy of the whole repository:
 
 ```
 cd diffs/tex
-latexmk -pdf v3.1_to_v3.2.tex
+latexmk -pdf arxiv-v2_to_v3.1.tex
 ```
 
 (LaTeX prints a harmless warning about the path of the class and style
@@ -162,7 +176,13 @@ sh revision/mkdiff.sh arxiv-v2 v3.3
 ```
 
 which write `diffs/v3.2_to_v3.3.pdf` and `diffs/tex/v3.2_to_v3.3.tex` (and
-the cumulative diff from arXiv). While editing, `sh revision/mkdiff.sh`
+the cumulative diff from arXiv). Alternatively, as for v3.2, the new text is
+wrapped in `revision/main.tex` with `\revone{...}` (Reviewer 1, blue),
+`\revtwo{...}` (Reviewer 2, magenta) or `\revother{...}` (other changes,
+green), and the compiled `revision/main.pdf` is copied here as
+`v3.x_highlighted.pdf`. The colours are switched off for the final version
+by replacing `\highlightchangestrue` by `\highlightchangesfalse` in the
+preamble of `revision/main.tex`. While editing, `sh revision/mkdiff.sh`
 alone writes `revision/diff.pdf`, the changes since the last tag (not
 committed).
 
