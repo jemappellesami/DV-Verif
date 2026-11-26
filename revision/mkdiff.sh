@@ -7,7 +7,9 @@
 #                                     paper on arXiv (paper/main.tex): all
 #                                     the changes of the revision
 # Deletions in small red text, additions in blue sans-serif text (colour
-# markup only, so that long formulas still break across lines).
+# markup only, so that long formulas still break across lines; a changed
+# equation is shown entirely as deleted and added, which latexdiff needs
+# for the large aligned equations of the proofs).
 # The build happens in a temporary folder, so it does not clash with an
 # editor compiling in revision/; only the PDF is copied back.
 set -e
@@ -24,7 +26,7 @@ else
   OUT=diff.pdf
 fi
 cd "$TMP"
-latexdiff --type=CFONT old.tex main.tex > diff.tex
+latexdiff --type=CFONT --math-markup=whole old.tex main.tex > diff.tex
 latexmk -pdf -interaction=nonstopmode -halt-on-error diff.tex
 cp diff.pdf "$HERE/$OUT"
 echo "Written: $HERE/$OUT"
