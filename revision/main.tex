@@ -379,33 +379,35 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
         The constant $\frac13$ is chosen for simplicity and can be replaced by $1-\frac2k$ for any constant $k>2$ with a constant increase in sample complexity, by replacing the acceptance condition in step 4 of Protocol~\ref{protocol:certification} by $\bar W\ge1-(1-\frac1k)\epsilon$ and setting $\lambda=\frac\epsilon k$ in the proof.
 
         \begin{proof}
-        Recall that $\jdist$ is a joint probability distribution over qubit indices and single-qubit Pauli observables. We define the estimator
+        Recall that $\jdist$ is a joint probability distribution over blocks and Pauli observables on these blocks. We define the estimator
         \begin{equation}
         \label{def_f}
-            f(i,P,x)\coloneqq \tfrac 1 2 \sgn(\chi_{\psi_i}(P)) \times x\;,
+            f(b,P,x)\coloneqq \tfrac 1 2 \sgn(\chi_{\psi_b}(P)) \times x\;,
         \end{equation}
-            where $(i,P)\sim\mathcal D$ and $x\in\{+1, -1\}$ is a random variable describing the binary outcome of measuring the observable $C P^{(i)}C^\dagger$ on $\rho$ (where $P^{(i)}$ denotes the $n$-qubit Pauli operator acting as $P$ on the $i$-th qubit and as identity on all the other qubits). Then, the quantity $\bar X$ computed at step $3$ of Protocol~\ref{protocol:certification} using $N$ samples $(i_j,P_j,x_j)$ is an empirical estimate of the expected value of $f$ over the classical randomness of $(i,P)$ and the quantum randomness of $x$, which writes $X=\mathbb E_{i,P,x}[f(i,P,x)]$.
+            where $(b,P)\sim\mathcal D$ and $x\in\{+1, -1\}$ is a random variable describing the binary outcome of measuring the observable $C P^{(b)}C^\dagger$ on $\rho$ (where $P^{(b)}$ denotes the $n$-qubit Pauli operator acting as $P$ on block $b$ and as identity on all the other qubits). Then, the quantity $\bar X$ computed at step $3$ of Protocol~\ref{protocol:certification} using $N$ samples $(b_j,P_j,x_j)$ is an empirical estimate of the expected value of $f$ over the classical randomness of $(b,P)$ and the quantum randomness of $x$, which writes $X=\mathbb E_{b,P,x}[f(b,P,x)]$.
         
         Now we have:
 \begin{widetext}
 \begin{align}
-    X &= \mathbb E_{i,P,x}[f(i,P,x)] \nonumber \\
-    &= \sum_{i=1}^n \mu(i) \sum_{P \in \mathcal{P}_1} \mathcal{D}_{\psi_i}(P) \left[ \tfrac 1 2 \sgn(\chi_{\psi_i}(P)) \Tr[\rho \, C P^{(i)} C^\dagger] \right] \nonumber \\
-    &= \sum_{i=1}^n \frac{\|\chi_{\psi_i}\|_1}{\np} \sum_{P \in \mathcal{P}_1} \frac{|\chi_{\psi_i}(P)|}{\|\chi_{\psi_i}\|_1} \left[ \tfrac 1 2 \sgn(\chi_{\psi_i}(P)) \Tr[\rho \, C P^{(i)} C^\dagger] \right] \nonumber \\
-    &= \frac{1}{\np} \sum_{i=1}^n \left( \frac{1}{2} \sum_{P \in \mathcal{P}_1} \chi_{\psi_i}(P) \Tr[C^\dagger \rho C \, P^{(i)}] \right) \nonumber \\
-    &= \frac{1}{\np} \sum_{i=1}^n \left( \frac{1}{2} \sum_{P \in \mathcal{P}_1} \chi_{\psi_i}(P) \Tr[(C^\dagger \rho C)_i \, P] \right) \nonumber \\
-    &= \frac{1}{\np} \sum_{i=1}^n \Tr\left[ (C^\dagger \rho C)_i \left( \frac{1}{2} \sum_{P \in \mathcal{P}_1} \chi_{\psi_i}(P) P \right) \right] \nonumber \\
-    &= \frac{1}{\np} \sum_{i=1}^n \Tr[(C^\dagger \rho C)_i \, \ketbra{\psi_i}] \nonumber \\
-    &= \frac{1}{\np} \sum_{i=1}^n F((C^\dagger \rho C)_i, \ket{\psi_i}).
+    X &= \mathbb E_{b,P,x}[f(b,P,x)] \nonumber \\
+    &= \sum_{b} \mu(b) \sum_{P \in \mathcal{P}_{|b|}} \mathcal{D}_{\psi_b}(P) \left[ \tfrac 1 2 \sgn(\chi_{\psi_b}(P)) \Tr[\rho \, C P^{(b)} C^\dagger] \right] \nonumber \\
+    &= \sum_{b} \frac{2\|\chi_{\psi_b}\|_1}{d_b\,\np} \sum_{P \in \mathcal{P}_{|b|}} \frac{|\chi_{\psi_b}(P)|}{\|\chi_{\psi_b}\|_1} \left[ \tfrac 1 2 \sgn(\chi_{\psi_b}(P)) \Tr[\rho \, C P^{(b)} C^\dagger] \right] \nonumber \\
+    &= \sum_{b} \sum_{P \in \mathcal{P}_{|b|}} \frac{2}{d_b}\frac{|\chi_{\psi_b}(P)|}{\np} \left[ \tfrac 1 2 \sgn(\chi_{\psi_b}(P)) \Tr[\rho \, C P^{(b)} C^\dagger] \right] \nonumber \\
+    &= \frac{1}{\np} \sum_{b} \left( \frac{1}{d_b} \sum_{P \in \mathcal{P}_{|b|}} \chi_{\psi_b}(P) \Tr[\rho \, C P^{(b)} C^\dagger] \right) \nonumber \\
+    &= \frac{1}{\np} \sum_{b} \left( \frac{1}{d_b} \sum_{P \in \mathcal{P}_{|b|}} \chi_{\psi_b}(P) \Tr[C^\dagger \rho C \, P^{(b)}] \right) \nonumber \\
+    &= \frac{1}{\np} \sum_{b} \left( \frac{1}{d_b} \sum_{P \in \mathcal{P}_{|b|}} \chi_{\psi_b}(P) \Tr[(C^\dagger \rho C)_b \, P] \right) \nonumber \\
+    &= \frac{1}{\np} \sum_{b} \Tr\left[ (C^\dagger \rho C)_b \left( \frac{1}{d_b} \sum_{P \in \mathcal{P}_{|b|}} \chi_{\psi_b}(P) P \right) \right] \nonumber \\
+    &= \frac{1}{\np} \sum_{b} \Tr[(C^\dagger \rho C)_b \, \ketbra{\psi_b}] \nonumber \\
+    &= \frac{1}{\np} \sum_{b} F((C^\dagger \rho C)_b, \ket{\psi_b}).
 \end{align}
 %
 \end{widetext}
-        where we used Eq.~\eqref{def_f} and the Born rule in the second line, Eqs.~\eqref{mu_i} and~\eqref{Dpsi_iP} in the third line, the cyclicity of the trace in the fourth line, where in the fifth line $(C^\dag\rho C)_i$ denotes the $i$-th reduced subsystem of $C^\dag\rho C$, and where we used Eq.~\eqref{expansion} in the seventh line and Eq.~\eqref{fidover} (from Appendix \ref{sec:prelim}) in the last line.
+        where we used Eq.~\eqref{def_f} and the Born rule in the second line, Eqs.~\eqref{mu_i} and~\eqref{Dpsi_iP} in the third line (where the sums run over the $1+t$ blocks $b\in\{S\}\cup M$ and over the Pauli operators $P$ on the $|b|$ qubits of block $b$), the simplification $\mu(b)\,\pdist_{\psi_b}(P)=\frac{2}{d_b}|\chi_{\psi_b}(P)|/\np$ of Eq.~\eqref{DpsiPi} in the fourth line, $|\chi_{\psi_b}(P)|\,\sgn(\chi_{\psi_b}(P))=\chi_{\psi_b}(P)$ in the fifth line, the cyclicity of the trace in the sixth line, where in the seventh line $(C^\dag\rho C)_b$ denotes the reduced state of $C^\dag\rho C$ on block $b$, and where we used Eq.~\eqref{expansion} on block $b$ (of dimension $d_b$) in the ninth line and Eq.~\eqref{fidover} (from Appendix \ref{sec:prelim}) in the last line.
         
-        With Eq.~\eqref{eq:prelims:witness} we thus obtain 
+        With Eq.~\eqref{eq:prelims:blockwitness} applied to these $1+t$ blocks, we thus obtain 
         \begin{equation}
             \label{eq:equality witness sum of fid}
-            W(C^\dagger\rho C,C^\dagger\Psi C) = 1-n+\np X\; .
+            W(C^\dagger\rho C,C^\dagger\Psi C) = 1-(1+t)+\np X\; .
         \end{equation}
 
 
@@ -419,7 +421,7 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
             \end{figure*}
 
 
-        Next, we show how close the empirical estimate $\bar X=\frac1N\sum_{j=1}^Nf(i_j,P_j,x_j)$ is to $X=\mathbb E_{i,P,x}[f(i,P,x)]$. Since the range of $f$ is $\max_{i,P,x}f(i,P,x)-\min_{i,P,x}f(i,P,x)\leq1$, Hoeffding's inequality (see Lemma \ref{lemma:prelim:hoeffding}) implies
+        Next, we show how close the empirical estimate $\bar X=\frac1N\sum_{j=1}^Nf(b_j,P_j,x_j)$ is to $X=\mathbb E_{b,P,x}[f(b,P,x)]$. Since the range of $f$ is $\max_{b,P,x}f(b,P,x)-\min_{b,P,x}f(b,P,x)\leq1$, Hoeffding's inequality (see Lemma \ref{lemma:prelim:hoeffding}) implies
         \begin{equation}
             \Pr[
             \bar X - X \geq \lambda
@@ -429,7 +431,7 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
             \right),
         \end{equation}
         for any $\lambda>0$, and the same bound holds for $\Pr[X - \bar X \geq \lambda]$.
-        Furthermore, by Eq.\ (\ref{eq:equality witness sum of fid}) we have $W=1-n +\np X$, so
+        Furthermore, by Eq.\ (\ref{eq:equality witness sum of fid}) we have $W=1-(1+t) +\np X$, so
         \begin{equation}
             \begin{aligned}
             \mathrm{Pr}[
@@ -451,13 +453,16 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
                 N(\lambda)\coloneqq\frac{\np^2}{2\lambda^2}\log\left(\dfrac{1}{\delta}\right)\; .
             \end{equation}
  
-        By cyclicity of the trace we have $F(C^\dagger\rho C,C^\dagger\Psi C)=F(\rho,\ket\Psi)$ so Eq.~\eqref{eq:prelims:witness:robustness} implies
+        By cyclicity of the trace we have $F(C^\dagger\rho C,C^\dagger\Psi C)=F(\rho,\ket\Psi)$ so Eq.~\eqref{eq:prelims:blockwitness:robustness} with $B=1+t$ implies
         \begin{equation}
-            1-n(1-F(\rho,\ket\Psi)) \leq W(C^\dagger\rho C,C^\dagger\Psi C) \leq F(\rho,\ket\Psi).
+            \begin{aligned}
+            1-(1+t)(1-F(\rho,\ket\Psi)) &\leq W(C^\dagger\rho C,C^\dagger\Psi C)\\
+            &\leq F(\rho,\ket\Psi).
+            \end{aligned}
         \end{equation}
-        Hence, for $N\ge N(\lambda)$, each of the events $\bar W \leq W + \lambda$ and $\bar W \geq W - \lambda$ holds with probability greater than $1-\delta$. For soundness, $\bar W \leq W+\lambda \leq F(\rho,\ket\Psi)+\lambda$, so $F(\rho,\ket\Psi)<1-\epsilon$ implies $\bar W<1-\epsilon+\lambda$ with probability greater than $1-\delta$. For completeness, $\bar W \geq W-\lambda \geq 1-n(1-F(\rho,\ket\Psi))-\lambda$, so $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3n}$ implies $\bar W\ge1-\epsilon/3-\lambda$ with probability greater than $1-\delta$. Setting $\lambda=\epsilon/3$ concludes the proof, with $\Niid=N(\epsilon/3)\in\mathcal O(\frac{n^2}{\epsilon^2}\log(\frac{1}{\delta}))$ since $m\le n(1+\sqrt3)$.
+        Hence, for $N\ge N(\lambda)$, each of the events $\bar W \leq W + \lambda$ and $\bar W \geq W - \lambda$ holds with probability greater than $1-\delta$. For soundness, $\bar W \leq W+\lambda \leq F(\rho,\ket\Psi)+\lambda$, so $F(\rho,\ket\Psi)<1-\epsilon$ implies $\bar W<1-\epsilon+\lambda$ with probability greater than $1-\delta$. For completeness, $\bar W \geq W-\lambda \geq 1-(1+t)(1-F(\rho,\ket\Psi))-\lambda$, so $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3(1+t)}$ implies $\bar W\ge1-\epsilon/3-\lambda$ with probability greater than $1-\delta$. Setting $\lambda=\epsilon/3$ concludes the proof, with $\Niid=N(\epsilon/3)\in\mathcal O(\frac{(1+t)^2}{\epsilon^2}\log(\frac{1}{\delta}))$ since $m\le 2+t(1+\sqrt3)$.
         \end{proof}
-        As a result, we can efficiently certify any $n$-qubit $\mCEPS$ using only (non-adaptive) single-qubit Pauli measurements on a number of samples that scales quadratically in $n$ and with efficient sampling and post-processing of measurement outcomes.
+        As a result, we can efficiently certify any $n$-qubit $\mCEPS$ using only (non-adaptive) single-qubit Pauli measurements on a number of samples that scales quadratically in the number $t$ of non-stabilizer states $\ket{\psi_i}$, independently of the number $s$ of stabilizer ones, and with efficient sampling and post-processing of measurement outcomes.
 
 
 \subsection{Extension to the non-i.i.d.\ setting}
