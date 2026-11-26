@@ -292,12 +292,12 @@ In this section, we give a protocol to check whether a prover correctly prepares
 %
 the verifier holds the classical description of $\ket\Psi$ ($C$ and the single-qubit states) and defines a target precision $\epsilon$ and the maximum allowed failure probability $\delta$, meaning that the protocol should succeed with probability $\geq 1-\delta$. Then, we first consider the case where the verifier receives from the prover $N+1$ copies of an unknown quantum state $\rho$ on $n$ qubits, one of which is set aside unmeasured to serve as the protocol's output state (the prover is said to be \textit{i.i.d.}).
 %
-The goal of the protocol is for the verifier to use (non-adaptive) Pauli measurements and classical post-processing to output an acceptance flag if $F(\rho, \ket\Psi) \geq 1-c$, a rejection flag if $F(\rho, \ket\Psi)\leq 1-s$ where $c$ and $s$ are completeness and soundness variables parametrized by $\epsilon$ (Theorem~\ref{theorem:certification} achieves $c=\frac{\epsilon}{3n}$ and $s=\epsilon$).
+The goal of the protocol is for the verifier to use (non-adaptive) Pauli measurements and classical post-processing to output an acceptance flag if $F(\rho, \ket\Psi) \geq 1-c$, a rejection flag if $F(\rho, \ket\Psi)\leq 1-s$ where $c$ and $s$ are completeness and soundness variables parametrized by $\epsilon$ (Theorem~\ref{theorem:certification} achieves $c=\frac{\epsilon}{3(1+t)}$ and $s=\epsilon$, where $t\le n$ is the number of non-stabilizer single-qubit states $\ket{\psi_i}$).
 The efficiency analysis of the protocol consists of computing how many samples the verifier has to ask from the prover in order to achieve this certification task with precision $\epsilon$ and success probability $\geq1-\delta$, knowing the state has size $n$. In other terms, it amounts to computing how $N$ scales with $\epsilon, \delta, n$.
 
 If the prover is not i.i.d., the state received by the verifier might be entangled across the $N$ samples, so they cannot be considered as independent copies anymore. However the verifier has the same aim: perform Pauli measurements on some of the received samples, and leave one remaining subsystem that is accepted if its fidelity is close enough to the target state.
 
-We introduce some notations in Section\ \ref{subsection:notations}, describe the i.i.d.\ protocol in Section\ \ref{subsection:iid} and generalize that approach to the non-i.i.d.\ setting in Section\ \ref{rmk:malicious}. In both cases, we provide theorems showing that the protocols are efficient. In the i.i.d.\ setting, $N \sim O(n^2/\epsilon^2 \; \log(1/\delta))$, while in the non-i.i.d.\ setting, we have $N\sim \tilde O(n^5/(\delta^2\epsilon^6))$, with $\tilde O$ hiding polylogarithmic factors.
+We introduce some notations in Section\ \ref{subsection:notations}, describe the i.i.d.\ protocol in Section\ \ref{subsection:iid} and generalize that approach to the non-i.i.d.\ setting in Section\ \ref{rmk:malicious}. In both cases, we provide theorems showing that the protocols are efficient. In the i.i.d.\ setting, $N \sim O((1+t)^2/\epsilon^2 \; \log(1/\delta))$, while in the non-i.i.d.\ setting, we have $N\sim \tilde O(n^5/(\delta^2\epsilon^6))$, with $\tilde O$ hiding polylogarithmic factors.
 
 
 \subsection{Notations}
@@ -370,11 +370,11 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
             \label{eq:certification:sample iid}
             \Niid = \frac{9\np^2}{2\epsilon^2} \log\left(\frac{1}{\delta}\right)
                     \in\O\left(
-                    \frac{n^2}{\epsilon^2} \log\left(\frac{1}{\delta}\right)
+                    \frac{(1+t)^2}{\epsilon^2} \log\left(\frac{1}{\delta}\right)
                     \right)
                     \; ,
             \end{equation}
-                 then Protocol~\ref{protocol:certification} rejects if $F(\rho,\ket\Psi)<1-\epsilon$ and accepts if $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3n}$, with probability greater than $1-\delta$.
+                 then Protocol~\ref{protocol:certification} rejects if $F(\rho,\ket\Psi)<1-\epsilon$ and accepts if $F(\rho,\ket\Psi)\ge1-\frac\epsilon{3(1+t)}$, with probability greater than $1-\delta$.
         \end{theorem}
         The constant $\frac13$ is chosen for simplicity and can be replaced by $1-\frac2k$ for any constant $k>2$ with a constant increase in sample complexity, by replacing the acceptance condition in step 4 of Protocol~\ref{protocol:certification} by $\bar W\ge1-(1-\frac1k)\epsilon$ and setting $\lambda=\frac\epsilon k$ in the proof.
 
