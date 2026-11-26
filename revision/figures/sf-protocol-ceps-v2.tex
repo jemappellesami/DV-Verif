@@ -7,27 +7,36 @@
 % Original request (author): redraw the submitted figure in TikZ, keeping
 % its content and colours (the submitted one was exported from Inkscape).
 % ----------------------------------------------------------------------
+% Revision (R1.2): the protocol now samples a block b in {S} u M (the
+% stabilizer block S with probability 2/m, or a non-stabilizer qubit
+% i in M with probability ||chi_psi_i||_1/m) instead of a qubit index i;
+% variant "B" chosen by the author: the two kinds of test are spelled out
+% and the wires are grouped into the block S and a qubit i.
 % Redrawn for arXiv v2: the v2 figure is the v1 drawing scaled by 0.99862
 % (page 439 x 223 bp), with the bottom equation Xbar = (1/N) sum f(x_j).
 % What is drawn:
 %   - a stack of cards, one per copy j <= N (double arrow, top left): a
 %     blue card at the back, then three identical red cards;
-%   - on each red card, left: the sampling by mu of the target index i
-%     (white die) and, by D_i, of the Pauli observable P in P_1 (blue
-%     die); right, three panels: receive rho (blue), measure CP_iC^dagger
+%   - on each red card, left: the sampling by mu of the test b (white
+%     die; S with probability 2/m, i in M with probability
+%     ||chi_psi_i||_1/m) and, by D_psi_b, of the Pauli observable P on
+%     block b (blue die; uniform on Stab(psi_S) if b = S, single-qubit if
+%     b = i); right, three panels: receive rho (blue; the first two wires
+%     form the block S, the last one is a qubit i), measure CP^(b)C^dagger
 %     by back-propagation (pink, dashed box), binary outcome x_j as the
 %     product of the outcomes (grey);
 %   - below: Xbar = (1/N) sum f(x_j) => Wbar.
 % Coordinates are in bp, origin at the top-left corner, y pointing down,
-% read from the submitted PDF, so the figure keeps its size and layout.
-% The two dice are the bitmaps of the submitted figure (img/die-*.png);
+% read from the arXiv v1 PDF (scaled to v2), so the figure keeps its layout.
+% The two dice are the bitmaps of the arXiv figure (img/die-*.png);
 % the pips recoloured on the white die are drawn on top, as there.
-% Sans fonts, as in the submitted figure.
+% Sans fonts, as in the arXiv figure.
 %
 % Knobs: \sfcard{dx}{dy} draws one red card shifted from the front one.
 % ======================================================================
 \documentclass[tikz,border=0pt]{standalone}
 \input{figpreamble}
+\usetikzlibrary{decorations.pathreplacing}
 \figsansfonts
 % Big operators (sum, prod) scale with the font size here.
 \DeclareFontFamily{OMX}{lmex}{}
@@ -40,7 +49,7 @@
 \definecolor{sfreceive}{RGB}{67,188,255}   % panel "Receive"   (opacity .33)
 \definecolor{sfmeasure}{RGB}{255,67,67}    % panel "Measure"   (opacity .33)
 \definecolor{sfoutcome}{RGB}{161,161,161}  % panel "Binary outcome" (.33)
-\definecolor{sfarrow}{RGB}{201,0,0}        % P_i -> CP_iC^dagger
+\definecolor{sfarrow}{RGB}{201,0,0}        % P^(b) -> CP^(b)C^dagger
 \definecolor{sfpipblue}{RGB}{159,225,255}  % recoloured pips, white die
 \definecolor{sfpipgrey}{RGB}{74,80,88}
 
@@ -52,7 +61,7 @@
   sf link/.style={line width=0.751bp,
     -{Triangle[length=3.25bp, width=3.75bp]}},
   % A measurement: box 17.96 x 13.97 bp, top-left corner at the origin;
-  % /sfmeterscale shrinks it (the small one next to P_i).
+  % /sfmeterscale shrinks it (the small one next to P^(b)).
   pics/sfmeter/.style={code={
     \draw[line cap=round, line join=round]
       (0,0) rectangle (17.96,13.969)
@@ -89,7 +98,7 @@
       \pic[line width=0.965bp] at (291.84,\y) {sfmeter};
     \draw[line width=0.752bp, dash pattern=on 4.515bp off 4.515bp]
       (251.336,63.805) -- ++(62.219,0) -- ++(0,82.418) -- ++(-62.219,0) -- cycle;
-    % small meter of P_i and the red arrow to CP_iC^dagger
+    % small meter of P^(b) and the red arrow to CP^(b)C^dagger
     \pic[line width=0.387bp, scale=0.40078] at (237.229,123.629) {sfmeter};
     \draw[sfarrow, line width=1.036bp] (246.689,126.547) -- (257.686,126.547);
     % outcomes multiplied into x_j
@@ -99,7 +108,7 @@
   \end{scope}
   \fill[sfarrow] (258.621,126.547) -- (255.512,129.656) -- (253.441,129.656)
     -- (256.551,126.547) -- (253.441,123.438) -- (255.512,123.438) -- cycle;
-  % dice: the white one (target index i), rotated; the blue one (P)
+  % dice: the white one (test b), rotated; the blue one (P)
   \node[anchor=south west, rotate=120.73] at (74.307,88.647)
     {\includegraphics[width=24.51bp]{img/die-white.png}};
   \fill[sfpipblue] (58.793,75.242) .. controls (58.793,75.664) and (58.07,76.004) .. (57.176,76.004) .. controls (56.281,76.004) and (55.555,75.664) .. (55.555,75.242) .. controls (55.555,74.82) and (56.281,74.477) .. (57.176,74.477) .. controls (58.07,74.477) and (58.793,74.82) .. (58.793,75.242) -- cycle;
@@ -117,16 +126,24 @@
   \fill (64.598,121.848) -- (62.266,124.016) -- (60.762,123.965) -- (63.098,121.793) -- (60.926,119.457) -- (62.426,119.512) -- cycle;
   \node[anchor=south west] at (63.0755,137.934)
     {\includegraphics[width=27.587bp, height=27.598bp]{img/die-blue.png}};
+  % blocks of the wires
+  \draw[line width=0.5bp, decorate, decoration={brace, amplitude=1.6bp}]
+    (200.3,109.2) -- (200.3,72.6);
+  \node[font=\figsize{7}, anchor=east] at (198.4,90.9) {$S$};
+  \node[font=\figsize{7}, anchor=east] at (199.4,136.0) {$i$};
   % labels
   \node[font=\figsize{17.59}] at (50.76,64.89) {$\boldsymbol{\mu}$};
-  \node[font=\figsize{7.07}] at (94.23,80.19) {Target index};
-  \node[font=\figsize{6.67}] at (83.07,89.01) {$i\leq n$};
-  \node[font=\figsize{9.65}] at (68.13,110.07) {$\mathcal{D}_i$};
-  \node[font=\figsize{5.85}] at (103.95,114.84) {Pauli obs.};
-  \node[font=\figsize{4.80}] at (100.80,122.76) {$P\in\mathcal{P}_1$};
+  \node[font=\figsize{7.07}, anchor=west] at (75.1,78.5) {Test $b$};
+  \node[font=\figsize{4.5}, anchor=west] at (75.1,85.6) {$S$: $2/m$};
+  \node[font=\figsize{4.5}, anchor=west] at (75.1,91.6) {$i\in M$: $\|\chi_{\psi_i}\|_1/m$};
+  \node[font=\figsize{9.65}] at (70.5,110.07) {$\mathcal{D}_{\psi_b}$};
+  \node[font=\figsize{5.85}, anchor=west] at (90.8,114.84) {Pauli obs.};
+  \node[font=\figsize{4.3}, anchor=west] at (90.8,121.5) {$P$ on block $b$};
+  \node[font=\figsize{4.6}] at (78.9,143.2) {$b=S$: $P$ uniform on $\mathrm{Stab}(\ket{\psi_S})$};
+  \node[font=\figsize{4.6}] at (78.9,149.0) {$b=i$: $P\sim\mathcal{D}_{\psi_i}$, single-qubit};
   \node[font=\figsize{7.32}] at (79.02,159.93) {Meas.\ basis sampling};
-  \node[font=\figsize{6.82}] at (78.93,168.93) {$\Rightarrow\ i, P$};
-  \node[font=\figsize{31.46}] at (187.83,103.59) {$\rho$};
+  \node[font=\figsize{6.82}] at (78.93,168.93) {$\Rightarrow\ b, P$};
+  \node[font=\figsize{31.46}] at (176.5,103.59) {$\rho$};
   \node[font=\figsize{11.18}] at (189.63,157.23) {Receive $\rho$};
   \node[font=\figsize{8.92}] at (273.87,157.86) {Measure};
   \node[font=\figsize{6.87}] at (275.49,170.64) {(Back-Propagation)};
@@ -134,8 +151,8 @@
   \node[font=\figsize{6.86}] at (360.18,166.86) {for sample $j$};
   \node[font=\figsize{18.17}] at (366.39,103.86) {$x_j$};
   \node[font=\figsize{8.61}] at (341.28,79.92) {$\displaystyle\prod$};
-  \node[font=\figsize{8.38}] at (231.39,126.18) {$P_i$};
-  \node[font=\figsize{10.56}] at (274.41,126.81) {$CP_iC^\dagger$};
+  \node[font=\figsize{8.38}, anchor=east] at (236.2,126.18) {$P^{(b)}$};
+  \node[font=\figsize{9.2}, anchor=west] at (259.6,126.81) {$CP^{(b)}C^\dagger$};
 \end{scope}}
 
 \begin{document}

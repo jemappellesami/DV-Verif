@@ -414,7 +414,7 @@ Without loss of generality, we can write the product state $\bigotimes_{i=1}^n\k
             \begin{figure*}[t]
                 \centering
                 \includegraphics[width=0.9\textwidth]{figures/sf-protocol-ceps-v2.pdf} 
-                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sample $\qubit, P$, we have $f(i_j,P_j,x_j) = \tfrac 1 2 \mathrm{sgn}(\chi_{\psi_{\qubit_j}}(P_j)) \,x_j$ (cf. Eq.~\eqref{def_f}). The estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-n+\np\times \bar X$.
+                \caption{Visual description of our protocol to certify $\mCEPS$. With the notations of Protocol \ref{protocol:certification}, here for copy $j$ for which we sample $b, P$, we have $f(b_j,P_j,x_j) = \tfrac 1 2 \mathrm{sgn}(\chi_{\psi_{b_j}}(P_j)) \,x_j$ (cf. Eq.~\eqref{def_f}). The test $b$ is either the stabilizer block $S$, with probability $2/\np$, or a non-stabilizer qubit $i\in M$, with probability $\norm{\chi_{\psi_i}}_1/\np$; here, the first two wires form the block $S$ and the last one is a qubit $i\in M$. The estimate for the witness $\bar W$ is computed from the estimator $\bar X$ using $\bar W = 1-(1+t)+\np\times \bar X$.
                 The samples in red boxes are used for certification, while
                 the blue box is the sample left unmeasured, the output copy $\rho_{\mathrm{fin}}$.}
                 \label{fig:protocol:certification}
